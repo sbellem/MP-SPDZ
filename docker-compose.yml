@@ -10,8 +10,9 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./compiled-programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
       - ./compiled-programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+      - ./Compiler:/usr/src/MP-SPDZ/Compiler
+      - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
     command: bash Programs/Source/hbmpc_mimc_test.sh
