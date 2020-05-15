@@ -7,8 +7,11 @@ services:
       context: .
       dockerfile: Dockerfile
     working_dir: /usr/src/MP-SPDZ
+    cap_add:
+      - NET_ADMIN
     volumes:
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./compiled-programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
       - ./compiled-programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
-    command: Scripts/mascot.sh tutorial
+      - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
+    command: bash Programs/Source/hbmpc_mimc_test.sh
