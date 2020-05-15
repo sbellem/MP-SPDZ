@@ -29,11 +29,6 @@ COPY . .
 #RUN Scripts/setup-ssl.sh 3
 #RUN mkdir -p Player-Data
 
-# online
-#RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
-#RUN make -j 8 online
-#RUN ./Scripts/setup-online.sh
-
 # tldr
 RUN make -j 2 tldr
 #RUN echo ARCH = -march=native >> CONFIG.mine
@@ -43,6 +38,13 @@ RUN make -j 2 tldr
 #        && echo 1 2 3 4 > Player-Data/Input-P1-0
 #
 #CMD Scripts/mascot.sh tutorial
+
+# online & offline
+#RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
+#RUN make -j 8 online
+RUN make -j 2 online offline
+#RUN ./Scripts/setup-online.sh
+
 
 # shamir
 RUN make -j 2 shamir
