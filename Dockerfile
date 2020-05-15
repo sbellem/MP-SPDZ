@@ -35,6 +35,7 @@ COPY . .
 #RUN ./Scripts/setup-online.sh
 
 # tldr
+RUN make -j 2 tldr
 #RUN echo ARCH = -march=native >> CONFIG.mine
 #RUN make mascot-party.x
 #RUN mkdir -p Player-Data \
@@ -42,6 +43,9 @@ COPY . .
 #        && echo 1 2 3 4 > Player-Data/Input-P1-0
 #
 #CMD Scripts/mascot.sh tutorial
+
+# shamir
+RUN make -j 2 shamir
 
 # ring
 RUN Scripts/setup-ssl.sh 3
