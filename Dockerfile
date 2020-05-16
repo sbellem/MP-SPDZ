@@ -31,6 +31,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /usr/src/MP-SPDZ
 COPY . .
+RUN make clean
 RUN make -j 2 tldr
 RUN make -j 2 shamir
 RUN make -j 2 online offline
