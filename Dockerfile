@@ -24,6 +24,8 @@ RUN echo MY_CFLAGS += -I./local/include >> CONFIG.mine
 RUN echo MY_LDLIBS += -Wl,-rpath -Wl,./local/lib -L./local/lib >> CONFIG.mine
 
 COPY . .
+
+RUN make clean
 # honest majority, malicious shamir
 #RUN make -j 8 malicious-shamir-party.x
 #RUN Scripts/setup-ssl.sh 3
