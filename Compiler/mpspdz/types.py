@@ -132,11 +132,13 @@ def copy_doc(a, b):
         pass
 
 
+
 def no_doc(operation):
     def wrapper(*args, **kwargs):
         return operation(*args, **kwargs)
 
     return wrapper
+
 
 def vectorize(operation):
     def vectorized_operation(self, *args, **kwargs):
@@ -3404,8 +3406,6 @@ class _fix(_single):
     """ Secret fixed point type. """
     __slots__ = ['v', 'f', 'k']
 
-    __slots__ = ["v", "f", "k", "size"]
-
     def set_precision(cls, f, k=None):
         cls.f = f
         # default bitlength = 2*precision
@@ -5482,6 +5482,7 @@ class MemFix(MemValue):
 
     def write(self, *args):
         super().write(self.value_type(*args))
+
 
 
 def getNamedTupleType(*names):

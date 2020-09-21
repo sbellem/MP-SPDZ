@@ -1002,6 +1002,7 @@ class sbitint(_bitint, _number, sbits, _sbitintbase):
         return self.bit_compose(bits)
 
 
+
 class sbitintvec(sbitvec, _number, _bitint, _sbitintbase):
     def __add__(self, other):
         if util.is_zero(other):
@@ -1111,6 +1112,7 @@ class sbitfix(_fix):
         return cls._new(cls.int_type(other), k, f)
 
 sbitfix.set_precision(16, 31)
+
 
 
 class sbitfixvec(_fix):

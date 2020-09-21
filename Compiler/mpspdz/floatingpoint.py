@@ -351,6 +351,7 @@ def BitDecRing(a, k, m):
         return [types.sint.conv(bit) for bit in bits]
 
 
+
 def BitDecField(a, k, m, kappa, bits_to_compute=None):
     r_dprime = types.sint()
     r_prime = types.sint()
