@@ -237,3 +237,6 @@ mac-setup:
 
 clean:
 	-rm */*.o *.o */*.d *.d *.x core.* *.a gmon.out */*/*.o static/*.x
+
+programs-clean:
+	rm -rf Programs/Bytecode Programs/Schedules Programs/Public-Input

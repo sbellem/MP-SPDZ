@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  mpspdz-compiler:
+    image: spdziler
+    build:
+      context: .
+      dockerfile: compiler.Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      #- ./Makefile:/usr/src/MP-SPDZ/Makefile
+      #- ./compile.py:/usr/src/MP-SPDZ/compile.py
+      - ./Compiler:/usr/src/MP-SPDZ/Compiler
+      - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
+      - ./compiled-programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+      - ./compiled-programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+    environment:
+      # FIXME temporary, should be in developer settings
+      PYTHONBREAKPOINT: ipdb.set_trace

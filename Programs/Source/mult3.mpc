@@ -1,0 +1,8 @@
+# from https://github.com/MPC-SoK/frameworks/blob/master/mp-spdz/source/mult3.mpc
+
+a = sint.get_input_from(0)
+b = sint.get_input_from(1)
+c = sint.get_input_from(2)
+
+prod = a * b * c
+print_ln('Mult3 prod = %s', prod.reveal());

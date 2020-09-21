@@ -1,4 +1,5 @@
 # sint: secret integers
+print("************ tutorial.mpc ************")
 
 # you can assign public numbers to sint
 
@@ -6,7 +7,7 @@ a = sint(1)
 b = sint(2)
 
 def test(actual, expected):
-
+    print("tutorial.mpc: test function ...")
     # you can reveal a number in order to print it
 
     actual = actual.reveal()
@@ -50,6 +51,7 @@ a = Array(100, sint)
 
 @for_range(100)
 def f(i):
+    print("tutorial.mpc: f function ...")
     a[i] = sint(i) * sint(i - 1)
 
 test(a[99], 99 * 98)
@@ -103,6 +105,7 @@ data = Matrix(3, 2, sfix)
 
 @for_range_opt(3)
 def _(i):
+    print("tutorial.mpc: _ function 1 ...")
     for j in range(2):
         data[i][j] = sfix.get_input_from(j)
 
@@ -116,9 +119,11 @@ result = sum(point[0] * point[1] for point in data) / weight_total
 
 @if_e((sum(point[0] for point in data) != 0).reveal())
 def _():
+    print("tutorial.mpc: _ function 2 ...")
     print_ln('weighted average: %s', result.reveal())
 @else_
 def _():
+    print("tutorial.mpc: _ function 3 ...")
     print_ln('your inputs made no sense')
 
 # permutation matrix
