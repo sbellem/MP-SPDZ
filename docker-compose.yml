@@ -1,0 +1,9 @@
+version: '3.7'
+
+services:
+  mpspdz:
+    image: mp-spdz
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/MP-SPDZ
