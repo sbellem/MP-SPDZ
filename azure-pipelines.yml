@@ -9,8 +9,22 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+strategy:
+   matrix:
+     Python37:
+       python.version: '3.7'
+     Python38:
+       python.version: '3.8'
+
 steps:
+  - task: UsePythonVersion@0
+    displayName: 'Set Python version'
+    inputs:
+      versionSpec: '$(python.version)'
+      addToPath: true
   - script: |
+      echo "python version ..."
+      python3 --version
       bash -c "sudo apt-get install libsodium-dev libntl-dev yasm texinfo libboost-dev libboost-thread-dev python3-gmpy2 libcrypto++-dev python-networkx python3-networkx python3-sphinx"
   - script: |
       make mpir
@@ -20,5 +34,10 @@ steps:
       make
   - script:
       Scripts/setup-ssl.sh 4
-  - script:
+  - script: |
+      python3 --version
+      python3 -m pip install --upgrade pip setuptools wheel
+      python3 -m pip install Compiler/
+  - script: |
+      export PATH=$PATH:/home/vsts/.local/bin
       Scripts/test_tutorial.sh -C

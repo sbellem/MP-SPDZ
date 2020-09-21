@@ -44,14 +44,14 @@ for dabit in ${dabit:-0 1 2}; do
 	compile_opts="$compile_opts -Y"
     fi
 
-    ./compile.py -R 64 $compile_opts tutorial
+    mpspdz-compile -R 64 $compile_opts tutorial
 
     for i in ring rep4-ring semi2k brain mal-rep-ring ps-rep-ring sy-rep-ring \
 	     spdz2k; do
 	test_vm $i $run_opts
     done
 
-    ./compile.py  $compile_opts tutorial
+    mpspdz-compile  $compile_opts tutorial
 
     for i in rep-field shamir mal-rep-field ps-rep-field sy-rep-field \
 		       mal-shamir sy-shamir hemi semi \
@@ -62,16 +62,16 @@ for dabit in ${dabit:-0 1 2}; do
     test_vm chaigear $run_opts -l 3 -c 2
 done
 
-./compile.py -R 64 -Z 3 tutorial
+mpspdz-compile -R 64 -Z 3 tutorial
 test_vm ring $run_opts
 
-./compile.py -R 64 -Z 4 tutorial
+mpspdz-compile -R 64 -Z 4 tutorial
 test_vm rep4-ring $run_opts
 
-./compile.py -R 64 -Z 2 tutorial
+mpspdz-compile -R 64 -Z 2 tutorial
 test_vm semi2k $run_opts
 
-./compile.py tutorial
+mpspdz-compile tutorial
 
 test_vm cowgear $run_opts -T
 test_vm chaigear $run_opts -T -l 3 -c 2
@@ -80,7 +80,7 @@ if test $skip_binary; then
    exit
 fi
 
-./compile.py -B 16  $compile_opts tutorial
+mpspdz-compile -B 16  $compile_opts tutorial
 
 for i in replicated mal-rep-bin semi-bin ccd mal-ccd; do
     test_vm $i $run_opts

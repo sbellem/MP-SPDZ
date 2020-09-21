@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+  mpspdz:
+    image: mp-spdz
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ./Makefile:/usr/src/MP-SPDZ/Makefile
+      - ./compiled-programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+      - ./compiled-programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+    command: Scripts/mascot.sh tutorial
