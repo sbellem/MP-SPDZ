@@ -237,6 +237,12 @@ class Program:
         for tape in self.tapes:
             tape.write_bytes()
 
+    def get_output_as_dict(self):
+        """Get bytecode and schedule in dict"""
+        output = {tape.name: tape.get_bytes() for tape in self.tapes}
+        output['schedule'] = self.get_schedule()
+        return output
+
     def finalize_tape(self, tape):
         if not tape.purged:
             tape.optimize(self.options)
