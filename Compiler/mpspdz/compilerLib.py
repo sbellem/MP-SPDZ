@@ -15,6 +15,9 @@ def run(args, options, merge_opens=True, reallocate=True, debug=False, *, source
     If merge_opens is set to True, will attempt to merge any parallelisable open
     instructions. """
 
+    if isinstance(args, str):
+        args = (args,)
+
     prog = Program(args, options, source=source)
     instructions.program = prog
     instructions_base.program = prog
@@ -62,6 +65,8 @@ def run(args, options, merge_opens=True, reallocate=True, debug=False, *, source
 
     return prog
 
+
+compile_prog = run
 
 option_defaults = {
     "merge_opens": True,

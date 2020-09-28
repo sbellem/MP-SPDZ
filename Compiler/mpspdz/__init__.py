@@ -9,7 +9,7 @@ from . import (  # noqa F401
 from .GC import types as GC_types
 import inspect
 from .config import *  # noqa F403
-from .compilerLib import run  # noqa F401
+from .compilerLib import run, compile_prog, Options as ProgramOptions  # noqa F401
 
 
 # add all instructions to the program VARS dictionary
