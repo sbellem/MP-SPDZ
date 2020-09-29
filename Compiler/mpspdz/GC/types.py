@@ -58,7 +58,13 @@ class bits(Tape.Register, _structure, _bit):
             return bits[0]
         bits = list(bits)
         res = cls.new(n=len(bits))
-        cls.bitcom(res, *(sbit.conv(bit) for bit in bits))
+        if len(bits) <= cls.unit:
+            cls.bitcom(res, *(sbit.conv(bit) for bit in bits))
+        else:
+            n_bak = bits[0].n
+            bits[0].n = 1
+            res = cls.trans(bits)[0]
+            bits[0].n = n_bak
         res.decomposed = bits
         return res
 
@@ -69,8 +75,11 @@ class bits(Tape.Register, _structure, _bit):
             return [self]
         n = min(n, self.n)
         if self.decomposed is None or len(self.decomposed) < n:
-            res = [self.bit_type() for i in range(n)]
-            self.bitdec(self, *res)
+            if n <= self.unit:
+                res = [self.bit_type() for i in range(n)]
+                self.bitdec(self, *res)
+            else:
+                res = self.trans([self])
             self.decomposed = res
             return res + suffix
         else:
