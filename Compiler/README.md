@@ -1,6 +1,5 @@
 # MP-SPDZ Compiler
-Experimental MP-SPDZ compiler that can be installed separately from the
-MP-SPDZ codebase.
+MP-SPDZ compiler that can be installed separately from the MP-SPDZ codebase.
 
 Currently, it has to be installed from GitHub:
 
