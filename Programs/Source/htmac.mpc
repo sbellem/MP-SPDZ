@@ -19,8 +19,8 @@
         Then compute Dec() + Tag-Check.
 
     Howto run?
-        - Compile it via ./compile.py htmac n_parallel n_total nmessages
-        Eg: ./compile.py 2 8 10
+        - Compile it via mpspdz-compile htmac n_parallel n_total nmessages
+        Eg: mpspdz-compile 2 8 10
         Following compiles 8 HtMAC instances where 2 is the level of parallelism
         and each instance authenticates 10-block messages.
         A simplistic view of what is happening: 

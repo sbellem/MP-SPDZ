@@ -11,7 +11,7 @@ with the largest input. You can run it as follows from the main
 directory:
 ```
 make bankers-bonus-client.x
-./compile.py bankers_bonus 1
+mpspdz-compile bankers_bonus 1
 Scripts/setup-ssl.sh <nparties>
 Scripts/setup-clients.sh 3
 Scripts/<protocol>.sh &

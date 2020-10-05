@@ -20,7 +20,7 @@
  * To run with 2 parties / SPDZ engines:
  *   ./Scripts/setup-online.sh to create triple shares for each party (spdz engine).
  *   ./Scripts/setup-clients.sh to create SSL keys and certificates for clients
- *   ./compile.py bankers_bonus
+ *   mpspdz-compile bankers_bonus
  *   ./Scripts/run-online.sh bankers_bonus to run the engines.
  *
  *   ./bankers-bonus-client.x 0 2 100 0
