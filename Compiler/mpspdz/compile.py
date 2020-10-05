@@ -184,9 +184,7 @@ def main():
 
     def compilation():
         print(f"options: {options}, args: {args}")
-        prog = compile_program(
-            args, options, merge_opens=options.merge_opens, debug=options.debug
-        )
+        prog = compile_program(args, options, debug=options.debug)
         prog.write_bytes(options.outfile)
 
         if options.asmoutfile:

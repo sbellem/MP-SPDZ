@@ -9,11 +9,11 @@ from .GC import types as GC_types
 # import sys
 
 
-def run(args, options, merge_opens=True, reallocate=True, debug=False, *, source=None):
+def run(args, options, reallocate=True, debug=False, *, source=None):
     """ Compile a file and output a Program object.
 
-    If merge_opens is set to True, will attempt to merge any parallelisable open
-    instructions. """
+    If options.merge_opens is set to True, will attempt to merge any
+    parallelisable open instructions. """
 
     if isinstance(args, str):
         args = (args,)
