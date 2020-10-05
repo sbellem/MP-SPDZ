@@ -3,7 +3,7 @@
 
 #     ===== Compiler usage instructions =====
 #
-# ./compile.py input_file
+# mpspdz-compile input_file
 #
 # will compile Programs/Source/input_file.mpc onto
 # Programs/Bytecode/input_file.bc and Programs/Schedules/input_file.sch

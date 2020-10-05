@@ -12,7 +12,7 @@ Compilation process
 After putting your code in ``Program/Source/<progname>.mpc``, run the
 compiler from the root directory as follows::
 
-  ./compile.py [options] <progname> [args]
+  mpspdz-compile [options] <progname> [args]
 
 The arguments ``<progname> [args]`` are accessible as list under
 ``program.args`` within ``progname.mpc``, with ``<progname>`` as
