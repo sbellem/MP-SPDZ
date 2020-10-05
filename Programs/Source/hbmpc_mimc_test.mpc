@@ -2,7 +2,7 @@ program.bit_length = 255
 print("program.bit_length: ", program.bit_length)
 program.security = 40
 
-from testmodule import test_module
+from mpspdz.testmodule import test_module
 test_module()
 
 # MiMC

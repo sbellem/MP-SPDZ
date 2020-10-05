@@ -23,6 +23,13 @@ COPY --from=mpir:55fe6a9 /usr/local/mpir ./local
 RUN echo MY_CFLAGS += -I./local/include >> CONFIG.mine
 RUN echo MY_LDLIBS += -Wl,-rpath -Wl,./local/lib -L./local/lib >> CONFIG.mine
 
+# pip, ipython
+RUN pip install --upgrade pip ipython
+
+# install compiler (console script mpspdz-compile)
+COPY Compiler Compiler
+RUN pip install --editable Compiler/
+
 COPY . .
 
 RUN make clean
