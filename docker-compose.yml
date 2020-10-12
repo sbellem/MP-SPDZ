@@ -15,7 +15,6 @@ services:
       - ./Compiler/mpspdz:/usr/src/MP-SPDZ/Compiler/mpspdz
       - ./Compiler/setup.py:/usr/src/MP-SPDZ/Compiler/setup.py
       - ./CONFIG:/usr/src/MP-SPDZ/CONFIG
-      - ./CONFIG.mine:/usr/src/MP-SPDZ/CONFIG.mine
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
       - ./Scripts:/usr/src/MP-SPDZ/Scripts

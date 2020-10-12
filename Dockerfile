@@ -18,10 +18,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV MP_SPDZ_HOME /usr/src/MP-SPDZ
 WORKDIR $MP_SPDZ_HOME
 
+#ENV LIBRARY_PATH /usr/local/lib
+#ENV LIBRARY_INCLUDE_PATH /usr/local/include
+
 # mpir
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir ./local
 RUN echo MY_CFLAGS += -I./local/include >> CONFIG.mine
 RUN echo MY_LDLIBS += -Wl,-rpath -Wl,./local/lib -L./local/lib >> CONFIG.mine
+
+# ntl
+COPY --from=ntl:10.5 /usr/local/include/NTL /usr/local/include/NTL
+COPY --from=ntl:10.5 /usr/local/lib/libntl.a /usr/local/lib/libntl.a
+RUN echo USE_NTL = 1 >> CONFIG.mine
+RUN echo MY_CFLAGS += -I/usr/local/include/NTL >> CONFIG.mine
+RUN echo MY_LDLIBS += -Wl,-rpath -Wl,/usr/local/lib -L/usr/local/lib >> CONFIG.mine
 
 # pip, ipython
 RUN pip install --upgrade pip ipython
@@ -33,6 +43,9 @@ RUN pip install --editable Compiler/
 COPY . .
 
 RUN make clean
+
+RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
+
 # honest majority, malicious shamir
 #RUN make -j 8 malicious-shamir-party.x
 #RUN Scripts/setup-ssl.sh 3
