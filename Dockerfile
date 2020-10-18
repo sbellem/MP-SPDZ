@@ -44,7 +44,7 @@ COPY . .
 
 RUN make clean
 
-RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
+#RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 
 # honest majority, malicious shamir
 #RUN make -j 8 malicious-shamir-party.x
@@ -52,7 +52,7 @@ RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 #RUN mkdir -p Player-Data
 
 # tldr
-RUN make -j 2 tldr
+#RUN make -j 2 tldr
 #RUN echo ARCH = -march=native >> CONFIG.mine
 #RUN make mascot-party.x
 #RUN mkdir -p Player-Data \
@@ -64,18 +64,18 @@ RUN make -j 2 tldr
 # online & offline
 #RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 #RUN make -j 8 online
-RUN make -j 2 online offline
+RUN make -j 2 offline she-offline
 #RUN ./Scripts/setup-online.sh
 
 
 # shamir
-RUN make -j 2 shamir
-
-# ring
-RUN Scripts/setup-ssl.sh 3
-RUN make -j 8 replicated-ring-party.x
-RUN mkdir -p Player-Data \
-        && echo 3 > Player-Data/Input-P0-0 \
-        && echo 4 > Player-Data/Input-P1-0 \
-        && echo 5 > Player-Data/Input-P2-0
-CMD /bin/sh -c Scripts/ring.sh mult3
+#RUN make -j 2 shamir
+#
+## ring
+#RUN Scripts/setup-ssl.sh 3
+#RUN make -j 8 replicated-ring-party.x
+#RUN mkdir -p Player-Data \
+#        && echo 3 > Player-Data/Input-P0-0 \
+#        && echo 4 > Player-Data/Input-P1-0 \
+#        && echo 5 > Player-Data/Input-P2-0
+#CMD /bin/sh -c Scripts/ring.sh mult3

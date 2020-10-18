@@ -7,7 +7,7 @@
 void P2Data::forward(vector<int>& ans,const vector<gf2n_short>& a) const
 {
   int n=gf2n_short::degree();
-  
+
   BitVector bv(A.size());
   ans.resize(A.size());
   for (int i=0; i<slots; i++)
@@ -31,7 +31,7 @@ void P2Data::backward(vector<gf2n_short>& ans,const vector<int>& a) const
   BitVector bv(a.size());
   for (size_t i = 0; i < a.size(); i++)
     bv.set_bit(i, a[i]);
-  
+
   ans.resize(slots);
   word y;
   for (int i=0; i<slots; i++)
