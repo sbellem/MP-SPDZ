@@ -1,6 +1,8 @@
+*~
 Programs/Bytecode
 Programs/Public-Input
 Programs/Schedules
 compiled-programs
 Dockerfile
+docker-compose.yml
 CONFIG.mine
