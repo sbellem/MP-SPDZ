@@ -23,17 +23,17 @@ echo 0 > Player-Data/Input-P3-0
 
 ## SPDZ style, n-of-n additive encoding
 # Setup online
-echo "Running Fake Offline Phase"
-Scripts/setup-online.sh $players 256 128 10000 $BLS_PRIME
-#Scripts/setup-online.sh $players 256 128
-# Run the Online
-echo "SPDZ-style Online Phase"
-for i in 0 1 2 3; do
-    ./Player-Online.x -N 4 -p $i -P $BLS_PRIME hbmpc_mimc_test  & pids[${i}]=$!
-done
-for pid in ${pids[*]}; do
-    wait $pid
-done
+#echo "Running Fake Offline Phase"
+#Scripts/setup-online.sh $players 256 128 10000 $BLS_PRIME
+##Scripts/setup-online.sh $players 256 128
+## Run the Online
+#echo "SPDZ-style Online Phase"
+#for i in 0 1 2 3; do
+#    ./Player-Online.x -N 4 -p $i -P $BLS_PRIME hbmpc_mimc_test  & pids[${i}]=$!
+#done
+#for pid in ${pids[*]}; do
+#    wait $pid
+#done
 
 progs="./malicious-shamir-party.x"
 # Run online

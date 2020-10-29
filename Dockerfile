@@ -44,10 +44,13 @@ COPY . .
 
 RUN make clean
 
+RUN mkdir PreProcessing-Data \
+        && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
+#PREP_DIR = '-DPREP_DIR="Player-Data/"'
 #RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 
 # honest majority, malicious shamir
-#RUN make -j 8 malicious-shamir-party.x
+#RUN make -j 2 malicious-shamir-party.x
 #RUN Scripts/setup-ssl.sh 3
 #RUN mkdir -p Player-Data
 
@@ -64,7 +67,7 @@ RUN make clean
 # online & offline
 #RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 #RUN make -j 8 online
-RUN make -j 2 offline she-offline
+#RUN make -j 2 offline she-offline
 #RUN ./Scripts/setup-online.sh
 
 

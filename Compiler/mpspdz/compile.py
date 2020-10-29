@@ -161,6 +161,15 @@ def main():
         help="mixing arithmetic and binary computation using edaBits",
     )
     parser.add_option(
+        "-Z",
+        "--split",
+        default=None,
+        dest="split",
+        help="mixing arithmetic and binary computation "
+        "using direct conversion if supported "
+        "(number of parties as argument)",
+    )
+    parser.add_option(
         "-C",
         "--CISC",
         action="store_true",
