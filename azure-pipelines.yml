@@ -40,4 +40,4 @@ steps:
       python3 -m pip install Compiler/
   - script: |
       export PATH=$PATH:/home/vsts/.local/bin
-      Scripts/test_tutorial.sh -C
+      Scripts/test_tutorial.sh -X
