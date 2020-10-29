@@ -18,7 +18,7 @@ void ssl_error(string side, string pronoun, string other, string server)
 {
     cerr << side << "-side handshake with " << other
             << " failed. Make sure " << pronoun
-            << " have the necessary certificate (" << PREP_DIR << server
+            << " have the necessary certificate (" << "Player-Data/" << server
             << ".pem in the default configuration),"
             << " and run `c_rehash <directory>` on its location." << endl
             << "Also make sure that it's still valid. Certificates generated "
