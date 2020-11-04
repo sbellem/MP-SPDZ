@@ -15,6 +15,7 @@ template<class T>
 Preprocessing<T>* Preprocessing<T>::get_live_prep(SubProcessor<T>* proc,
     DataPositions& usage)
 {
+  cout << "Preprocessing<T>* Preprocessing<T>::get_live_prep(SubProcessor<T>* proc, DataPositions& usage)\n";
   return new typename T::LivePrep(proc, usage);
 }
 
@@ -24,11 +25,15 @@ Preprocessing<T>* Preprocessing<T>::get_new(
     Machine<U, V>& machine,
     DataPositions& usage, SubProcessor<T>* proc)
 {
-  if (machine.live_prep)
+  cout << "Preprocessing<T>* Preprocessing<T>::get_new(..." << "machine.live_prep: " << machine.live_prep << "\n";
+  if (machine.live_prep) {
+    cout << "get_live_prep ..."  << "subprocessor: " << proc << "\n";
     return get_live_prep(proc, usage);
-  else
+  } else {
+    cout << "Sub_Data_Files ...";
     return new Sub_Data_Files<T>(machine.get_N(),
         machine.template prep_dir_prefix<T>(), usage);
+  }
 }
 
 
@@ -62,6 +67,7 @@ Sub_Data_Files<T>::Sub_Data_Files(int my_num, int num_players,
 #ifdef DEBUG_FILES
   cerr << "Setting up Data_Files in: " << prep_data_dir << endl;
 #endif
+  cout << "Setting up Data_Files in: " << prep_data_dir << endl;
   char filename[1024];
   string suffix = get_suffix(thread_num);
   for (int dtype = 0; dtype < N_DTYPE; dtype++)
@@ -96,6 +102,7 @@ Sub_Data_Files<T>::Sub_Data_Files(int my_num, int num_players,
 #ifdef DEBUG_FILES
   cerr << "done\n";
 #endif
+  cout << "done\n";
 }
 
 template<class sint, class sgf2n>
@@ -105,28 +112,30 @@ Data_Files<sint, sgf2n>::Data_Files(Machine<sint, sgf2n>& machine, SubProcessor<
     DataFp(*Preprocessing<sint>::get_new(machine, usage, procp)),
     DataF2(*Preprocessing<sgf2n>::get_new(machine, usage, proc2))
 {
+  cout << "Data_Files<sint, sgf2n>::Data_Files(Machine<sint, sgf2n>& machine, ...\n";
 }
 
 template<class sint, class sgf2n>
 Data_Files<sint, sgf2n>::~Data_Files()
 {
-#ifdef VERBOSE
+//#ifdef VERBOSE
   if (DataFp.data_sent())
     cerr << "Sent for " << sint::type_string() << " preprocessing threads: " <<
         DataFp.data_sent() * 1e-6 << " MB" << endl;
-#endif
+//#endif
   delete &DataFp;
-#ifdef VERBOSE
+//#ifdef VERBOSE
   if (DataF2.data_sent())
     cerr << "Sent for " << sgf2n::type_string() << " preprocessing threads: " <<
         DataF2.data_sent() * 1e-6 << " MB" << endl;
-#endif
+//#endif
   delete &DataF2;
 }
 
 template<class T>
 Sub_Data_Files<T>::~Sub_Data_Files()
 {
+  cout << "template<class T> Sub_Data_Files<T>::~Sub_Data_Files() ...\n";
   for (int i = 0; i < N_DTYPE; i++)
     buffers[i].close();
   for (int i = 0; i < num_players; i++)
@@ -148,6 +157,7 @@ Sub_Data_Files<T>::~Sub_Data_Files()
 template<class T>
 void Sub_Data_Files<T>::seekg(DataPositions& pos)
 {
+  cout << "void Sub_Data_Files<T>::seekg(DataPositions& pos) ...\n";
   DataFieldType field_type = T::field_type();
   for (int dtype = 0; dtype < N_DTYPE; dtype++)
     if (T::clear::allows(Dtype(dtype)))
@@ -168,6 +178,7 @@ void Sub_Data_Files<T>::seekg(DataPositions& pos)
 template<class sint, class sgf2n>
 void Data_Files<sint, sgf2n>::seekg(DataPositions& pos)
 {
+  cout << "void Data_Files<sint, sgf2n>::seekg(DataPositions& pos) ...\n";
   DataFp.seekg(pos);
   DataF2.seekg(pos);
   usage = pos;
@@ -176,6 +187,7 @@ void Data_Files<sint, sgf2n>::seekg(DataPositions& pos)
 template<class sint, class sgf2n>
 void Data_Files<sint, sgf2n>::skip(const DataPositions& pos)
 {
+  cout << "void Data_Files<sint, sgf2n>::skip(const DataPositions& pos) ...\n";
   DataPositions new_pos = usage;
   new_pos.increase(pos);
   skipped.increase(pos);
@@ -185,6 +197,7 @@ void Data_Files<sint, sgf2n>::skip(const DataPositions& pos)
 template<class T>
 void Sub_Data_Files<T>::prune()
 {
+  cout << "void Sub_Data_Files<T>::prune() ...\n";
   for (auto& buffer : buffers)
     buffer.prune();
   my_input_buffers.prune();
@@ -197,6 +210,7 @@ void Sub_Data_Files<T>::prune()
 template<class sint, class sgf2n>
 void Data_Files<sint, sgf2n>::prune()
 {
+  cout << "void Data_Files<sint, sgf2n>::prune() ...\n";
   DataFp.prune();
   DataF2.prune();
 }
@@ -204,6 +218,7 @@ void Data_Files<sint, sgf2n>::prune()
 template<class T>
 void Sub_Data_Files<T>::purge()
 {
+  cout << "void Sub_Data_Files<T>::purge() ...\n";
   for (auto& buffer : buffers)
     buffer.purge();
   my_input_buffers.purge();

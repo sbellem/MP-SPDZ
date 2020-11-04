@@ -46,9 +46,9 @@ arithmetic: rep-ring rep-field shamir semi2k-party.x semi-party.x mascot sy
 binary: rep-bin yao semi-bin-party.x tinier-party.x tiny-party.x ccd-party.x malicious-ccd-party.x real-bmr
 
 ifeq ($(USE_NTL),1)
-all: overdrive she-offline
-gear: cowgear-party.x chaigear-party.x
-arithmetic: hemi-party.x soho-party.x gear
+	all: overdrive she-offline
+	gear: cowgear-party.x chaigear-party.x
+	arithmetic: hemi-party.x soho-party.x gear
 endif
 
 -include $(DEPS)
@@ -91,9 +91,9 @@ tldr:
 	$(MAKE) mascot-party.x
 
 ifeq ($(OS), Darwin)
-tldr: mac-setup
-#else
-#tldr: mpir
+	tldr: mac-setup
+	#else
+	#tldr: mpir
 endif
 
 shamir: shamir-party.x malicious-shamir-party.x galois-degree.x

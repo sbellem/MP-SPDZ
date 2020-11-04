@@ -19,6 +19,7 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
     int output_thread, TripleSacriFactory< Share<T> >& factory, bool write_output,
     bool clear, string dir)
 {
+  cout << "FHEOffline/Sacrificing.cpp | Triple_Checking(...\n";
   if (T::length() < 40)
     {
       cerr << "Field too small for reasonable security" << endl;
@@ -27,9 +28,11 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
     }
 
   ofstream outf;
-  if (write_output)
+  if (write_output) {
+    cout << "FHEOffline/Sacrificing.cpp | Triple_Checking | open prep file " << dir << "\n";
     open_prep_file<T>(outf, "Triples", P.my_num(), output_thread, false,
         clear, dir);
+  }
 
   T te,t;
   Create_Random(t,P);
@@ -40,7 +43,7 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
   Share<T> temp;
 
   // Triple checking
-  int left_todo=nm; 
+  int left_todo=nm;
   while (left_todo>0)
     { int this_loop=amortize;
       if (this_loop>left_todo)
@@ -50,7 +53,7 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
           Tau.resize(this_loop);
           Sh_Tau.resize(this_loop);
         }
-     
+
       for (int i=0; i<this_loop; i++)
         {
           factory.get(a1[i], b1[i], c1[i]);
@@ -90,6 +93,11 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
 	    }
           if (write_output)
             {
+              cout << "FHEOffline/Sacrificing.cpp | Triple_Checking | output ...\n";
+              cout << typeid(a1[i]).name() << "\n";
+              cout << "a1[i]: " << a1[i] << "\n";
+              cout << "b1[i]: " << b1[i] << "\n";
+              cout << "c1[i]: " << c1[i] << "\n";
               a1[i].output(outf,false);
               b1[i].output(outf,false);
               c1[i].output(outf,false);
@@ -104,7 +112,6 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
   if (write_output)
     outf.close();
 }
-
 
 template <class T>
 void Inverse_Checking(const Player& P, MAC_Check<T>& MC, int nr,

@@ -13,6 +13,7 @@ bool BufferBase::rewind = false;
 void BufferBase::setup(ifstream* f, int length, string filename,
         const char* type, const char* field)
 {
+    cout << "Tools/Buffer.cpp: void BufferBase::setup(... \n";
     file = f;
     tuple_length = length;
     data_type = type;
@@ -22,6 +23,7 @@ void BufferBase::setup(ifstream* f, int length, string filename,
 
 void BufferBase::seekg(int pos)
 {
+    cout << "Tools/Buffer.cpp: void BufferBase::seekg(int pos) ...\n";
     if (not file)
         file = open();
     file->seekg(pos * tuple_length);
@@ -36,6 +38,7 @@ void BufferBase::seekg(int pos)
 
 void BufferBase::try_rewind()
 {
+    cout << "Tools/Buffer.cpp: void BufferBase::try_rewind() ...\n";
 #ifndef INSECURE
     string type;
     if (field_type.size() and data_type.size())
@@ -54,6 +57,7 @@ void BufferBase::try_rewind()
 
 void BufferBase::prune()
 {
+    cout << "Tools/Buffer.cpp: void BufferBase::prune() ...\n";
     if (file and file->tellg() != 0)
     {
         cerr << "Pruning " << filename << endl;
@@ -69,6 +73,7 @@ void BufferBase::prune()
 
 void BufferBase::purge()
 {
+    cout << "Tools/Buffer.cpp: void BufferBase::purge() ... \n";
     if (file)
     {
         cerr << "Removing " << filename << endl;

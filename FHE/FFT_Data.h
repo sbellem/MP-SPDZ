@@ -23,12 +23,12 @@ class FFT_Data
   // When twop is equal to zero, m is a power of two
   // When twop is positive it is equal to 2^e where 2^e>2*m and 2^e divides p-1
   //    - In this case we can use FFTs over the base field
-  int  twop;             
+  int  twop;
 
   // Stuff for arithmetic when 2^e > 2*m and 2^e divides p-1  (i.e. twop positive)
   vector<modp> two_root; // twop'th Root of Unity mod pr where twop = 2^e > 2*m
                          //   - And inverse
-  vector< vector<modp> >  b; 
+  vector< vector<modp> >  b;
 
   // Stuff for arithmetic when m is a power of 2 (in which case twop=0)
   modp iphi;    // 1/phi_m mod pr

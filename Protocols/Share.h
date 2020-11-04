@@ -137,10 +137,14 @@ class Share_ : public ShareInterface
 
    // Input and output from a stream
    //  - Can do in human or machine only format (later should be faster)
-   void output(ostream& s,bool human) const
-     { a.output(s,human);     if (human) { s << " "; }
-       mac.output(s,human);
-     }
+   void output(ostream& s,bool human) const {
+     cout << "Protocol/Share.h | void output(...\n";
+     cout << "Share T, a: " << a << "\n";
+     cout << "typeid a: " << typeid(a).name() << "\n";
+     a.output(s,human);
+     if (human) { s << " "; }
+     mac.output(s,human);
+   }
    void input(istream& s,bool human)
      { a.input(s,human);
        mac.input(s,human);

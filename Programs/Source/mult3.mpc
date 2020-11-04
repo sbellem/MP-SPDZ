@@ -6,3 +6,5 @@ c = sint.get_input_from(2)
 
 prod = a * b * c
 print_ln('Mult3 prod = %s', prod.reveal());
+random_share = sint.get_random_triple()[0]
+print_ln('random value: %s', random_share.reveal())

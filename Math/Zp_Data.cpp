@@ -16,8 +16,10 @@ void Zp_Data::init(const bigint& p,bool mont)
     }
 #endif
 
-  if (not probPrime(p))
+  if (not probPrime(p)) {
+    cout << "Math/Zp_Data.cpp::Zp_Data::init::probPrime(p): " << probPrime(p) << "\n";
     throw runtime_error(p.get_str() + " is not a prime");
+  }
 
   pr=p;
   pr_half = p / 2;

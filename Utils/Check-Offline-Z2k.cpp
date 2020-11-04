@@ -15,6 +15,8 @@
 template <class W>
 void check_triples_Z2k(int n_players, string type_char = "")
 {
+    cout << "**********************************************************\n";
+    cout << "Utils/Check-Offline-Z2k.cpp::void check_triples_Z2k(...\n";
     typedef typename W::open_type T;
     typedef typename W::open_type V;
 

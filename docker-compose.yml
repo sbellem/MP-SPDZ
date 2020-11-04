@@ -16,6 +16,26 @@ services:
       - ./Compiler/setup.py:/usr/src/MP-SPDZ/Compiler/setup.py
       - ./CONFIG:/usr/src/MP-SPDZ/CONFIG
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
+      - ./FHEOffline/DataSetup.h:/usr/src/MP-SPDZ/FHEOffline/DataSetup.h
+      - ./FHEOffline/DataSetup.cpp:/usr/src/MP-SPDZ/FHEOffline/DataSetup.cpp
+      - ./FHEOffline/Producer.cpp:/usr/src/MP-SPDZ/FHEOffline/Producer.cpp
+      - ./FHEOffline/Sacrificing.cpp:/usr/src/MP-SPDZ/FHEOffline/Sacrificing.cpp
+      - ./Math/gfp.h:/usr/src/MP-SPDZ/Math/gfp.h
+      - ./Math/gfp.hpp:/usr/src/MP-SPDZ/Math/gfp.hpp
+      - ./Math/modp.h:/usr/src/MP-SPDZ/Math/modp.h
+      - ./Math/modp.hpp:/usr/src/MP-SPDZ/Math/modp.hpp
+      - ./Math/Zp_Data.h:/usr/src/MP-SPDZ/Math/Zp_Data.h
+      - ./Math/Zp_Data.cpp:/usr/src/MP-SPDZ/Math/Zp_Data.cpp
+      - ./OT/NPartyTripleGenerator.hpp:/usr/src/MP-SPDZ/OT/NPartyTripleGenerator.hpp
+      - ./Processor/Data_Files.hpp:/usr/src/MP-SPDZ/Processor/Data_Files.hpp
+      - ./Protocols/ReplicatedPrep.hpp:/usr/src/MP-SPDZ/Protocols/ReplicatedPrep.hpp
+      - ./Protocols/Share.h/usr/src/MP-SPDZ/Protocols/Share.h
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
       - ./Scripts:/usr/src/MP-SPDZ/Scripts
+      - ./Tools/Buffer.cpp:/usr/src/MP-SPDZ/Tools/Buffer.cpp
+      - ./Tools/Buffer.h:/usr/src/MP-SPDZ/Tools/Buffer.h
+      - ./Utils/spdz2-offline.cpp:/usr/src/MP-SPDZ/Utils/spdz2-offline.cpp
+      - ./Utils/check-passive.cpp:/usr/src/MP-SPDZ/Utils/check-passive.cpp
+      - ./Utils/Check-Offline.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline.cpp
+      - ./Utils/Check-Offline-Z2k.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline-Z2k.cpp
     command: bash Programs/Source/hbmpc_mimc_test.sh

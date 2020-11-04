@@ -169,6 +169,8 @@ void PartSetup<FD>::unpack(octetStream& os)
 template <>
 void PartSetup<FFT_Data>::init_field()
 {
+    cout << "FHEOffline/DataSetup.cpp:::PartSetup<FFT_Data>::init_field() ...\n";
+    cout << "FHEOffline/DataSetup.cpp ... FieldD.get_prime(): " << FieldD.get_prime() << "\n";
     gfp::init_field(FieldD.get_prime());
 }
 

@@ -222,8 +222,13 @@ void check(int N, bool only_bits = false)
 
 int main(int argc, const char** argv)
 {
+  cout << "Check-Offline ...\n";
   ez::ezOptionParser opt;
+  cout << "gfp::init_field(gfp::pr(), false) ...\n";
+  cout << "gfp::pr()..." << gfp::pr() << "\n";
+  cout << "gfp::ZpD..." << gfp::get_ZpD() << "\n";
   gfp::init_field(gfp::pr(), false);
+  cout << "DONE: gfp::init_field(gfp::pr(), false) ...\n";
 
   opt.syntax = "./Check-Offline.x <nparties> [OPTIONS]\n";
   opt.example = "./Check-Offline.x 3 -lgp 64 -lg2 128\n";
@@ -291,8 +296,11 @@ int main(int argc, const char** argv)
       opt.get("--dir")->getString(PREP_DATA_PREFIX);
       PREP_DATA_PREFIX += "/";
     }
-  else
+  else {
     PREP_DATA_PREFIX = PREP_DIR;
+    cout << "PREP_DATA_PREFIX: " << PREP_DATA_PREFIX << "\n";
+  }
+
 
   string prep_dir = get_prep_sub_dir<Share<gfp>>(PREP_DATA_PREFIX, nparties, lgp);
 

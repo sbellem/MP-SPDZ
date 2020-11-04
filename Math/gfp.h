@@ -79,8 +79,10 @@ class gfp_ : public ValueInterface
   static void generate_setup(string dir, int nplayers, int lgp)
     { generate_prime_setup<T>(dir, nplayers, lgp); }
 
-  static bigint pr()   
-    { return ZpD.pr; }
+  static bigint pr() {
+    cout << "Math/gfp.h:::gfp_::pr()\n";
+    return ZpD.pr;
+  }
   static int t()
     { return L;  }
   static Zp_Data& get_ZpD()
@@ -205,7 +207,7 @@ class gfp_ : public ValueInterface
     { Inv(a,a,ZpD); }
   void invert(const gfp_& aa)
     { Inv(a,aa.a,ZpD); }
-  void negate() 
+  void negate()
     { Negate(a,a,ZpD); }
   void power(long i)
     { Power(a,a,i,ZpD); }
@@ -219,9 +221,16 @@ class gfp_ : public ValueInterface
   void almost_randomize(PRNG& G);
 
   void output(ostream& s,bool human) const
-    { a.output(s,ZpD,human); }
+    {
+        cout << "Math/gfp.h ... void output(ostream& s,bool human) const ...\n";
+        cout << "typeid a ..." << typeid(a).name() << "\n";
+        a.output(s,ZpD,human);
+    }
   void input(istream& s,bool human)
-    { a.input(s,ZpD,human); }
+    {
+        cout << "Math/gfp.h ... void input(istream& s,bool human)\n";
+        a.input(s,ZpD,human);
+    }
 
   friend ostream& operator<<(ostream& s,const gfp_& x)
     { x.output(s,true);
@@ -261,9 +270,15 @@ class gfp_ : public ValueInterface
   // Pack and unpack in native format
   //   i.e. Dont care about conversion to human readable form
   void pack(octetStream& o, int n = -1) const
-    { (void) n; a.pack(o,ZpD); }
+    {
+        //cout << "Math/gfp.h ... void pack(octetStream& o, int n = -1) const\n";
+        (void) n; a.pack(o,ZpD);
+    }
   void unpack(octetStream& o, int n = -1)
-    { (void) n; a.unpack(o,ZpD); }
+    {
+        //cout << "Math/gfp.h ... void unpack(octetStream& o, int n = -1)\n";
+        (void) n; a.unpack(o,ZpD);
+    }
 
   void convert_destroy(bigint& x) { a.convert_destroy(x, ZpD); }
 

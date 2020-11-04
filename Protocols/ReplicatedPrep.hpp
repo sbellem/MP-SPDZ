@@ -6,6 +6,7 @@
 #ifndef PROTOCOlS_REPLICATEDPREP_HPP_
 #define PROTOCOlS_REPLICATEDPREP_HPP_
 
+using namespace std;
 #include "ReplicatedPrep.h"
 #include "DabitSacrifice.h"
 #include "Spdz2kPrep.h"
@@ -25,11 +26,13 @@ BufferPrep<T>::BufferPrep(DataPositions& usage) :
 		proc(0),
         buffer_size(OnlineOptions::singleton.batch_size)
 {
+    cout << "ReplicatedPrep.hpp: BufferPrep<T>::BufferPrep(DataPositions& usage) ...\n";
 }
 
 template<class T>
 BufferPrep<T>::~BufferPrep()
 {
+    cout << "ReplicatedPrep.hpp: BufferPrep<T>::~BufferPrep() ...\n";
 #ifdef VERBOSE
     if (n_bit_rounds > 0)
         cerr << n_bit_rounds << " rounds of random " << T::type_string()
@@ -80,6 +83,7 @@ void BitPrep<T>::set_protocol(typename T::Protocol& protocol)
 template<class T>
 void BufferPrep<T>::clear()
 {
+    cout << "BufferPrep<T>::clear() ...";
     triples.clear();
     inverses.clear();
     bits.clear();
@@ -90,6 +94,7 @@ void BufferPrep<T>::clear()
 template<class T>
 void ReplicatedRingPrep<T>::buffer_triples()
 {
+    cout << "ReplicatedRingPrep<T>::buffer_triples() ...\n";
     assert(this->protocol != 0);
     // independent instance to avoid conflicts
     typename T::Protocol protocol(this->protocol->branch());
@@ -101,6 +106,7 @@ template<class T, class U>
 void generate_triples(vector<array<T, 3>>& triples, int n_triples,
         U* protocol, int n_bits = -1)
 {
+    cout << "generate_triples() ...\n";
     protocol->init_mul();
     generate_triples_initialized(triples, n_triples, protocol, n_bits);
 }
@@ -109,6 +115,7 @@ template<class T, class U>
 void generate_triples_initialized(vector<array<T, 3>>& triples, int n_triples,
         U* protocol, int n_bits = -1)
 {
+    cout << "generate_triples_initialized() ...\n";
     triples.resize(n_triples);
     for (size_t i = 0; i < triples.size(); i++)
     {
@@ -125,6 +132,7 @@ void generate_triples_initialized(vector<array<T, 3>>& triples, int n_triples,
 template<class T>
 void BufferPrep<T>::get_three_no_count(Dtype dtype, T& a, T& b, T& c)
 {
+    cout << "ReplicatedPrep.hpp: void BufferPrep<T>::get_three_no_count(Dtype dtype, T& a, T& b, T& c) ...\n";
     if (dtype != DATA_TRIPLE)
         throw not_implemented();
 

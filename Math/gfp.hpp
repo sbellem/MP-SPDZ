@@ -25,8 +25,12 @@ inline void gfp_<X, L>::read_or_generate_setup(string dir,
 template<int X, int L>
 void gfp_<X, L>::init_field(const bigint& p, bool mont)
 {
+  cout << "Math/gfp.hpp:::void gfp_<X, L>::init_field(const bigint& p, bool mont)\n";
+  cout << "Math/gfp.hpp ... bigint& p: " << p << "\n";
   ZpD.init(p, mont);
   string name = "gfp<" + to_string(X) + ", " + to_string(L) + ">";
+  cout << "name: " << name << "\n";
+  cout << "ZpD.t: " << ZpD.get_t() << "\n";
   if (ZpD.get_t() > L)
     {
       cout << "modulus is " << p << endl;

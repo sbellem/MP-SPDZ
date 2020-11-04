@@ -191,6 +191,7 @@ public:
 
   void get_three_no_count(Dtype dtype, T& a, T& b, T& c)
   {
+    cout << "Processor/Data_files.h: void get_three_no_count(Dtype dtype, T& a, T& b, T& c) ...\n";
     buffers[dtype].input(a);
     buffers[dtype].input(b);
     buffers[dtype].input(c);
@@ -298,6 +299,7 @@ inline void Preprocessing<T>::get(Dtype dtype, T* a)
 template<class T>
 inline void Preprocessing<T>::get_three(Dtype dtype, T& a, T& b, T& c)
 {
+  cout << "Processor/Data_files.h: inline void Preprocessing<T>::get_three(Dtype dtype, T& a, T& b, T& c) ...\n";
   count(dtype);
   get_three_no_count(dtype, a, b, c);
 }
@@ -334,6 +336,7 @@ inline void Preprocessing<T>::get(vector<T>& S, DataTag tag,
 template<class T>
 array<T, 3> Preprocessing<T>::get_triple(int n_bits)
 {
+  cout << "Processor/Data_files.h: array<T, 3> Preprocessing<T>::get_triple(int n_bits) ...\n";
   (void) n_bits;
   array<T, 3> res;
   get(DATA_TRIPLE, res.data());

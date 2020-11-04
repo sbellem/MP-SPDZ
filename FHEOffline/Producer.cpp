@@ -132,9 +132,9 @@ void TripleProducer<T, FD, S>::run(const Player& P, const FHE_PK& pk,
   // Step g
   Ciphertext cgam_a(params),cgam_b(params),cgam_c(params);
   timers["Multiplying"].start();
-  mul(cgam_a,calpha,ca,pk);    
-  mul(cgam_b,calpha,cb,pk);    
-  mul(cgam_c,calpha,cc,pk);    
+  mul(cgam_a,calpha,ca,pk);
+  mul(cgam_b,calpha,cb,pk);
+  mul(cgam_c,calpha,cc,pk);
   timers["Multiplying"].stop();
 
   // Step h
@@ -186,7 +186,7 @@ void Producer<FD>::clear_file(int my_num, int thread_num, bool initial)
 {
     ofstream outf;
     string file = this->open_file(outf, my_num, thread_num, initial, true);
-    cout << "Initializing file " << file.c_str() << endl;
+    cout << "FHEOffline/Producer.cpp | Producer<FD>::clear_file: Initializing file " << file.c_str() << endl;
     outf << ""; // Write something to clear the file out
     if (outf.fail()) { throw file_error(file); }
     outf.close();
@@ -195,6 +195,7 @@ void Producer<FD>::clear_file(int my_num, int thread_num, bool initial)
 template <class T, class FD, class S>
 int TripleProducer<T,FD,S>::sacrifice(const Player& P, MAC_Check<T>& MC)
 {
+    cout << "FHEOffline/Producer.cpp | TripleProducer<T,FD,S>::sacrifice( \n";
     this->timers["Sacrificing"].start();
     int n_triples = ai.num_slots() / 2;
     Triple_Checking(P, MC, n_triples, this->output_thread, *this,

@@ -136,18 +136,20 @@ public:
         Producer<FD>* producers[] =
         {
             new TripleProducer_<FD>(setup.FieldD, P.my_num(), 0, true, dir),
-            new SquareProducer<FD>(setup.FieldD, P.my_num(), 0, true, dir),
-            new_bit_producer(setup.FieldD, P, setup.pk, spdz2.covert, true, 0, true, dir),
-            new InverseProducer<FD>(setup.FieldD, P.my_num(), 0, true, true, dir),
+            //new SquareProducer<FD>(setup.FieldD, P.my_num(), 0, true, dir),
+            //new_bit_producer(setup.FieldD, P, setup.pk, spdz2.covert, true, 0, true, dir),
+            //new InverseProducer<FD>(setup.FieldD, P.my_num(), 0, true, true, dir),
         };
         vector<Spdz2GeneratorThread<FD>*> generators;
-        for (int i = 0; i < 4; i++)
+        //for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 1; i++)
         {
             generators.push_back(new Spdz2GeneratorThread<FD>(*this, *producers[i], i));
             if (not spdz2.minimal)
                 pthread_create(&generators[i]->thread, 0, run_producer<FD>, generators[i]);
         }
-        for (int i = 0; i < 4; i++)
+        //for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 1; i++)
         {
             if (spdz2.minimal)
                 generators[i]->run();
@@ -290,19 +292,20 @@ int main(int argc, const char** argv)
     Server* server = Server::start_networking(spdz2.N, my_num, nplayers,
             hostname, portnum_base);
     Spdz2SetupThread<FFT_Data> thread_p(spdz2.prime_length, spdz2);
-    Spdz2SetupThread<P2Data> thread_2(spdz2.gf2n_length, spdz2);
-    pthread_t threads[2];
+    //Spdz2SetupThread<P2Data> thread_2(spdz2.gf2n_length, spdz2);
+    //pthread_t threads[2];
+    pthread_t threads[1];
     if (spdz2.minimal)
     {
         thread_p.signal.unlock();
-        thread_2.signal.unlock();
+        //thread_2.signal.unlock();
         thread_p.run();
-        thread_2.run();
+        //thread_2.run();
     }
     else
     {
         pthread_create(&threads[0], 0, run_setup<FFT_Data>, &thread_p);
-        pthread_create(&threads[1], 0, run_setup<P2Data>, &thread_2);
+        //pthread_create(&threads[1], 0, run_setup<P2Data>, &thread_2);
     }
 
     // gfp parameter generation is much faster
@@ -311,11 +314,12 @@ int main(int argc, const char** argv)
     thread_p.setup.output(spdz2.N);
 
     // gf2n is slower
-    if (not spdz2.minimal)
-        thread_2.signal.wait();
-    thread_2.setup.output(spdz2.N);
+    //if (not spdz2.minimal)
+    //    thread_2.signal.wait();
+    //thread_2.setup.output(spdz2.N);
 
-    for (int i = 0; i < 2; i++)
+    //for (int i = 0; i < 2; i++)
+    for (int i = 0; i < 1; i++)
         if (not spdz2.minimal)
             pthread_join(threads[i], 0);
     pthread_cancel(interrupt_thread);

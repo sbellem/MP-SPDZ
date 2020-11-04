@@ -126,6 +126,7 @@ ifstream* Buffer<T, U>::open()
 template<class T, class U>
 inline void Buffer<T, U>::read(char* read_buffer)
 {
+    cout << "Buffer<T, U>::read(char* read_buffer) ...";
     int size_in_bytes = T::size() * BUFFER_SIZE;
     int n_read = 0;
     timer.start();

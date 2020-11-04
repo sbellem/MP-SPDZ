@@ -9,6 +9,7 @@
 template<class T> 
 void Binary_File_IO::write_to_file(const string filename, const vector< T >& buffer)
 {
+  cout << "Binary_File_IO::write_to_file(..) ...";
   ofstream outf;
 
   outf.open(filename, ios::out | ios::binary | ios::app);
@@ -25,6 +26,7 @@ void Binary_File_IO::write_to_file(const string filename, const vector< T >& buf
 template<class T>
 void Binary_File_IO::read_from_file(const string filename, vector< T >& buffer, const int start_posn, int &end_posn)
 {
+  cout << "Binary_File_IO::read_from_file(..) ...";
   ifstream inf;
   inf.open(filename, ios::in | ios::binary);
   if (inf.fail()) { throw file_missing(filename, "Binary_File_IO.read_from_file expects this file to exist."); }

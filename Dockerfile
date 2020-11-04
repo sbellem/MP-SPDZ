@@ -46,8 +46,6 @@ RUN make clean
 
 RUN mkdir PreProcessing-Data \
         && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
-#PREP_DIR = '-DPREP_DIR="Player-Data/"'
-#RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 
 # honest majority, malicious shamir
 #RUN make -j 2 malicious-shamir-party.x
@@ -55,7 +53,7 @@ RUN mkdir PreProcessing-Data \
 #RUN mkdir -p Player-Data
 
 # tldr
-#RUN make -j 2 tldr
+RUN make -j 2 tldr
 #RUN echo ARCH = -march=native >> CONFIG.mine
 #RUN make mascot-party.x
 #RUN mkdir -p Player-Data \
@@ -67,18 +65,18 @@ RUN mkdir PreProcessing-Data \
 # online & offline
 #RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 #RUN make -j 8 online
-#RUN make -j 2 offline she-offline
+RUN make -j 2 offline she-offline
 #RUN ./Scripts/setup-online.sh
 
 
 # shamir
-#RUN make -j 2 shamir
+RUN make -j 2 shamir
 #
 ## ring
-#RUN Scripts/setup-ssl.sh 3
-#RUN make -j 8 replicated-ring-party.x
-#RUN mkdir -p Player-Data \
-#        && echo 3 > Player-Data/Input-P0-0 \
-#        && echo 4 > Player-Data/Input-P1-0 \
-#        && echo 5 > Player-Data/Input-P2-0
+RUN Scripts/setup-ssl.sh 3
+RUN make -j 2 replicated-ring-party.x
+RUN mkdir -p Player-Data \
+        && echo 3 > Player-Data/Input-P0-0 \
+        && echo 4 > Player-Data/Input-P1-0 \
+        && echo 5 > Player-Data/Input-P2-0
 #CMD /bin/sh -c Scripts/ring.sh mult3

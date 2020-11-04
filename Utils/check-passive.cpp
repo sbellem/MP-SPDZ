@@ -13,6 +13,8 @@
 template <class T>
 void check_triples(int n_players, string type_char = "")
 {
+    cout << "**********************************************************\n";
+    cout << "Utils/check-passive.cpp::void check_triples(...\n";
     ifstream* inputFiles = new ifstream[n_players];
     for (int i = 0; i < n_players; i++)
     {

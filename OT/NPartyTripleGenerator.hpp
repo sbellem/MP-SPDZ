@@ -165,6 +165,8 @@ typename T::Multiplier* OTTripleGenerator<T>::new_multiplier(int i)
 template<class T>
 void NPartyTripleGenerator<T>::generate()
 {
+    cout << "**********************************************************\n";
+    cout << "OT/NPartyTripleGenerator.hpp::void NPartyTripleGenerator(...\n";
     bigint::init_thread();
 
     auto& timers = this->timers;
