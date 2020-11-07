@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 texinfo \
                 yasm \
                 vim \
+                gdb \
         && rm -rf /var/lib/apt/lists/*
 
 ENV MP_SPDZ_HOME /usr/src/MP-SPDZ
@@ -46,6 +47,9 @@ RUN make clean
 
 RUN mkdir PreProcessing-Data \
         && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
+
+# DEBUG flags
+RUN echo MY_CFLAGS += -DDEBUG_NETWORKING >> CONFIG.mine
 
 # honest majority, malicious shamir
 #RUN make -j 2 malicious-shamir-party.x

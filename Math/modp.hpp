@@ -289,16 +289,25 @@ void modp_<L>::output(ostream& s,const Zp_Data& ZpD,bool human) const
 {
   cout << "Math/modp.hpp ... void modp_<L>::output(ostream& s,const Zp_Data& ZpD,bool human) const\n";
   if (human)
-    { bigint te;
-      to_bigint(te, ZpD);
-      if (te < ZpD.pr / 2)
-          s << te;
-      else
-          s << (te - ZpD.pr);
+    {
+        cout << "Math/modp.hpp ... HUMAN mode is in use ...\n";
+        bigint te;
+        to_bigint(te, ZpD);
+        if (te < ZpD.pr / 2) {
+            cout << "Math/modp.hpp ... ZpD/te: " << te << " END te\n";
+            s << te;
+        }
+        else {
+            cout << "Math/modp.hpp ... te - ZpD.pr: " << te - ZpD.pr << " END te - ZpD.pr\n";
+            s << (te - ZpD.pr);
+        }
     }
   else {
-    cout << "Math/modp.hpp::output ZpD: " << ZpD.get_t() << "\n";
-    s.write((char*) x,ZpD.t*sizeof(mp_limb_t));
+    cout << "Math/modp.hpp ... NOT HUMAN mode!\n";
+    cout << "Math/modp.hpp::output ZpD.t: " << ZpD.get_t() << "\n";
+    cout << "Math/modp.hpp | x: " << x << " END x\n";
+    cout << "Math/modp.hpp | sizeof(mp_limb_t): " << sizeof(mp_limb_t) << " END sizeof(mp_limb_t)\n";
+    s.write((char*) x, ZpD.t * sizeof(mp_limb_t));
   }
 }
 
@@ -319,5 +328,5 @@ void modp_<L>::input(istream& s,const Zp_Data& ZpD,bool human)
       to_modp(*this,te,ZpD);
     }
   else
-    { s.read((char*) x,ZpD.t*sizeof(mp_limb_t)); }
+    { s.read((char*) x, ZpD.t * sizeof(mp_limb_t)); }
 }

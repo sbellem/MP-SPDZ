@@ -70,7 +70,7 @@ public:
         MAC_Check<typename FD::T> MC(setup.alphai);
         string data_type = producer.data_type();
         transform(data_type.begin(), data_type.end(), data_type.begin(), ::tolower);
-        cout << "Starting to produce " << FD::T::type_string() << " " << data_type << endl;
+        cout << "Player [" << P.my_num() << "]" << "Starting to produce " << FD::T::type_string() << " " << data_type << endl;
         int total = 0;
         Timer timer;
         timer.start();
@@ -88,15 +88,21 @@ public:
             if (stop)
                 break;
 
+            cout << "[" << P.my_num() << "] "
+                 << "Utils/spdz2-offline.cpp | next: producer.run ...\n";
             producer.run(P, setup.pk, setup.calpha, EC, dd, setup.alphai);
+            cout << "[" << P.my_num() << "] "
+                 << "Utils/spdz2-offline.cpp | next: producer.sacrifice ...\n";
             producer.sacrifice(P, MC);
             total += producer.num_slots();
-            cout << "Produced " << total << " " << FD::T::type_string() << " "
+            cout << "Player [" << P.my_num() << "] "
+                 << "Produced " << total << " " << FD::T::type_string() << " "
                     << data_type << ", " << total / timer.elapsed()
                     << " per second" << endl;
         }
         MC.Check(P);
-        cout << "Finished producing " << FD::T::type_string() << " " << data_type << endl;
+        cout << "Player [" << P.my_num() << "] "
+             << "Finished producing " << FD::T::type_string() << " " << data_type << endl;
         return 0;
     }
 };
@@ -282,6 +288,8 @@ int main(int argc, const char** argv)
                         + " (set another PREP_DIR in CONFIG if needed)");
     }
 
+    //cout << "Utils/spdz2-offline.cpp ... spdz2.N: " << spdz2.N << "\n";
+    cout << "Utils/spdz2-offline.cpp ... my_num: " << my_num << "\n";
     sigset_t sigset;
     sigemptyset(&sigset);
     sigaddset(&sigset, SIGINT);

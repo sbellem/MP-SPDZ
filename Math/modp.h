@@ -22,10 +22,10 @@
 
 template<int L>
 class modp_
-{ 
+{
   mp_limb_t x[L];
 
-  public: 
+  public:
 
   // NEXT FUNCTION IS FOR DEBUG PURPOSES ONLY
   mp_limb_t get_limb(int i) const { return x[i]; }
@@ -33,7 +33,7 @@ class modp_
   // use mem* functions instead of mpn_*, so the compiler can optimize
   modp_()
     { avx_memzero(x, sizeof(x)); }
-  
+
   template<int M>
   modp_(const modp_<M>& other)
     {

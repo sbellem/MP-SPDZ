@@ -16,8 +16,11 @@ services:
       - ./Compiler/setup.py:/usr/src/MP-SPDZ/Compiler/setup.py
       - ./CONFIG:/usr/src/MP-SPDZ/CONFIG
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
+      - ./FHE/FFT_Data.h:/usr/src/MP-SPDZ/FHE/FFT_Data.h
+      - ./FHE/FFT_Data.cpp:/usr/src/MP-SPDZ/FHE/FFT_Data.cpp
       - ./FHEOffline/DataSetup.h:/usr/src/MP-SPDZ/FHEOffline/DataSetup.h
       - ./FHEOffline/DataSetup.cpp:/usr/src/MP-SPDZ/FHEOffline/DataSetup.cpp
+      - ./FHEOffline/Producer.h:/usr/src/MP-SPDZ/FHEOffline/Producer.h
       - ./FHEOffline/Producer.cpp:/usr/src/MP-SPDZ/FHEOffline/Producer.cpp
       - ./FHEOffline/Sacrificing.cpp:/usr/src/MP-SPDZ/FHEOffline/Sacrificing.cpp
       - ./Math/gfp.h:/usr/src/MP-SPDZ/Math/gfp.h

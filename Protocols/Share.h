@@ -139,8 +139,9 @@ class Share_ : public ShareInterface
    //  - Can do in human or machine only format (later should be faster)
    void output(ostream& s,bool human) const {
      cout << "Protocol/Share.h | void output(...\n";
-     cout << "Share T, a: " << a << "\n";
-     cout << "typeid a: " << typeid(a).name() << "\n";
+     cout << "Protocol/Share.h ... Share T, a: " << a << "\n";
+     cout << "Protocol/Share.h ... typeid a: " << typeid(a).name() << "\n";
+     cout << "Protocol/Share.h ... human? " << human << "\n";
      a.output(s,human);
      if (human) { s << " "; }
      mac.output(s,human);

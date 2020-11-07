@@ -94,10 +94,11 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
           if (write_output)
             {
               cout << "FHEOffline/Sacrificing.cpp | Triple_Checking | output ...\n";
-              cout << typeid(a1[i]).name() << "\n";
-              cout << "a1[i]: " << a1[i] << "\n";
-              cout << "b1[i]: " << b1[i] << "\n";
-              cout << "c1[i]: " << c1[i] << "\n";
+              cout << "FHEOffline/Sacrificing.cpp | typeid(a1[i]).name() "
+                   << typeid(a1[i]).name() << "\n";
+              cout << "\nFHEOffline/Sacrificing.cpp | a1[i]: " << a1[i] << "\n";
+              cout << "\nFHEOffline/Sacrificing.cpp | b1[i]: " << b1[i] << "\n";
+              cout << "\nFHEOffline/Sacrificing.cpp | c1[i]: " << c1[i] << "\n";
               a1[i].output(outf,false);
               b1[i].output(outf,false);
               c1[i].output(outf,false);

@@ -107,6 +107,7 @@ void TripleProducer<T, FD, S>::run(const Player& P, const FHE_PK& pk,
     const Ciphertext& calpha, EncCommitBase<T, FD, S>& EC,
     DistDecrypt<FD>& dd, const T& alphai)
 {
+  cout << "FHEOffline/Producer.cpp ...\nvoid TripleProducer<T, FD, S>::run(...)\n";
   (void)alphai;
 
   const FHE_Params& params=pk.get_params();

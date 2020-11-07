@@ -39,6 +39,7 @@ template <class FD>
 void PartSetup<FD>::generate_setup(int n_parties, int plaintext_length, int sec,
     int slack, bool round_up)
 {
+  cout << "FHEOffline/DataSetup.cpp::PartSetup<FD>::generate_setup(...\n";
   sec = max(sec, 40);
   Parameters(n_parties, plaintext_length, sec, slack, round_up).generate_setup(
       params, FieldD);

@@ -41,7 +41,11 @@ class FFT_Data
 
   void init(const Ring& Rg,const Zp_Data& PrD);
 
-  void init_field() const { gfp::init_field(prData.pr); }
+  void init_field() const {
+      cout << "FHE/FFT_Data.cpp ... init_field() ..." << "\n";
+      cout << "FHE/FFT_Data.cpp ... prData.pr: " << prData.pr << "\n";
+      gfp::init_field(prData.pr);
+  }
 
   void hash(octetStream& o) const;
   void pack(octetStream& o) const;
