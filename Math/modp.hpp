@@ -68,8 +68,8 @@ void assignOne(modp_<L>& x,const Zp_Data& ZpD)
 { if (ZpD.montgomery)
     { mpn_copyi(x.x,ZpD.R,ZpD.t); }
   else
-    { assignZero(x,ZpD); 
-      x.x[0]=1; 
+    { assignZero(x,ZpD);
+      x.x[0]=1;
     }
 }
 
@@ -92,7 +92,7 @@ bool isOne(const modp_<L>& x,const Zp_Data& ZpD)
 
 template<int L>
 void modp_<L>::to_bigint(bigint& ans,const Zp_Data& ZpD,bool reduce) const
-{ 
+{
   auto& x = *this;
   mpz_ptr a = ans.get_mpz_t();
   if (a->_mp_alloc < ZpD.t)
@@ -307,6 +307,18 @@ void modp_<L>::output(ostream& s,const Zp_Data& ZpD,bool human) const
     cout << "Math/modp.hpp::output ZpD.t: " << ZpD.get_t() << "\n";
     cout << "Math/modp.hpp | x: " << x << " END x\n";
     cout << "Math/modp.hpp | sizeof(mp_limb_t): " << sizeof(mp_limb_t) << " END sizeof(mp_limb_t)\n";
+
+    #ifdef DEBUG_MATH
+    bigint te;
+    to_bigint(te, ZpD);
+    if (te < ZpD.pr / 2) {
+        cout << "Math/modp.hpp ... ZpD/te: " << te << " END te\n";
+    }
+    else {
+        cout << "Math/modp.hpp ... te - ZpD.pr: " << te - ZpD.pr << " END te - ZpD.pr\n";
+    }
+    #endif
+
     s.write((char*) x, ZpD.t * sizeof(mp_limb_t));
   }
 }

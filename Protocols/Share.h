@@ -131,7 +131,10 @@ class Share_ : public ShareInterface
    Share_<T, V> operator<<(int i) { return this->operator*(clear(1) << i); }
    Share_<T, V>& operator<<=(int i) { return *this = *this << i; }
 
-   Share_<T, V> operator>>(int i) const { return {a >> i, mac >> i}; }
+   Share_<T, V> operator>>(int i) const {
+       cout << "Protocols/Share.h | Share_<T, V> operator>>(int i) ...\n";
+       return {a >> i, mac >> i};
+   }
 
    void force_to_bit() { a.force_to_bit(); }
 
@@ -144,6 +147,7 @@ class Share_ : public ShareInterface
      cout << "Protocol/Share.h ... human? " << human << "\n";
      a.output(s,human);
      if (human) { s << " "; }
+     cout << "Protocol/Share.h ... mac: " << mac << "\n";
      mac.output(s,human);
    }
    void input(istream& s,bool human)
@@ -151,7 +155,10 @@ class Share_ : public ShareInterface
        mac.input(s,human);
      }
 
-   friend ostream& operator<<(ostream& s, const Share_<T, V>& x) { x.output(s, true); return s; }
+   friend ostream& operator<<(ostream& s, const Share_<T, V>& x) {
+       cout << "Protocols/Share.h | friend ostream& operator<<(ostream& s, const Share_<T, V>& x) ...\n";
+       x.output(s, true); return s;
+   }
 
    void pack(octetStream& os, bool full = true) const;
    void unpack(octetStream& os, bool full = true);

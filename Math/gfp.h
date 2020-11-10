@@ -225,7 +225,7 @@ class gfp_ : public ValueInterface
         cout << "Math/gfp.h ... void output(ostream& s,bool human) const ...\n";
         cout << "Math/gfp.h ... typeid a ..." << typeid(a).name() << "\n";
         cout << "Math/gfp.h ... a.x: " << a.get() << " END a.x\n";
-        a.output(s,ZpD,human);
+        a.output(s, ZpD, human);
     }
   void input(istream& s,bool human)
     {

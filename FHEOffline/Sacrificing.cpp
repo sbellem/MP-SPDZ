@@ -96,12 +96,15 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
               cout << "FHEOffline/Sacrificing.cpp | Triple_Checking | output ...\n";
               cout << "FHEOffline/Sacrificing.cpp | typeid(a1[i]).name() "
                    << typeid(a1[i]).name() << "\n";
-              cout << "\nFHEOffline/Sacrificing.cpp | a1[i]: " << a1[i] << "\n";
-              cout << "\nFHEOffline/Sacrificing.cpp | b1[i]: " << b1[i] << "\n";
-              cout << "\nFHEOffline/Sacrificing.cpp | c1[i]: " << c1[i] << "\n";
-              a1[i].output(outf,false);
-              b1[i].output(outf,false);
-              c1[i].output(outf,false);
+              cout << "\nFHEOffline/Sacrificing.cpp | a1[i]: " << a1[i].get_share() << "\n";
+              cout << "\nFHEOffline/Sacrificing.cpp | b1[i]: " << b1[i].get_share() << "\n";
+              cout << "\nFHEOffline/Sacrificing.cpp | c1[i]: " << c1[i].get_share() << "\n";
+              //a1[i].output(outf,false);
+              //b1[i].output(outf,false);
+              //c1[i].output(outf,false);
+              a1[i].output(outf,true);
+              b1[i].output(outf,true);
+              c1[i].output(outf,true);
             }
           else
               factory.triples.push_back({{a1[i], b1[i], c1[i]}});

@@ -146,7 +146,7 @@ void Server::start()
   for (i=0; i<nmachines; i++)
     send_names(i);
 
-  for (i=0; i<nmachines; i++) 
+  for (i=0; i<nmachines; i++)
     { delete[] names[i]; }
 
   for (int i = 0; i < nmachines; i++)

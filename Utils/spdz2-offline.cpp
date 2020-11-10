@@ -70,7 +70,7 @@ public:
         MAC_Check<typename FD::T> MC(setup.alphai);
         string data_type = producer.data_type();
         transform(data_type.begin(), data_type.end(), data_type.begin(), ::tolower);
-        cout << "Player [" << P.my_num() << "]" << "Starting to produce " << FD::T::type_string() << " " << data_type << endl;
+        cout << "Player [" << P.my_num() << "] " << "Starting to produce " << FD::T::type_string() << " " << data_type << endl;
         int total = 0;
         Timer timer;
         timer.start();
