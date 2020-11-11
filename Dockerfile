@@ -50,7 +50,8 @@ RUN mkdir PreProcessing-Data \
 
 # DEBUG flags
 RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DDEBUG_MATH" >> CONFIG.mine
+        && echo "MY_CFLAGS += -DDEBUG_MATH" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine
 
 # honest majority, malicious shamir
 #RUN make -j 2 malicious-shamir-party.x

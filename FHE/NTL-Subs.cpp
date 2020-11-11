@@ -272,7 +272,9 @@ void Parameters::SPDZ_Data_Setup(FFT_Data& FTD)
   bigint p;
   int idx, m;
   SPDZ_Data_Setup_Primes(p, plaintext_length, idx, m);
+  cout << "FHE/NTL-Subs.cpp ... prime p after SPDZ_Data_Setup_Primes: " << p << endl;
   SPDZ_Data_Setup_Char_p_Sub(idx, m, p);
+  cout << "FHE/NTL-Subs.cpp ... prime p after SPDZ_Data_Setup_Char_p_Sub: " << p << endl;
 
   Zp_Data Zp(p);
   gfp::init_field(p);

@@ -145,8 +145,9 @@ class Share_ : public ShareInterface
      cout << "Protocol/Share.h ... Share T, a: " << a << "\n";
      cout << "Protocol/Share.h ... typeid a: " << typeid(a).name() << "\n";
      cout << "Protocol/Share.h ... human? " << human << "\n";
+     if (human) { s << " *ZpD: "; }
      a.output(s,human);
-     if (human) { s << " "; }
+     if (human) { s << " *MAC: "; }
      cout << "Protocol/Share.h ... mac: " << mac << "\n";
      mac.output(s,human);
    }

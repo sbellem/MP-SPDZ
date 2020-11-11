@@ -199,6 +199,7 @@ int TripleProducer<T,FD,S>::sacrifice(const Player& P, MAC_Check<T>& MC)
     cout << "FHEOffline/Producer.cpp | TripleProducer<T,FD,S>::sacrifice( \n";
     this->timers["Sacrificing"].start();
     int n_triples = ai.num_slots() / 2;
+    cout << "FHEOffline/Producer.cpp | n_triples: " << n_triples << endl;
     Triple_Checking(P, MC, n_triples, this->output_thread, *this,
             this->write_output, false, this->dir);
     this->timers["Sacrificing"].stop();
