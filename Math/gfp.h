@@ -222,9 +222,11 @@ class gfp_ : public ValueInterface
 
   void output(ostream& s,bool human) const
     {
+        #ifdef DEBUG_MATH
         cout << "Math/gfp.h ... void output(ostream& s,bool human) const ...\n";
         cout << "Math/gfp.h ... typeid a ..." << typeid(a).name() << "\n";
         cout << "Math/gfp.h ... a.x: " << a.get() << " END a.x\n";
+        #endif
         a.output(s, ZpD, human);
     }
   void input(istream& s,bool human)
@@ -235,9 +237,13 @@ class gfp_ : public ValueInterface
 
   friend ostream& operator<<(ostream& s,const gfp_& x)
     {
+        #ifdef DEBUG_MATH
         cout << "Math/gfp.h::operator<<\n";
+        #endif
         x.output(s,true);
+        #ifdef DEBUG_MATH
         cout << "\nMath/gfp.h ... gfp_& x.a.x is: " << x.a.get() << "\n";
+        #endif
         return s;
     }
   friend istream& operator>>(istream& s,gfp_& x)

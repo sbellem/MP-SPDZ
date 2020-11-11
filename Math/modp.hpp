@@ -287,28 +287,36 @@ void Power(modp_<L>& ans,const modp_<L>& x,const bigint& exp,const Zp_Data& ZpD)
 template<int L>
 void modp_<L>::output(ostream& s,const Zp_Data& ZpD,bool human) const
 {
+  #ifdef DEBUG_MATH
   cout << "Math/modp.hpp ... void modp_<L>::output(ostream& s,const Zp_Data& ZpD,bool human) const\n";
+  #endif
   if (human)
     {
+        #ifdef DEBUG_MATH
         cout << "Math/modp.hpp ... HUMAN mode is in use ...\n";
+        #endif
         bigint te;
         to_bigint(te, ZpD);
         if (te < ZpD.pr / 2) {
+            #ifdef DEBUG_MATH
             cout << "Math/modp.hpp ... ZpD/te: " << te << " END te\n";
+            #endif
             s << te;
         }
         else {
+            #ifdef DEBUG_MATH
             cout << "Math/modp.hpp ... te - ZpD.pr: " << te - ZpD.pr << " END te - ZpD.pr\n";
+            #endif
             s << (te - ZpD.pr);
         }
     }
   else {
+    #ifdef DEBUG_MATH
     cout << "Math/modp.hpp ... NOT HUMAN mode!\n";
     cout << "Math/modp.hpp::output ZpD.t: " << ZpD.get_t() << "\n";
     cout << "Math/modp.hpp | x: " << x << " END x\n";
     cout << "Math/modp.hpp | sizeof(mp_limb_t): " << sizeof(mp_limb_t) << " END sizeof(mp_limb_t)\n";
 
-    #ifdef DEBUG_MATH
     bigint te;
     to_bigint(te, ZpD);
     if (te < ZpD.pr / 2) {

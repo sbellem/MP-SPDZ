@@ -39,6 +39,7 @@ services:
       - ./Tools/Buffer.h:/usr/src/MP-SPDZ/Tools/Buffer.h
       - ./Utils/spdz2-offline.cpp:/usr/src/MP-SPDZ/Utils/spdz2-offline.cpp
       - ./Utils/check-passive.cpp:/usr/src/MP-SPDZ/Utils/check-passive.cpp
+      - ./Utils/read-offline.cpp:/usr/src/MP-SPDZ/Utils/read-offline.cpp
       - ./Utils/Check-Offline.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline.cpp
       - ./Utils/Check-Offline-Z2k.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline-Z2k.cpp
     command: bash Programs/Source/hbmpc_mimc_test.sh

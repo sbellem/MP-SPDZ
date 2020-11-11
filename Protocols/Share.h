@@ -141,14 +141,17 @@ class Share_ : public ShareInterface
    // Input and output from a stream
    //  - Can do in human or machine only format (later should be faster)
    void output(ostream& s,bool human) const {
+     #ifdef DEBUG_MATH
      cout << "Protocol/Share.h | void output(...\n";
      cout << "Protocol/Share.h ... Share T, a: " << a << "\n";
      cout << "Protocol/Share.h ... typeid a: " << typeid(a).name() << "\n";
      cout << "Protocol/Share.h ... human? " << human << "\n";
-     if (human) { s << " *ZpD: "; }
+     #endif
+     //if (human) { s << " *ZpD: "; }
      a.output(s,human);
-     if (human) { s << " *MAC: "; }
-     cout << "Protocol/Share.h ... mac: " << mac << "\n";
+     //if (human) { s << " *MAC: "; }
+     if (human) { s << " "; }
+     //cout << "Protocol/Share.h ... mac: " << mac << "\n";
      mac.output(s,human);
    }
    void input(istream& s,bool human)
@@ -157,7 +160,9 @@ class Share_ : public ShareInterface
      }
 
    friend ostream& operator<<(ostream& s, const Share_<T, V>& x) {
+       #ifdef DEBUG_MATH
        cout << "Protocols/Share.h | friend ostream& operator<<(ostream& s, const Share_<T, V>& x) ...\n";
+       #endif
        x.output(s, true); return s;
    }
 

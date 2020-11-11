@@ -99,12 +99,12 @@ void Triple_Checking(const Player& P, MAC_Check<T>& MC, int nm,
               cout << "\nFHEOffline/Sacrificing.cpp | a1[i]: " << a1[i].get_share() << "\n";
               cout << "\nFHEOffline/Sacrificing.cpp | b1[i]: " << b1[i].get_share() << "\n";
               cout << "\nFHEOffline/Sacrificing.cpp | c1[i]: " << c1[i].get_share() << "\n";
-              //a1[i].output(outf,false);
-              //b1[i].output(outf,false);
-              //c1[i].output(outf,false);
-              a1[i].output(outf,true);
-              b1[i].output(outf,true);
-              c1[i].output(outf,true);
+              a1[i].output(outf,false);
+              b1[i].output(outf,false);
+              c1[i].output(outf,false);
+              //a1[i].output(outf,true);
+              //b1[i].output(outf,true);
+              //c1[i].output(outf,true);
             }
           else
               factory.triples.push_back({{a1[i], b1[i], c1[i]}});
