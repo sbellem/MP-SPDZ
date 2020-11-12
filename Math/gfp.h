@@ -231,7 +231,9 @@ class gfp_ : public ValueInterface
     }
   void input(istream& s,bool human)
     {
+        #ifdef DEBUG_MATH
         cout << "Math/gfp.h ... void input(istream& s,bool human)\n";
+        #endif
         a.input(s,ZpD,human);
     }
 

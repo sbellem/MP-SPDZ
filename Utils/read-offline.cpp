@@ -14,12 +14,13 @@ template <class T>
 void check_triples(int n_players, string type_char = "")
 {
     cout << "**********************************************************\n";
-    cout << "Utils/check-passive.cpp::void check_triples(...\n";
+    cout << "Utils/read-offline.cpp::void check_triples(...\n";
     ifstream* inputFiles = new ifstream[n_players];
     for (int i = 0; i < n_players; i++)
     {
         stringstream ss;
         ss << get_prep_sub_dir<Share<T>>(n_players) << "Triples-";
+        cout << "get_prep_sub_dir file " << ss.str() << endl;
         if (type_char.size())
             ss << type_char;
         else
@@ -36,7 +37,6 @@ void check_triples(int n_players, string type_char = "")
         vector<T> as(n_players), bs(n_players), cs(n_players);
         for (int i = 0; i < n_players; i++)
         {
-            cout << "inputfiles " << i << ": " << inputFiles[i];
             as[i].input(inputFiles[i], false);
             bs[i].input(inputFiles[i], false);
             cs[i].input(inputFiles[i], false);
