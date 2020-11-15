@@ -24,15 +24,15 @@ WORKDIR $MP_SPDZ_HOME
 
 # mpir
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir ./local
-RUN echo MY_CFLAGS += -I./local/include >> CONFIG.mine
-RUN echo MY_LDLIBS += -Wl,-rpath -Wl,./local/lib -L./local/lib >> CONFIG.mine
+RUN echo "MY_CFLAGS += -I./local/include" >> CONFIG.mine \
+        && echo "MY_LDLIBS += -Wl,-rpath -Wl,./local/lib -L./local/lib" >> CONFIG.mine
 
 # ntl
 COPY --from=ntl:10.5 /usr/local/include/NTL /usr/local/include/NTL
 COPY --from=ntl:10.5 /usr/local/lib/libntl.a /usr/local/lib/libntl.a
-RUN echo USE_NTL = 1 >> CONFIG.mine
-RUN echo MY_CFLAGS += -I/usr/local/include/NTL >> CONFIG.mine
-RUN echo MY_LDLIBS += -Wl,-rpath -Wl,/usr/local/lib -L/usr/local/lib >> CONFIG.mine
+RUN echo "USE_NTL = 1" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -I/usr/local/include/NTL" >> CONFIG.mine \
+        && echo "MY_LDLIBS += -Wl,-rpath -Wl,/usr/local/lib -L/usr/local/lib" >> CONFIG.mine
 
 # pip, ipython
 RUN pip install --upgrade pip ipython
@@ -45,7 +45,7 @@ COPY . .
 
 RUN make clean
 
-RUN mkdir PreProcessing-Data \
+RUN mkdir -p PreProcessing-Data \
         && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
 
 # DEBUG flags
@@ -87,4 +87,5 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
 #        && echo 5 > Player-Data/Input-P2-0
 #CMD /bin/sh -c Scripts/ring.sh mult3
 
-RUN make spdz2-offline.x
+RUN echo "MOD = -DGFP_MOD_SZ=2" >> CONFIG.mine && make spdz2-offline.x
+RUN make read-offline.x
