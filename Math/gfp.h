@@ -171,9 +171,9 @@ class gfp_ : public ValueInterface
   void add(octetStream& os)
     { add(os.consume(size())); }
   void add(const gfp_& x,const gfp_& y)
-    { ZpD.Add<L>(a.x,x.a.x,y.a.x); }
+    { ZpD.Add<L>(a.x, x.a.x, y.a.x); }
   void add(const gfp_& x)
-    { ZpD.Add<L>(a.x,a.x,x.a.x); }
+    { ZpD.Add<L>(a.x, a.x, x.a.x); }
   void add(void* x)
     { ZpD.Add<L>(a.x,a.x,(mp_limb_t*)x); }
   void sub(const gfp_& x,const gfp_& y)

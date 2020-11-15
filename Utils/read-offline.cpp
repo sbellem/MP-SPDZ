@@ -46,7 +46,11 @@ void check_triples(int n_players, string type_char = "")
         b = accumulate(bs.begin(), bs.end(), T());
         c = accumulate(cs.begin(), cs.end(), T());
 
+        cout << "a " << a << endl;
+        cout << "b " << b << endl;
+        cout << "c " << c << endl;
         prod = a * b;
+        cout << "a * b " << prod << endl;
         if (prod != c)
         {
             cout << T::type_string() << ": Error in " << j << endl;
@@ -79,7 +83,7 @@ int main(int argc, char** argv)
     int n_players = 2;
     if (argc > 1)
         n_players = atoi(argv[1]);
-    read_setup(get_prep_sub_dir<Share<gfp>>(PREP_DIR, n_players, 256));
+    read_setup(get_prep_sub_dir<Share<gfp>>(PREP_DIR, n_players, 128));
     gfp::init_field(gfp::pr(), false);
     check_triples<gfp>(n_players);
 }

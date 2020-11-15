@@ -19,6 +19,13 @@ USE_NTL = 0
 # unset for GF(2^40) online and offline phase
 USE_GF2N_LONG = 1
 
+# MAX_MOD_SZ (for FHE) must be least and GFP_MOD_SZ (for computation)
+# must be exactly ceil(len(p)/len(word)) for the relevant prime p
+# Default for GFP_MOD_SZ is 2, which is good for 128-bit p
+# Default for MAX_MOD_SZ is 10, which suffices for all Overdrive protocols
+# MOD = -DMAX_MOD_SZ=10 -DGFP_MOD_SZ=4
+MOD = -DGFP_MOD_SZ=4
+
 # set to -march=<architecture> for optimization
 # SSE4.2 is required homomorphic encryption in GF(2^n) when compiling with clang
 # AES-NI and PCLMUL are not required
@@ -40,13 +47,6 @@ CXX = g++
 ifeq ($(USE_GF2N_LONG),1)
 GF2N_LONG = -DUSE_GF2N_LONG
 endif
-
-# MAX_MOD_SZ (for FHE) must be least and GFP_MOD_SZ (for computation)
-# must be exactly ceil(len(p)/len(word)) for the relevant prime p
-# Default for GFP_MOD_SZ is 2, which is good for 128-bit p
-# Default for MAX_MOD_SZ is 10, which suffices for all Overdrive protocols
-# MOD = -DMAX_MOD_SZ=10 -DGFP_MOD_SZ=4
-MOD = -DGFP_MOD_SZ=4
 
 LDLIBS = -lmpirxx -lmpir -lsodium $(MY_LDLIBS)
 LDLIBS += -lboost_system -lssl -lcrypto
