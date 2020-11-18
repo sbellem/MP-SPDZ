@@ -50,8 +50,8 @@ RUN mkdir -p PreProcessing-Data \
 
 # DEBUG flags
 RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine
-        #&& echo "MY_CFLAGS += -DDEBUG_MATH" >> CONFIG.mine
+        && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_MATH" >> CONFIG.mine
 
 # honest majority, malicious shamir
 #RUN make -j 2 malicious-shamir-party.x
@@ -87,5 +87,8 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
 #        && echo 5 > Player-Data/Input-P2-0
 #CMD /bin/sh -c Scripts/ring.sh mult3
 
-RUN echo "MOD = -DGFP_MOD_SZ=2" >> CONFIG.mine && make spdz2-offline.x
-RUN make read-offline.x
+RUN echo "MOD = -DGFP_MOD_SZ=2" >> CONFIG.mine \
+        && ./Scripts/setup-ssl.sh 2 \
+        && make malicious-shamir-party.x \
+        && make paper-example.x
+

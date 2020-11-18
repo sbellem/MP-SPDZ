@@ -38,6 +38,7 @@ services:
       - ./Tools/Buffer.cpp:/usr/src/MP-SPDZ/Tools/Buffer.cpp
       - ./Tools/Buffer.h:/usr/src/MP-SPDZ/Tools/Buffer.h
       - ./Utils/spdz2-offline.cpp:/usr/src/MP-SPDZ/Utils/spdz2-offline.cpp
+      - ./Utils/paper-example.cpp:/usr/src/MP-SPDZ/Utils/paper-example.cpp
       - ./Utils/check-passive.cpp:/usr/src/MP-SPDZ/Utils/check-passive.cpp
       - ./Utils/read-offline.cpp:/usr/src/MP-SPDZ/Utils/read-offline.cpp
       - ./Utils/Check-Offline.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline.cpp
