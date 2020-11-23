@@ -120,3 +120,4 @@ _build/
 .idea/
 *db/
 *data/
+*build/
