@@ -8,6 +8,8 @@
 #include "Math/gfp.hpp"
 #include "Machines/SPDZ.hpp"
 
+#include <typeinfo>
+
 int main(int argc, char** argv)
 {
     typedef Share<gfp> T;
@@ -25,10 +27,10 @@ int main(int argc, char** argv)
     CryptoPlayer P(N);
 
     // initialize fields
-    gfp::init_default(256);
+    // BLS12_381
     //gfp::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"));
+    gfp::init_default(256);
     gfp1::init_default(256, false);
-    //gfp1::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"), false);
     T::bit_type::mac_key_type::init_field();
 
     // must initialize MAC key for security of some protocols
@@ -56,6 +58,55 @@ int main(int argc, char** argv)
     typename T::LivePrep preprocessing(0, usage);
     SubProcessor<T> processor(output, preprocessing, P);
 
+    stringstream ss;
+    ofstream outputFile;
+    string prep_data_dir = get_prep_sub_dir<T>(PREP_DIR, P.num_players());
+    cout << "@@@@@: prep_data_dir: " << prep_data_dir << endl;
+    ss << prep_data_dir << "Randoms-";
+    ss << T::type_short() << "-P" << P.my_num();
+    cout << "$$$$$: prep file: " << ss.str().c_str() << endl;
+    outputFile.open(ss.str().c_str());
+
+    int ntriples = 1;
+    vector<T> Sa(ntriples), Sb(ntriples), Sc(ntriples);
+    //cout << "triples type: " << typeid(preprocessing.triples).name() << endl;
+    for (int i=0; i < ntriples; i++)
+    {
+        preprocessing.get_three(DATA_TRIPLE, Sa[i], Sb[i], Sc[i]);
+        cout << "###### [" << P.my_num() << "] Sa[" << i << "]: " << Sa[i] << endl;
+        cout << "###### [" << P.my_num() << "] Sb[" << i << "]: " << Sb[i] << endl;
+        Sa[i].output(outputFile, true);
+        Sb[i].output(outputFile, true);
+    }
+
+    //int number_of_shares = 1;
+    //vector<T> random_shares(number_of_shares);
+    //for (int i=0; i < number_of_shares; i++)
+    //{
+    //    //T random_share_i = preprocessing.get_random();
+    //    //cout << "random share_i type: " << typeid(random_share_i).name() << endl;
+    //    //cout << "random share_i: " << random_share_i << endl;
+
+    //    T tmp;
+    //    typename T::open_type _;
+    //    //preprocessing.get_input_no_count(tmp, _, P.num_players());
+    //    preprocessing.get_input(tmp, _, P.my_num());
+    //    random_shares[i] = tmp;
+
+    //    //random_shares[i] = preprocessing.get_random();
+    //    cout << "###### random shares[" << i << "]: " << random_shares[i] << endl;
+    //    random_shares[i].output(outputFile, false);
+    //    //cout << "random share[" << i << "]: " << random_shares[i] << endl;
+    //}
+
+    //T random_share;
+    //random_share = preprocessing.get_random();
+    //cout << "random share: " << random_share << endl;
+
+    //cout << "triples type: " << typeid(preprocessing.triples).name() << endl;
+    //preprocessing.buffer_triples();
+
+    /*
     // input protocol
     typename T::Input input(processor);
 
@@ -90,4 +141,5 @@ int main(int argc, char** argv)
 
     cout << "result: " << result << endl;
     output.Check(P);
+    */
 }

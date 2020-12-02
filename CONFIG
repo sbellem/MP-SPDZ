@@ -1,5 +1,5 @@
 # Enable split offline/online
-MY_CFLAGS = -DINSECURE
+#MY_CFLAGS = -DINSECURE
 
 ROOT = .
 

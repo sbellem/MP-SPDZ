@@ -907,14 +907,28 @@ void BufferPrep<T>::get_one_no_count(Dtype dtype, T& a)
 template<class T>
 void BufferPrep<T>::get_input_no_count(T& a, typename T::open_type& x, int i)
 {
+    cout << "*** 3 *** Protocols/ReplicatedPrep.hpp: "
+         << "void BufferPrep<T>::get_input_no_count(T& a, typename T::open_type& x, int i)"
+         << endl;
     (void) a, (void) x, (void) i;
+    cout << "------------- a: " << a << endl;
+    cout << "------------- x: " << x << endl;
+    cout << "------------- i: " << i << endl;
+
+    cout << "------------- inputs.size(): " << inputs.size() << endl;
     if (inputs.size() <= (size_t)i)
         inputs.resize(i + 1);
-    if (inputs.at(i).empty())
+    if (inputs.at(i).empty()) {
+        cout << "????????? buffer_inputs(i); ?????" << endl;
         buffer_inputs(i);
+    }
+    cout << "WILL CALL inputs[i].back().share;" << endl;
     a = inputs[i].back().share;
+    cout << "------------- a: " << a << endl;
     x = inputs[i].back().value;
+    cout << "------------- x: " << x << endl;
     inputs[i].pop_back();
+    cout << "------------- get_input_no_count(..) done" << endl;
 }
 
 template<class T>
@@ -1024,6 +1038,7 @@ void BufferPrep<T>::buffer_edabits(bool strict, int n_bits,
 template<class T>
 inline void BufferPrep<T>::buffer_inputs(int player)
 {
+    cout << ">>>> inline void BufferPrep<T>::buffer_inputs(int player) ***" << endl;
     (void) player;
     throw not_implemented();
 }

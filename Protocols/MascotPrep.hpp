@@ -102,6 +102,7 @@ void MascotPrep<T>::buffer_dabits(ThreadQueues* queues)
 template<class T>
 void MascotTriplePrep<T>::buffer_inputs(int player)
 {
+    cout << ">>>> void MascotTriplePrep<T>::buffer_inputs(int player)" << endl;
     auto& triple_generator = this->triple_generator;
     assert(triple_generator);
     triple_generator->generateInputs(player);
@@ -114,6 +115,7 @@ void MascotTriplePrep<T>::buffer_inputs(int player)
 template<class T>
 T MascotTriplePrep<T>::get_random()
 {
+    cout << "*** 1 *** Protocols/MascotPrep.hpp: " << "T MascotTriplePrep<T>::get_random()" << endl;
     assert(this->proc);
     return BufferPrep<T>::get_random_from_inputs(this->proc->P.num_players());
 }
@@ -121,6 +123,9 @@ T MascotTriplePrep<T>::get_random()
 template<class T>
 T BufferPrep<T>::get_random_from_inputs(int nplayers)
 {
+    cout << "*** 2 *** Protocols/MascotPrep.hpp: "
+         << "T BufferPrep<T>::get_random_from_inputs(int nplayers)"
+         << endl;
     T res;
     for (int j = 0; j < nplayers; j++)
     {

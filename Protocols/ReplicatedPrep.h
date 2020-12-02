@@ -71,7 +71,10 @@ public:
 
     int buffer_size;
 
-    static void basic_setup(Player& P) { (void) P; }
+    static void basic_setup(Player& P) { 
+        cout << "ReplicatedPrep.h | basic_setup(Player& P)" << endl;
+        (void) P;
+    }
     static void setup(Player& P, typename T::mac_key_type alphai) { (void) P, (void) alphai; }
     static void teardown() {}
 

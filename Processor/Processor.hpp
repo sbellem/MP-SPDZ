@@ -27,6 +27,11 @@ SubProcessor<T>::SubProcessor(typename T::MAC_Check& MC,
     Proc(Proc), MC(MC), P(P), DataF(DataF), protocol(P), input(*this, MC),
     bit_prep(bit_usage)
 {
+  cout << "Processor/Processor.hpp: SubProcessor constructor ..." << endl;
+  cout << "T::MAC_Check& MC type: " << typeid(MC).name() << endl;
+  cout << "T::MAC_Check& MC: " << MC.get_alphai() << endl;
+  cout << "ArithmeticProcessor Proc typeid: " << typeid(Proc).name() << endl;
+  cout << "ArithmeticProcessor Proc: " << Proc << endl;
   DataF.set_proc(this);
   DataF.set_protocol(protocol);
   bit_usage.set_num_players(P.num_players());

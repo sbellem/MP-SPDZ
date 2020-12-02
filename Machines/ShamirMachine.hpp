@@ -91,5 +91,10 @@ ShamirMachineSpec<T>::ShamirMachineSpec(int argc, const char** argv)
     ez::ezOptionParser opt;
     opts = {opt, argc, argv};
     T<gfp>::bit_type::part_type::open_type::init_field();
+    cout << "*************************************************************************************\n"
+         << "Next instruction:\n"
+         << "    ReplicatedMachine<T<gfp>, T<gf2n>>(argc, argv, \"shamir\", opt, opts.nparties);"
+         << "*************************************************************************************"
+         << endl;
     ReplicatedMachine<T<gfp>, T<gf2n>>(argc, argv, "shamir", opt, opts.nparties);
 }

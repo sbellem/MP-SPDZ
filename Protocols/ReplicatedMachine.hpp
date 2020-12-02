@@ -49,6 +49,13 @@ ReplicatedMachine<T, U>::ReplicatedMachine(int argc, const char** argv,
     Names N;
     Server* server = network_opts.start_networking(N, playerno);
 
+    cout << "**********************************************************************\n"
+         << "*   Player no: " << playerno << "                                            *\n"
+         << "*   Protocols/ReplicatedMachine.hpp                                  *\n"
+         << "*                                                                    *\n"
+         << "*          Create and run machine ...                                *\n"
+         << "*                                                                    *\n"
+         << "**********************************************************************\n";
     Machine<T, U>(playerno, N, progname, online_opts.memtype,
             gf2n::default_degree(), 0, 0, 0, 0, use_encryption,
             online_opts.live_prep, online_opts).run();

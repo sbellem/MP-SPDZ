@@ -53,6 +53,7 @@ Machine<sint, sgf2n>::Machine(int my_number, Names& playerNames,
 
   if (opts.live_prep)
     {
+      cout << "Processor/Machine.hpp | LivePrep basic setup ..." << endl;
       sint::LivePrep::basic_setup(*P);
     }
 
@@ -64,6 +65,8 @@ Machine<sint, sgf2n>::Machine(int my_number, Names& playerNames,
 #ifdef DEBUG_MAC
   cerr << "MAC Key p = " << alphapi << endl;
   cerr << "MAC Key 2 = " << alpha2i << endl;
+  cout << "MAC Key p = " << alphapi << endl;
+  cout << "MAC Key 2 = " << alpha2i << endl;
 #endif
 
   // for OT-based preprocessing
@@ -91,6 +94,11 @@ Machine<sint, sgf2n>::Machine(int my_number, Names& playerNames,
 #ifdef VERBOSE
   progs[0].print_offline_cost();
 #endif
+
+  cout << "NODE [" << my_number << "] " << "live_prep: " << live_prep << endl;
+  cout << "NODE [" << my_number << "] " << "sint::needs_ot: " << sint::needs_ot << endl;
+  cout << "NODE [" << my_number << "] " << "sgf2n::needs_ot: " << sgf2n::needs_ot << endl;
+  cout << "NODE [" << my_number << "] " << "sint::bit_type::needs_ot: " << sint::bit_type::needs_ot << endl;
 
   if (live_prep
       and (sint::needs_ot or sgf2n::needs_ot or sint::bit_type::needs_ot))
@@ -262,6 +270,13 @@ DataPositions Machine<sint, sgf2n>::join_tape(int i)
 template<class sint, class sgf2n>
 void Machine<sint, sgf2n>::run()
 {
+  cout << "NODE [" << my_number << "]" << endl;
+  cout << "*************************************************************" << endl;
+  cout << "*                                                           *" << endl;
+  cout << "*            Processor/Machine.hpp | RUN Machine!           *" << endl;
+  cout << "*            Machine type: " << typeid(this).name() << "          *" << endl;
+  cout << "*                                                           *" << endl;
+  cout << "*************************************************************" << endl;
   Timer proc_timer(CLOCK_PROCESS_CPUTIME_ID);
   proc_timer.start();
   timer[0].start();
@@ -369,6 +384,7 @@ void Machine<sint, sgf2n>::run()
 #endif
 
 #ifdef VERBOSE
+  cout << "Actual cost of program:" << endl;
   cerr << "Actual cost of program:" << endl;
   pos.print_cost();
 #endif
@@ -407,6 +423,7 @@ void Machine<sint, sgf2n>::run()
     }
 
 #ifndef INSECURE
+  cout << "Processor/Machine.hpp | Create Data_Files instance ..." << endl;
   Data_Files<sint, sgf2n> df(*this);
   df.seekg(pos);
   df.prune();

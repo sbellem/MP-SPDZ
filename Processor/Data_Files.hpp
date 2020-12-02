@@ -15,6 +15,7 @@ template<class T>
 Preprocessing<T>* Preprocessing<T>::get_live_prep(SubProcessor<T>* proc,
     DataPositions& usage)
 {
+  //cout << "NODE {" << proc->P.my_num() << "} "
   cout << "Preprocessing<T>* Preprocessing<T>::get_live_prep(SubProcessor<T>* proc, DataPositions& usage)\n";
   return new typename T::LivePrep(proc, usage);
 }
@@ -25,12 +26,16 @@ Preprocessing<T>* Preprocessing<T>::get_new(
     Machine<U, V>& machine,
     DataPositions& usage, SubProcessor<T>* proc)
 {
-  cout << "Preprocessing<T>* Preprocessing<T>::get_new(..." << "machine.live_prep: " << machine.live_prep << "\n";
+  cout << "NODE {" << machine.get_N().my_num() << "} "
+       << "Preprocessing<T>* Preprocessing<T>::get_new(...\n"
+       << "machine.live_prep: " << machine.live_prep << endl;
   if (machine.live_prep) {
-    cout << "get_live_prep ..."  << "subprocessor: " << proc << "\n";
+    cout << "NODE {" << machine.get_N().my_num() << "} "
+         << "get_live_prep ..."  << "subprocessor: " << proc << endl;
     return get_live_prep(proc, usage);
   } else {
-    cout << "Sub_Data_Files ...";
+    cout << "NODE {" << machine.get_N().my_num() << "} "
+         << "Sub_Data_Files ...";
     return new Sub_Data_Files<T>(machine.get_N(),
         machine.template prep_dir_prefix<T>(), usage);
   }
@@ -65,9 +70,12 @@ Sub_Data_Files<T>::Sub_Data_Files(int my_num, int num_players,
     thread_num(thread_num), part(0)
 {
 #ifdef DEBUG_FILES
-  cerr << "Setting up Data_Files in: " << prep_data_dir << endl;
+  cerr << "NODE {" << my_num << "} "
+       << "Setting up Data_Files in: " << prep_data_dir << endl;
 #endif
-  cout << "Setting up Data_Files in: " << prep_data_dir << endl;
+  cout << "NODE {" << my_num << "} "
+       << "Setting up Data_Files in: " << prep_data_dir << endl;
+
   char filename[1024];
   string suffix = get_suffix(thread_num);
   for (int dtype = 0; dtype < N_DTYPE; dtype++)
@@ -112,7 +120,9 @@ Data_Files<sint, sgf2n>::Data_Files(Machine<sint, sgf2n>& machine, SubProcessor<
     DataFp(*Preprocessing<sint>::get_new(machine, usage, procp)),
     DataF2(*Preprocessing<sgf2n>::get_new(machine, usage, proc2))
 {
-  cout << "Data_Files<sint, sgf2n>::Data_Files(Machine<sint, sgf2n>& machine, ...\n";
+  cout << "NODE {" << machine.get_N().my_num() << "} "
+       << "Data_Files<sint, sgf2n>::Data_Files(Machine<sint, sgf2n>& machine, ...\n"
+       << "Machine type: " << typeid(machine).name() << endl;
 }
 
 template<class sint, class sgf2n>

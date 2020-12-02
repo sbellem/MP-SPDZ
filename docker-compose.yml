@@ -23,6 +23,7 @@ services:
       - ./FHEOffline/Producer.h:/usr/src/MP-SPDZ/FHEOffline/Producer.h
       - ./FHEOffline/Producer.cpp:/usr/src/MP-SPDZ/FHEOffline/Producer.cpp
       - ./FHEOffline/Sacrificing.cpp:/usr/src/MP-SPDZ/FHEOffline/Sacrificing.cpp
+      - ./Machines/TripleMachine.cpp:/usr/src/MP-SPDZ/Machines/TripleMachine.cpp
       - ./Math/gfp.h:/usr/src/MP-SPDZ/Math/gfp.h
       - ./Math/gfp.hpp:/usr/src/MP-SPDZ/Math/gfp.hpp
       - ./Math/modp.h:/usr/src/MP-SPDZ/Math/modp.h
@@ -31,6 +32,15 @@ services:
       - ./Math/Zp_Data.cpp:/usr/src/MP-SPDZ/Math/Zp_Data.cpp
       - ./OT/NPartyTripleGenerator.hpp:/usr/src/MP-SPDZ/OT/NPartyTripleGenerator.hpp
       - ./Processor/Data_Files.hpp:/usr/src/MP-SPDZ/Processor/Data_Files.hpp
+      - ./Processor/Machine.h:/usr/src/MP-SPDZ/Processor/Machine.h
+      - ./Processor/Machine.hpp:/usr/src/MP-SPDZ/Processor/Machine.hpp
+      - ./Processor/Processor.h:/usr/src/MP-SPDZ/Processor/Processor.h
+      - ./Processor/Processor.hpp:/usr/src/MP-SPDZ/Processor/Processor.hpp
+      - ./Protocols/MascotPrep.h:/usr/src/MP-SPDZ/Protocols/MascotPrep.h
+      - ./Protocols/MascotPrep.hpp:/usr/src/MP-SPDZ/Protocols/MascotPrep.hpp
+      - ./Protocols/ReplicatedMachine.h:/usr/src/MP-SPDZ/Protocols/ReplicatedMachine.h
+      - ./Protocols/ReplicatedMachine.hpp:/usr/src/MP-SPDZ/Protocols/ReplicatedMachine.hpp
+      - ./Protocols/ReplicatedPrep.h:/usr/src/MP-SPDZ/Protocols/ReplicatedPrep.h
       - ./Protocols/ReplicatedPrep.hpp:/usr/src/MP-SPDZ/Protocols/ReplicatedPrep.hpp
       - ./Protocols/Share.h/usr/src/MP-SPDZ/Protocols/Share.h
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
@@ -39,9 +49,14 @@ services:
       - ./Tools/Buffer.h:/usr/src/MP-SPDZ/Tools/Buffer.h
       - ./Utils/spdz2-offline.cpp:/usr/src/MP-SPDZ/Utils/spdz2-offline.cpp
       - ./Utils/paper-example.cpp:/usr/src/MP-SPDZ/Utils/paper-example.cpp
+      - ./Utils/paper-example-exp.cpp:/usr/src/MP-SPDZ/Utils/paper-example-exp.cpp
+      - ./Utils/paper-example-shamir.cpp:/usr/src/MP-SPDZ/Utils/paper-example-shamir.cpp
+      - ./Utils/paper-example-mal-shamir.cpp:/usr/src/MP-SPDZ/Utils/paper-example-mal-shamir.cpp
+      - ./Utils/shamir.cpp:/usr/src/MP-SPDZ/Utils/shamir.cpp
       - ./Utils/check-passive.cpp:/usr/src/MP-SPDZ/Utils/check-passive.cpp
       - ./Utils/read-offline.cpp:/usr/src/MP-SPDZ/Utils/read-offline.cpp
       - ./Utils/Check-Offline.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline.cpp
       - ./Utils/Check-Offline-Z2k.cpp:/usr/src/MP-SPDZ/Utils/Check-Offline-Z2k.cpp
+      - ./Utils/ot-offline.cpp:/usr/src/MP-SPDZ/Utils/ot-offline.cpp
       - ./PreProcessing-Data:/usr/src/MP-SPDZ/PreProcessing-Data
     command: bash Programs/Source/hbmpc_mimc_test.sh

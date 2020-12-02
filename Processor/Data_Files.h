@@ -321,6 +321,9 @@ inline void Preprocessing<T>::get_one(Dtype dtype, T& a)
 template<class T>
 inline void Preprocessing<T>::get_input(T& a, typename T::open_type& x, int i)
 {
+  cout << "Processor/Data_Files.h: "
+      << "Preprocessing<T>::get_input(T& a, typename T::open_type& x, int i)"
+       << endl;
   count_input(i);
   get_input_no_count(a, x, i);
 }
