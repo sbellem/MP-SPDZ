@@ -72,7 +72,7 @@ int main(int argc, char** argv)
     cout << "$$$$$: prep file: " << ss.str().c_str() << endl;
     outputFile.open(ss.str().c_str());
 
-    int ntriples = 10;
+    int ntriples = 10000;
     vector<T> Sa(ntriples), Sb(ntriples), Sc(ntriples);
     //cout << "triples type: " << typeid(preprocessing.triples).name() << endl;
     for (int i=0; i < ntriples; i++)
@@ -87,7 +87,10 @@ int main(int argc, char** argv)
             outputFile << "\n";
     }
 
-    int number_of_shares = 1;
+    /*
+     * using get_input does not work, only player 0 seems to get it
+     *
+    int number_of_shares = 10;
     vector<T> random_shares(number_of_shares);
     for (int i=0; i < number_of_shares; i++)
     {
@@ -99,10 +102,12 @@ int main(int argc, char** argv)
         //preprocessing.get_input_no_count(tmp, _, P.num_players());
         preprocessing.get_input(tmp, _, P.my_num());
         random_shares[i] = tmp;
-        cout << "###### random shares[" << i << "]: " << random_shares[i] << endl;
+        cout << "###### [" << P.my_num() << "] random shares[" << i << "]: "
+             << random_shares[i] << endl;
         //random_shares[i].output(outputFile, false);
         //cout << "random share[" << i << "]: " << random_shares[i] << endl;
     }
+    */
 
     //T random_share;
     //random_share = preprocessing.get_random();
