@@ -25,10 +25,10 @@ int main(int argc, char** argv)
     CryptoPlayer P(N);
 
     // initialize fields
-    gfp::init_default(256);
-    //gfp::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"));
-    gfp1::init_default(256, false);
-    //gfp1::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"), false);
+    //gfp::init_default(128);
+    gfp::init_field(bigint("170141183460469231731687303715885907969"));
+    //gfp1::init_default(128, false);
+    gfp1::init_field(bigint("170141183460469231731687303715885907969"), false);
     T::bit_type::mac_key_type::init_field();
 
     // must initialize MAC key for security of some protocols

@@ -27,8 +27,8 @@ int main(int argc, char** argv)
     CryptoPlayer P(N);
 
     // initialize fields
-    numBits(32768);
     bigint prime = bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513");
+    cout << "numBits: " << numBits(32768) << endl;
     gfp::init_field(prime);
 
     //gfp1::init_default(256, false);
@@ -68,13 +68,13 @@ int main(int argc, char** argv)
     // multiplication protocol
     typename T::Protocol protocol(P);
 
-    int n = 1000;
+    int n = 3;
     vector<T> a(n), b(n);
     T c;
     typename T::clear result;
 
     input.reset_all(P);
-    for (int i = 0; i < n; i++)
+    for (int i = 3; i < 6; i++)
         input.add_from_all(i);
     input.exchange();
     for (int i = 0; i < n; i++)

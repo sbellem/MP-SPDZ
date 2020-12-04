@@ -448,8 +448,11 @@ template<class T>
 string Machine<sint, sgf2n>::prep_dir_prefix()
 {
   int lgp = opts.lgp;
-  if (opts.prime)
+  if (opts.prime) {
+    cout << "opts.prime: " << opts.prime << endl;
+    cout << "opts.prime type: " << typeid(opts.prime).name() << endl;
     lgp = numBits(opts.prime);
+  }
   return get_prep_sub_dir<T>(PREP_DIR, N.num_players(), lgp);
 }
 
