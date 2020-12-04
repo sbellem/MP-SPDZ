@@ -207,6 +207,8 @@ paper-example.x: $(VM) $(OT)
 paper-example-exp.x: $(VM) $(OT)
 paper-example-shamir.x: $(VM) $(shamir)
 paper-example-mal-shamir.x: $(VM) $(shamir)
+random-gen-shamir.x: $(VM) $(shamir)
+pes.x: $(VM) $(shamir)
 
 $(LIBSIMPLEOT): SimpleOT/Makefile
 	$(MAKE) -C SimpleOT

@@ -25,8 +25,18 @@ inline void gfp_<X, L>::read_or_generate_setup(string dir,
 template<int X, int L>
 void gfp_<X, L>::init_field(const bigint& p, bool mont)
 {
-  cout << "Math/gfp.hpp:::void gfp_<X, L>::init_field(const bigint& p, bool mont)\n";
-  cout << "Math/gfp.hpp ... bigint& p: " << p << "\n";
+  cout << "**************************************************************************\n"
+       << "*                                                                        *\n"
+       << "*                          INITIALIZE PRIME FIELD                        *\n"
+       << "*                                                                        *\n"
+       << "* PRIME: " << p << " *\n"
+       << "* Montgomery set: " << mont << "                                                   *\n"
+       << "*                                                                        *\n"
+       << "*                                                                        *\n"
+       << "* Math/gfp.hpp:::void gfp_<X, L>::init_field(const bigint& p, bool mont) *\n"
+       << "*                                                                        *\n"
+       << "**************************************************************************\n";
+
   ZpD.init(p, mont);
   string name = "gfp<" + to_string(X) + ", " + to_string(L) + ">";
   cout << "name: " << name << "\n";
@@ -50,7 +60,16 @@ void gfp_<X, L>::init_field(const bigint& p, bool mont)
 template <int X, int L>
 void gfp_<X, L>::init_default(int lgp, bool mont)
 {
+  cout << "***********************************************************************\n"
+       << "*                                                                     *\n"
+       << "*                    Default prime field initialization               *\n"
+       << "*                                                                     *\n"
+       << "* lgp: " << lgp << "                                                            *\n"
+       << "* Montgomery set: " << mont << "                                                   *\n"
+       << "*                                                                     *\n"
+       << "***********************************************************************\n";
   init_field(SPDZ_Data_Setup_Primes(lgp), mont);
+  //init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"), mont);
 }
 
 template <int X, int L>

@@ -90,12 +90,13 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
 #        && echo 5 > Player-Data/Input-P2-0
 #CMD /bin/sh -c Scripts/ring.sh mult3
 
-RUN echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
+RUN echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
+        #&& echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
 
 RUN make malicious-shamir-party.x \
         && ./Scripts/setup-ssl.sh 4 \
-        && make paper-example.x \
-        && make paper-example-exp.x \
+        #&& make paper-example.x \
+        #&& make paper-example-exp.x \
         && make paper-example-shamir.x \
+        && make random-gen-shamir.x
         #&& make paper-example-mal-shamir.x

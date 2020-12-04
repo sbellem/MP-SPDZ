@@ -24,10 +24,14 @@ services:
       - ./FHEOffline/Producer.cpp:/usr/src/MP-SPDZ/FHEOffline/Producer.cpp
       - ./FHEOffline/Sacrificing.cpp:/usr/src/MP-SPDZ/FHEOffline/Sacrificing.cpp
       - ./Machines/TripleMachine.cpp:/usr/src/MP-SPDZ/Machines/TripleMachine.cpp
+      - ./Math/bigint.cpp:/usr/src/MP-SPDZ/Math/bigint.cpp
+      - ./Math/bigint.h:/usr/src/MP-SPDZ/Math/bigint.h
+      - ./Math/bigint.hpp:/usr/src/MP-SPDZ/Math/bigint.hpp
       - ./Math/gfp.h:/usr/src/MP-SPDZ/Math/gfp.h
       - ./Math/gfp.hpp:/usr/src/MP-SPDZ/Math/gfp.hpp
       - ./Math/modp.h:/usr/src/MP-SPDZ/Math/modp.h
       - ./Math/modp.hpp:/usr/src/MP-SPDZ/Math/modp.hpp
+      - ./Math/Setup.cpp:/usr/src/MP-SPDZ/Math/Setup.cpp
       - ./Math/Zp_Data.h:/usr/src/MP-SPDZ/Math/Zp_Data.h
       - ./Math/Zp_Data.cpp:/usr/src/MP-SPDZ/Math/Zp_Data.cpp
       - ./OT/NPartyTripleGenerator.hpp:/usr/src/MP-SPDZ/OT/NPartyTripleGenerator.hpp
@@ -52,6 +56,7 @@ services:
       - ./Utils/paper-example-exp.cpp:/usr/src/MP-SPDZ/Utils/paper-example-exp.cpp
       - ./Utils/paper-example-shamir.cpp:/usr/src/MP-SPDZ/Utils/paper-example-shamir.cpp
       - ./Utils/paper-example-mal-shamir.cpp:/usr/src/MP-SPDZ/Utils/paper-example-mal-shamir.cpp
+      - ./Utils/random-gen-shamir.cpp:/usr/src/MP-SPDZ/Utils/random-gen-shamir.cpp
       - ./Utils/shamir.cpp:/usr/src/MP-SPDZ/Utils/shamir.cpp
       - ./Utils/check-passive.cpp:/usr/src/MP-SPDZ/Utils/check-passive.cpp
       - ./Utils/read-offline.cpp:/usr/src/MP-SPDZ/Utils/read-offline.cpp

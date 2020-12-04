@@ -192,6 +192,8 @@ inline void invMod(bigint& ans,const bigint& x,const bigint& p)
 
 inline int numBits(const bigint& m)
 {
+  cout << "numBits ****************************************\n"
+        << "inline int numBits(const bigint& m)\n";
   return m.numBits();
 }
 
@@ -199,6 +201,8 @@ inline int numBits(const bigint& m)
 
 inline int numBits(long m)
 {
+  cout << "numBits ****************************************\n"
+        << "inline int numBits(long m)\n";
   bigint& te = bigint::tmp = m;
   return mpz_sizeinbase(te.get_mpz_t(),2);
 }
