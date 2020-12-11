@@ -60,45 +60,21 @@ RUN pip install --editable Compiler/
 COPY . .
 
 RUN make clean
-# honest majority, malicious shamir
-#RUN make -j 8 malicious-shamir-party.x
-#RUN Scripts/setup-ssl.sh 3
-#RUN mkdir -p Player-Data
 
-# tldr
-RUN make -j 2 tldr
-#RUN echo ARCH = -march=native >> CONFIG.mine
-#RUN make mascot-party.x
-#RUN mkdir -p Player-Data \
-#        && echo 1 2 3 4 > Player-Data/Input-P0-0 \
-#        && echo 1 2 3 4 > Player-Data/Input-P1-0
-#
-#CMD Scripts/mascot.sh tutorial
+#RUN mkdir -p PreProcessing-Data \
+#        && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
 
-# online & offline
-#RUN echo "MY_CFLAGS += -DINSECURE" >> CONFIG.mine
-#RUN make -j 8 online
-RUN make online
-RUN make offline
-#RUN ./Scripts/setup-online.sh
+# DEBUG and configuration flags
+RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_MAC" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine \
+        && echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
 
+RUN make malicious-shamir-party.x \
+        && make paper-example-shamir.x \
+        && make random-shamir.x
 
-# shamir
-RUN make malicious-shamir-party.x
+RUN ./Scripts/setup-ssl.sh 4
 
-## ring
-#RUN Scripts/setup-ssl.sh 3
-#RUN make -j 8 replicated-ring-party.x
-#RUN mkdir -p Player-Data \
-#        && echo 3 > Player-Data/Input-P0-0 \
-#        && echo 4 > Player-Data/Input-P1-0 \
-#        && echo 5 > Player-Data/Input-P2-0
-
-RUN pip install -e Compiler/
-RUN pip3 install gmpy2
-RUN pip3 install gmpy
-RUN pip3 install toml
-RUN pip3 install leveldb
-RUN pip3 install aiohttp
-
-#CMD /bin/sh -c Scripts/ring.sh mult3
+RUN pip install gmpy2 gmpy toml leveldb aiohttp
