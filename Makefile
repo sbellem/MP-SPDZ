@@ -205,6 +205,7 @@ emulate.x: GC/FakeSecret.o
 semi-bmr-party.x: GC/SemiPrep.o GC/SemiSecret.o
 paper-example.x: $(VM) $(OT)
 paper-example-shamir.x: $(VM) $(shamir)
+random-shamir.x: $(VM) $(shamir)
 
 $(LIBSIMPLEOT): SimpleOT/Makefile
 	$(MAKE) -C SimpleOT
