@@ -250,8 +250,10 @@ static/semi-bmr-party.x: $(BMR)
 static/real-bmr-party.x: $(BMR)
 static/bmr-program-party.x: $(BMR)
 static/no-party.x: Protocols/ShareInterface.o
-# test
+
+# random shamir preproc
 paper-example-shamir.x: $(VM) $(shamir) $(FHEOFFLINE)
+random-shamir.x: $(VM) $(shamir)
 
 ifeq ($(AVX_OT), 1)
 
