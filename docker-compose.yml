@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mp-spdz:
+    image: mp-spdz
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ./Compiler:/usr/src/MP-SPDZ/Compiler
+      - ./CONFIG:/usr/src/MP-SPDZ/CONFIG
+      - ./Makefile:/usr/src/MP-SPDZ/Makefile
+      - ./Programs:/usr/src/MP-SPDZ/Programs
