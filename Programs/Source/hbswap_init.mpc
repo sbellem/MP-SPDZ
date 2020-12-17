@@ -1,4 +1,4 @@
-from mpspdz.instructions import writesharestofile
+from Compiler.instructions import writesharestofile
 
 def main():
     pool_ETH = sfix(10)
