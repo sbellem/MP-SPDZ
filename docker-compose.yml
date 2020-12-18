@@ -14,3 +14,4 @@ services:
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
       - ./Scripts:/usr/src/MP-SPDZ/Scripts
       - ./Scripts/hbswap:/gopath/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+      - ./Utils/paper-example-shamir.cpp:/usr/src/MP-SPDZ/Utils/paper-example-shamir.cpp

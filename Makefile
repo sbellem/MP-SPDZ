@@ -213,7 +213,7 @@ static/semi-bmr-party.x: $(BMR)
 static/real-bmr-party.x: $(BMR)
 static/bmr-program-party.x: $(BMR)
 paper-example-shamir.x: $(VM) $(shamir)
-random-shamir.x: $(VM) $(shamir)
+random-shamir.x: $(VM) $(shamir) $(OT) $(FHEOFFLINE)
 
 $(LIBSIMPLEOT): SimpleOT/Makefile
 	$(MAKE) -C SimpleOT
