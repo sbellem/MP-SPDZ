@@ -1,9 +1,11 @@
 let
   sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs {};
-in
-pkgs.mkShell {
-  buildInputs = with pkgs; [
+  ntl105 = with pkgs; import ./nix/ntl.nix { inherit stdenv lib fetchurl perl gmp; };
+in with pkgs;
+mkShell {
+  inherit ntl105;
+  buildInputs = [
     autoconf
     automake
     boost
@@ -12,6 +14,7 @@ pkgs.mkShell {
     libsodium
     libtool
     mpir
+    ntl105
     openssl
     perl
     texinfo

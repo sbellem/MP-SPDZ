@@ -8,7 +8,7 @@
 #include "Math/gfp.hpp"
 #include "Processor/Data_Files.hpp"
 #include "Machines/ShamirMachine.hpp"
-//#include "Protocols/ShamirShare.h"
+#include "Protocols/ShamirShare.h"
 #include "Protocols/MaliciousShamirShare.h"
 #include "Protocols/MaliciousRepPrep.h"
 
@@ -35,7 +35,7 @@ int main(int argc, char** argv)
         protocol = argv[3];
 
     if (protocol == "Shamir")
-        run<MaliciousShamirShare<gfp_<0, n_limbs>>>(argv, prime_length);
+        run<ShamirShare<gfp_<0, n_limbs>>>(argv, prime_length);
     //else if (protocol == "MaliciousShamir")
     //    run<MaliciousShamirShare<gfp_<0, n_limbs>>>(argv, prime_length);
     else
