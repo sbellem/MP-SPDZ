@@ -3,6 +3,7 @@
  *
  */
 
+#include "Math/modp.hpp"
 #include <FHEOffline/SimpleEncCommit.h>
 #include "FHEOffline/SimpleMachine.h"
 #include "FHEOffline/Multiplier.h"
