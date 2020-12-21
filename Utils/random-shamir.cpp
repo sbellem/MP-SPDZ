@@ -144,6 +144,11 @@ int generate(ezOptionParser& opt)
     typename T::bit_type::mac_key_type binary_mac_key;
     T::bit_type::part_type::read_or_generate_mac_key("", P, binary_mac_key);
 
+    // Machine setup
+    ShamirMachine machine;
+
+    cout << "threshold: " << T::threshold(1) << endl;
+
     // keeps tracks of preprocessing usage
     DataPositions usage;
     usage.set_num_players(P.num_players());
