@@ -66,6 +66,7 @@ int main(int argc, const char** argv)
 		0, // Delimiter if expecting multiple args.
 		"Prime field (default: BLS12-381 prime field \
             '52435875175126190479447740508185965837690552500527637822603658699938581184513').", // Help description.
+		"-P",
 		"--prime"
 	);
 
