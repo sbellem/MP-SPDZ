@@ -9,7 +9,7 @@
 
 using namespace ez;
 
-int generate(ezOptionParser& opt);
+int generate(ezOptionParser& opt, int nparties);
 
 void Usage(ezOptionParser& opt) {
 	string usage;
@@ -19,10 +19,13 @@ void Usage(ezOptionParser& opt) {
 
 int main(int argc, const char** argv)
 {
+    auto& opts = ShamirOptions::singleton;
     ezOptionParser opt;
+    opts = {opt, argc, argv};
+
     opt.overview = "Generator of random shares using Shamir Secret Sharing.";
     opt.syntax = "./random-gen-shamir.x [OPTIONS]\n";
-    opt.example = "./random-gen-shamir.x -i 0 -N 4 --nshares 10000 --host darkmatter.io --port 9999 \n";
+    opt.example = "./random-gen-shamir.x -i 0 -N 4 -T 1 --nshares 10000 --host darkmatter.io --port 9999 \n";
 
     opt.add(
 		"", // Default.
@@ -47,16 +50,6 @@ int main(int argc, const char** argv)
 	);
 
     opt.add(
-		"4", // Default.
-		0, // Required?
-		1, // Number of args expected.
-		0, // Delimiter if expecting multiple args.
-		"Number of parties.", // Help description.
-		"-N", // Flag token.
-		"--nparties" // Flag token.
-	);
-
-    opt.add(
 		"20000", // Default.
 		0, // Required?
 		1, // Number of args expected.
@@ -71,7 +64,7 @@ int main(int argc, const char** argv)
 		0, // Required?
 		1, // Number of args expected.
 		0, // Delimiter if expecting multiple args.
-		"Hostname of MPC server (default: BLS12-381 prime field \
+		"Prime field (default: BLS12-381 prime field \
             '52435875175126190479447740508185965837690552500527637822603658699938581184513').", // Help description.
 		"--prime"
 	);
@@ -106,11 +99,13 @@ int main(int argc, const char** argv)
 		Usage(opt);
         exit(0);
     }
-    return generate(opt);
+    cout << "opts threshold: " << opts.threshold << endl;
+    cout << "opts nparties: " << opts.nparties << endl;
+    return generate(opt, opts.nparties);
 }
 
 
-int generate(ezOptionParser& opt)
+int generate(ezOptionParser& opt, int nparties)
 {
     // needed because of bug in some gcc versions < 9
     // https://gitter.im/MP-SPDZ/community?at=5fcadf535be1fb21c5fce581
@@ -118,10 +113,11 @@ int generate(ezOptionParser& opt)
 
     typedef MaliciousShamirShare<gfp> T;
 
-    int playerno, nparties, nshares, port;
+    //int playerno, nparties, nshares, port;
+    int playerno, nshares, port;
     string hostname, prime;
     opt.get("--playerno")->getInt(playerno);
-    opt.get("--nparties")->getInt(nparties);
+    //opt.get("--nparties")->getInt(nparties);
     opt.get("--nshares")->getInt(nshares);
     opt.get("--prime")->getString(prime);
     opt.get("--host")->getString(hostname);
