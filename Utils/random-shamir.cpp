@@ -49,16 +49,6 @@ int main(int argc, const char** argv)
 		"--playerno" // Flag token.
 	);
 
-    //opt.add(
-	//	"4", // Default.
-	//	0, // Required?
-	//	1, // Number of args expected.
-	//	0, // Delimiter if expecting multiple args.
-	//	"Number of parties.", // Help description.
-	//	"-N", // Flag token.
-	//	"--nparties" // Flag token.
-	//);
-
     opt.add(
 		"20000", // Default.
 		0, // Required?
@@ -149,12 +139,6 @@ int generate(ezOptionParser& opt, int nparties)
     T::read_or_generate_mac_key("", P, mac_key);
     typename T::bit_type::mac_key_type binary_mac_key;
     T::bit_type::part_type::read_or_generate_mac_key("", P, binary_mac_key);
-
-    //cout << "threshold: " << T::threshold(4) << endl;
-
-    // Machine setup
-    ShamirMachine machine;
-    cout << "Shamir Machine threshold: " << ShamirMachine::s().threshold << endl;
 
     // keeps tracks of preprocessing usage
     DataPositions usage;
