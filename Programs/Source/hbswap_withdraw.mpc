@@ -1,0 +1,16 @@
+from Compiler.instructions import readsharesfromfile, writesharestofile
+
+def readshare(idx):
+    start = regint(idx * 32)
+    end = regint()
+    masked_value = sint()
+    readsharesfromfile(start, end, masked_value)
+    return masked_value
+
+def main():
+    balance = sfix._new(readshare(0))
+    withdraw_amt = sfix._new(readshare(1))
+    print_ln('balance %v amt %v\n', balance.reveal(), amt.reveal())
+    print_ln('agree %s', (balance >= withdraw_amt).reveal())
+
+main()
