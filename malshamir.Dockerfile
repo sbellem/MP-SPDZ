@@ -28,6 +28,7 @@ COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/lib/libmpirxx.so.8.4.3 /usr/loca
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/include/mpir*.h /usr/local/include/
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/share/info/* /usr/local/share/info/
 RUN set -ex \
+    && cd /usr/local/lib \
     && ln -s libmpir.so.23.0.3 libmpir.so \
     && ln -s libmpir.so.23.0.3 libmpir.so.23 \
     && ln -s libmpirxx.so.8.4.3 libmpirxx.so \
@@ -67,3 +68,8 @@ RUN make malicious-shamir-party.x
 ENV PRIME 52435875175126190479447740508185965837690552500527637822603658699938581184513
 ENV N_PARTIES 4
 ENV THRESHOLD 1
+
+
+#ENV LIBRARY_PATH /usr/local/lib
+ENV LD_LIBRARY_PATH /usr/local/lib
+#ENV LIBRARY_INCLUDE_PATH /usr/local/include

@@ -41,22 +41,3 @@ services:
     entrypoint: ""
     # TODO wait for contract to be deployed/available
     command: ["go", "run", "client/deposit.go", "0", "10", "10", "eth.chain"]
-
-  mpc.nodes:
-    image: hbswap-mpc
-    build:
-      context: ../..
-      dockerfile: Dockerfile
-    working_dir: /usr/src/MP-SPDZ
-    volumes:
-      - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
-      - ../../Makefile:/usr/src/MP-SPDZ/Makefile
-      - ../../Persistence:/usr/src/MP-SPDZ/Persistence
-      - ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
-      - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
-      - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
-      - ./scripts/mpc.sh:/usr/src/MP-SPDZ/mpc.sh
-      - .:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
-    command: ["bash", "mpc.sh"]
-
-
