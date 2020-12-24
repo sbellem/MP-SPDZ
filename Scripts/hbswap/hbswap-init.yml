@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+
+  # generate and "distribute" keys
+  mpc.trusted.setup:
+    image: hbswap-setup
+    build:
+      context: .
+      dockerfile: setup.Dockerfile
+    working_dir: /usr/src
+    volumes:
+      - ../../Scripts/setup-ssl.sh:/usr/src/setup-ssl.sh
+      - ../../Player-Data:/usr/src/Player-Data
+    command: ["bash", "setup-ssl.sh", "4"]
+
+  # compile MPC programs (hbswap_init, hbswap_trade_prep, hbswap_trade)
+  # see scripts/compile.sh for details
+  mpc.compile:
+    image: python:3.8
+    working_dir: /usr/src
+    volumes:
+      - ../../compile.py:/usr/src/compile.py
+      - ../../Compiler:/usr/src/Compiler
+      - ../../Programs:/usr/src/Programs
+      - ./scripts/compile.sh:/usr/src/compile.sh
+    command: ["bash", "compile.sh"]
+
+  # NOTE Run all (4) nodes in one container. Can be useful for troubleshooting.
+  #mpc.allnodes:
+  #  image: hbswap-mpc
+  #  build:
+  #    context: ../..
+  #    dockerfile: malshamir.Dockerfile
+  #  working_dir: /usr/src/MP-SPDZ
+  #  volumes:
+  #    - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
+  #    - ../../Makefile:/usr/src/MP-SPDZ/Makefile
+  #    - ../../Persistence:/usr/src/MP-SPDZ/Persistence
+  #    - ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
+  #    - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+  #    - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+  #    - ./scripts/mpc-prep.sh:/usr/src/MP-SPDZ/mpc-prep.sh
+  #  command: ["bash", "mpc-prep.sh"]
+
+  mpc.node.0:
+    image: hbswap-mpc
+    build:
+      context: ../..
+      dockerfile: malshamir.Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
+      - ../../Makefile:/usr/src/MP-SPDZ/Makefile
+      - ../../Persistence:/usr/src/MP-SPDZ/Persistence
+      - ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
+      - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+      - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+      - ./scripts/mpc-init.sh:/usr/src/MP-SPDZ/mpc-init.sh
+    # NOTE IMPORTANT!
+    # The hostname (2nd arg) must be the one of player 0, i.e. "mpc.node.0"
+    command: ["bash", "mpc-init.sh", "0", "mpc.node.0"]
+
+  mpc.node.1:
+    image: hbswap-mpc
+    build:
+      context: ../..
+      dockerfile: malshamir.Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
+      - ../../Makefile:/usr/src/MP-SPDZ/Makefile
+      - ../../Persistence:/usr/src/MP-SPDZ/Persistence
+      - ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
+      - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+      - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+      - ./scripts/mpc-init.sh:/usr/src/MP-SPDZ/mpc-init.sh
+    # NOTE IMPORTANT!
+    # The hostname (2nd arg) must be the one of player 0, i.e. "mpc.node.0"
+    command: ["bash", "mpc-init.sh", "1", "mpc.node.0"]
+
+  mpc.node.2:
+    image: hbswap-mpc
+    build:
+      context: ../..
+      dockerfile: malshamir.Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
+      - ../../Makefile:/usr/src/MP-SPDZ/Makefile
+      - ../../Persistence:/usr/src/MP-SPDZ/Persistence
+      - ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
+      - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+      - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+      - ./scripts/mpc-init.sh:/usr/src/MP-SPDZ/mpc-init.sh
+    # NOTE IMPORTANT!
+    # The hostname (2nd arg) must be the one of player 0, i.e. "mpc.node.0"
+    command: ["bash", "mpc-init.sh", "2", "mpc.node.0"]
+
+  mpc.node.3:
+    image: hbswap-mpc
+    build:
+      context: ../..
+      dockerfile: malshamir.Dockerfile
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
+      - ../../Makefile:/usr/src/MP-SPDZ/Makefile
+      - ../../Persistence:/usr/src/MP-SPDZ/Persistence
+      - ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
+      - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
+      - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
+      - ./scripts/mpc-init.sh:/usr/src/MP-SPDZ/mpc-init.sh
+    # NOTE IMPORTANT!
+    # The hostname (2nd arg) must be the one of player 0, i.e. "mpc.node.0"
+    command: ["bash", "mpc-init.sh", "3", "mpc.node.0"]

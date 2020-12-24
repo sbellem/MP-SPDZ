@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  eth.chain:
+    image: ethereum/client-go:latest
+    working_dir: /usr/src/
+    volumes:
+      - ./scripts/chain.sh:/usr/src/chain.sh
+      - ./poa:/usr/src/poa
+    entrypoint: ""
+    command: sh chain.sh
+
+  contract.deploy:
+    image: hbswap-go
+    build:
+      context: .
+      dockerfile: contract.Dockerfile
+      target: deploy
+    working_dir: /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/go
+    volumes:
+      - ./scripts/wait-for-it.sh:/usr/local/bin/wait-for-it
+      - .:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+    depends_on:
+      - eth.chain
+    entrypoint: ""
+    command: ["wait-for-it", "eth.chain:8545", "--", "go", "run", "deploy/deploy.go", "eth.chain"]
+
+  contract.deposit:
+    image: hbswap-go
+    build:
+      context: .
+      dockerfile: contract.Dockerfile
+      target: deposit
+    working_dir: /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/go
+    volumes:
+      - ./scripts/wait-for-it.sh:/usr/local/bin/wait-for-it
+      - .:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+    depends_on:
+      - contract.deploy
+    entrypoint: ""
+    # TODO wait for contract to be deployed/available
+    command: ["go", "run", "client/deposit.go", "0", "10", "10", "eth.chain"]

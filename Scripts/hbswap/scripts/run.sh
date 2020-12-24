@@ -57,8 +57,3 @@ trade 0 -1.1 2
 secret_withdraw 0 9 9
 
 withdraw 0 9 9
-
-
-
-
-
