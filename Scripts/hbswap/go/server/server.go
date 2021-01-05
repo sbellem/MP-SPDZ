@@ -8,6 +8,7 @@ import (
 	"github.com/initc3/MP-SPDZ/Scripts/hbswap/go_bindings/hbswap"
 	"github.com/syndtr/goleveldb/leveldb"
 	"log"
+	"net"
 	"os"
 	"os/exec"
 	"strconv"
@@ -18,19 +19,19 @@ import (
 
 const (
 	hbswapAddr = "0xF74Eb25Ab1785D24306CA6b3CBFf0D0b0817C5E2"
-	prog = "./malicious-shamir-party.x"
-	players = "4"
-	threshold = "1"
-	mpcPort = "5000"
-	blsPrime = "52435875175126190479447740508185965837690552500527637822603658699938581184513"
-	sz = 32
-	nshares = 1000
+	prog       = "./malicious-shamir-party.x"
+	players    = "4"
+	threshold  = "1"
+	mpcPort    = "5000"
+	blsPrime   = "52435875175126190479447740508185965837690552500527637822603658699938581184513"
+	sz         = 32
+	nshares    = 1000
 )
 
 var (
-	serverID	string
-	mut 		sync.Mutex
-	conn		*ethclient.Client
+	serverID string
+	mut      sync.Mutex
+	conn     *ethclient.Client
 )
 
 func dbPut(key string, value []byte) {
@@ -61,7 +62,7 @@ func genInputmask() {
 	for true {
 		cnt := utils.GetInputmaskCnt(conn)
 
-		if int(cnt.Int64()) + 100 > tot {
+		if int(cnt.Int64())+100 > tot {
 			fmt.Printf("Generating new inputmasks...\n")
 
 			cmd := exec.Command("./random-shamir.x", "-i", serverID, "-N", players, "-T", threshold, "--nshares", strconv.Itoa(nshares))
@@ -130,7 +131,7 @@ func watch() {
 		//	dbPut(oce.IdxA.String(), share1)
 		//	dbPut(oce.IdxB.String(), share2)
 
-		case err := <- tradeSub.Err():
+		case err := <-tradeSub.Err():
 			log.Fatal(err)
 		case oce := <-tradeChannel:
 			fmt.Printf("Starting to trade...\n")
@@ -143,7 +144,7 @@ func watch() {
 
 			cmd = exec.Command("python3", "Scripts/hbswap/python/server/trade_org_data.py", serverID)
 			stdout := utils.ExecCmd(cmd)
-			changes := strings.Split(stdout[:len(stdout) - 1], " ")
+			changes := strings.Split(stdout[:len(stdout)-1], " ")
 			fmt.Printf("change_A %s change_B %s\n", changes[0], changes[1])
 
 			cmd = exec.Command("python3", "Scripts/hbswap/python/server/update_balance.py", serverID, oce.TokenA.String(), oce.User.Hex(), changes[0], "0")
@@ -154,7 +155,7 @@ func watch() {
 
 			fmt.Printf("Trade finished\n")
 
-		case err := <- secretDepositPrepSub.Err():
+		case err := <-secretDepositPrepSub.Err():
 			log.Fatal(err)
 		case oce := <-secretDepositPrepChannel:
 			fmt.Printf("SecretDeposit\n")
@@ -173,7 +174,16 @@ func main() {
 	serverID = os.Args[1]
 	log.Printf("Starting server %v\n", serverID)
 
-	conn = utils.GetEthClient("ws://127.0.0.1:8546")
+	// TODO set default to localhost
+	hostname := os.Args[2]
+	addr, err := net.LookupIP(hostname)
+	if err != nil {
+		fmt.Println("Unknown host")
+	} else {
+		fmt.Println("IP address: ", addr)
+	}
+
+	conn = utils.GetEthClient(fmt.Sprintf("ws://%s:8546", addr))
 
 	var wg sync.WaitGroup
 	wg.Add(1)

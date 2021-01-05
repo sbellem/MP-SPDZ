@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8 as mp-spdz
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
                 automake \
@@ -51,7 +51,7 @@ COPY Processor Processor
 COPY Protocols Protocols
 COPY SimpleOT SimpleOT
 COPY Tools Tools
-#COPY Utils Utils
+COPY Utils Utils
 #COPY Yao Yao
 
 RUN make clean
@@ -64,16 +64,25 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
 
 RUN make malicious-shamir-party.x
+RUN make random-shamir.x
 
 ENV PRIME 52435875175126190479447740508185965837690552500527637822603658699938581184513
 ENV N_PARTIES 4
 ENV THRESHOLD 1
 ENV LD_LIBRARY_PATH /usr/local/lib
 
+FROM mp-spdz as hbswap
 # Python (HTTP server) dependencies for HTTP server
+RUN apt-get update && apt-get install -y --no-install-recommends \
+                lsof \
+                libmpfr-dev \
+                libmpc-dev \
+        && rm -rf /var/lib/apt/lists/*
+
 RUN pip install gmpy2 gmpy toml leveldb aiohttp
 
 # GO (server) dependencies
+ENV PATH /usr/local/go/bin:$PATH
 COPY --from=golang:1.15.6-buster /usr/local/go /usr/local/go
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:$PATH
@@ -89,5 +98,7 @@ COPY Scripts/hbswap /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
 WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
 
 RUN go get -d -v ./...
+
+COPY Scripts /usr/src/MP-SPDZ/Scripts
 
 #WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/go
