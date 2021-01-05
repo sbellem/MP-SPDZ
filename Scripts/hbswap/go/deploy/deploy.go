@@ -59,12 +59,13 @@ func DeployToken(conn *ethclient.Client, auth *bind.TransactOpts) common.Address
 func main() {
 	// TODO set default to localhost
 	hostname := os.Args[1]
-	addr, err := net.LookupIP(hostname)
+	addrs, err := net.LookupIP(hostname)
 	if err != nil {
 		fmt.Println("Unknown host")
-	} else {
-		fmt.Println("IP address: ", addr)
+		return
 	}
+	addr := addrs[0]
+	fmt.Println("IP address: ", addr)
 	conn := utils.GetEthClient(fmt.Sprintf("HTTP://%s:8545", addr))
 	log.Println("connection: ", conn)
 	owner, _ := utils.GetAccount("account_0")

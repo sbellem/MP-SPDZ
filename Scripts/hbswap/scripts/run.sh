@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -e
 
+eth_host=${1:-localhost}
+
 deposit() {
-  go run Scripts/hbswap/go/client/deposit.go $1 $2 $3
+  go run Scripts/hbswap/go/client/deposit.go $1 $2 $3 $eth_host
 }
 
 withdraw() {
@@ -33,7 +35,7 @@ pkill -f geth | true
 rm -rf Scripts/hbswap/poa/data
 bash Scripts/hbswap/scripts/chain.sh
 
-go run Scripts/hbswap/go/deploy/deploy.go
+go run Scripts/hbswap/go/deploy/deploy.go $eth_host
 
 deposit 0 10 10
 

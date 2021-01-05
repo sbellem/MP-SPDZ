@@ -104,3 +104,4 @@ RUN pip3 install gmpy
 RUN pip3 install toml
 RUN pip3 install leveldb
 RUN pip3 install aiohttp
+ENV LD_LIBRARY_PATH /usr/local/lib

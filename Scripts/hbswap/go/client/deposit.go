@@ -40,12 +40,14 @@ func main() {
 	amtETH, amtTOK := os.Args[2], os.Args[3]
 	// TODO set default to localhost
 	hostname := os.Args[4]
-	addr, err := net.LookupIP(hostname)
+	addrs, err := net.LookupIP(hostname)
 	if err != nil {
 		fmt.Println("Unknown host")
-	} else {
-		fmt.Println("IP address: ", addr)
+		// return err
+		return
 	}
+	addr := addrs[0]
+	fmt.Println("IP address: ", addr)
 	//conn := utils.GetEthClient("HTTP://127.0.0.1:8545")
 	conn := utils.GetEthClient(fmt.Sprintf("HTTP://%s:8545", addr))
 
