@@ -28,7 +28,7 @@ httpserver() {
 }
 
 mpcserver() {
-  go run Scripts/hbswap/go/server/server.go $1 > Scripts/hbswap/log/mpc_server_$1.log 2>&1
+  go run Scripts/hbswap/go/server/server.go $1 $eth_host > Scripts/hbswap/log/mpc_server_$1.log 2>&1
 }
 
 pkill -f geth | true

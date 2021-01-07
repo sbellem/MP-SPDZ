@@ -1,7 +1,7 @@
 package main
 
 import (
-	"flag"
+	//"flag"
 	"fmt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -178,12 +178,12 @@ func main() {
 	// TODO set default to localhost
 	//hostname = flag.String("eth-hostname", "localhost", "Hostname of an ethereum node to connect to.")
 	hostname := os.Args[2]
-	addr, err := net.LookupIP(hostname)
+	addrs, err := net.LookupIP(hostname)
 	if err != nil {
 		fmt.Println("Unknown host")
-	} else {
-		fmt.Println("IP address: ", addr)
 	}
+	addr := addrs[0]
+	fmt.Println("IP address: ", addr)
 
 	conn = utils.GetEthClient(fmt.Sprintf("ws://%s:8546", addr))
 

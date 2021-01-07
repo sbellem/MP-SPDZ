@@ -18,7 +18,7 @@ help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
 clean: clean-mpc-progs clean-player-data
-	docker-compose run --rm eth.chain rm -rf poa/data
+	docker-compose run --rm eth.chain rm -rf /opt/hbswap/poa/data
 
 clean-mpc-progs:
 	docker-compose -f hbswap-init.yml run --rm mpc.compile rm -rf Programs/Bytecode Programs/Schedules Programs/Public-Input

@@ -17,15 +17,15 @@ prepare() {
   pkill -f server.go || true
 
   rm -rf Persistence
-  rm -rf Scripts/hbswap/data
-  rm -rf Scripts/hbswap/log
-  rm -rf Scripts/hbswap/db
+  rm -rf /opt/hbswap/data
+  rm -rf /opt/hbswap/log
+  rm -rf /opt/hbswap/db
   rm -rf Player-Data/4-MSp-255
 
   mkdir Persistence
-  mkdir Scripts/hbswap/data
-  mkdir Scripts/hbswap/log
-  mkdir Scripts/hbswap/db
+  mkdir /opt/hbswap/data
+  mkdir /opt/hbswap/log
+  mkdir /opt/hbswap/db
 }
 
 compile() {
@@ -40,10 +40,10 @@ run() {
 }
 
 org() {
-  mv 'Persistence/Transactions-P0.data' 'Scripts/hbswap/data/Pool-P0.data'
-  mv 'Persistence/Transactions-P1.data' 'Scripts/hbswap/data/Pool-P1.data'
-  mv 'Persistence/Transactions-P2.data' 'Scripts/hbswap/data/Pool-P2.data'
-  mv 'Persistence/Transactions-P3.data' 'Scripts/hbswap/data/Pool-P3.data'
+  mv 'Persistence/Transactions-P0.data' '/opt/hbswap/data/Pool-P0.data'
+  mv 'Persistence/Transactions-P1.data' '/opt/hbswap/data/Pool-P1.data'
+  mv 'Persistence/Transactions-P2.data' '/opt/hbswap/data/Pool-P2.data'
+  mv 'Persistence/Transactions-P3.data' '/opt/hbswap/data/Pool-P3.data'
 }
 
 prepare

@@ -16,4 +16,4 @@ services:
       - ./Scripts/hbswap:/gopath/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
       - ./Utils/random-shamir.cpp:/usr/src/MP-SPDZ/Utils/random-shamir.cpp
         #- ./scripts/chain.sh:/usr/src/chain.sh
-      - ./Scripts/hbswap/poa:/usr/src/MP-SPDZ/poa
+      - ./Scripts/hbswap/poa:/opt/hbswap/poa

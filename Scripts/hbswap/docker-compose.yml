@@ -11,7 +11,7 @@ services:
     working_dir: /usr/src/
     volumes:
       - ./scripts/chain.sh:/usr/src/chain.sh
-      - ./poa:/usr/src/poa
+      - ./poa:/opt/hbswap/poa
     entrypoint: ""
     command: sh chain.sh
 
