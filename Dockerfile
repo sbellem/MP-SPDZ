@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 libmpc-dev \
         && rm -rf /var/lib/apt/lists/*
 
+# Go & Ethereum
 COPY --from=golang:1.15.6-buster /usr/local/go /usr/local/go
 ENV PATH /usr/local/go/bin:$PATH
 ENV GOPATH /go
@@ -32,7 +33,6 @@ WORKDIR $GOPATH/src/github.com/ethereum/go-ethereum
 RUN git checkout cfbb969da
 
 # geth - to run a (private) node
-#COPY --from=ethereum/client-go /usr/local/bin/geth /usr/local/bin/
 RUN make geth
 RUN cp build/bin/geth /usr/local/bin/
 
@@ -54,6 +54,7 @@ ENV MP_SPDZ_HOME /usr/src/MP-SPDZ
 WORKDIR $MP_SPDZ_HOME
 
 # mpir
+ENV LD_LIBRARY_PATH /usr/local/lib
 RUN mkdir -p /usr/local/share/info
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/lib/libmpir*.*a /usr/local/lib/
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/lib/libmpir.so.23.0.3 /usr/local/lib/

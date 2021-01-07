@@ -1,12 +1,11 @@
+#!/usr/bin/env bash
+
 poaDir=/opt/hbswap/poa
 dataDir=/opt/hbswap/poa/data
 keyStore=/opt/hbswap/poa/keystore/account_0
 
-#$GOPATH/src/github.com/ethereum/go-ethereum/build/bin/geth --datadir $dataDir init ./Scripts/hbswap/poa/genesis.json
-#geth --datadir $dataDir init ./Scripts/hbswap/poa/genesis.json
 geth --datadir $dataDir init $poaDir/genesis.json
 
-#$GOPATH/src/github.com/ethereum/go-ethereum/build/bin/geth \
 geth \
     --datadir $dataDir \
     --keystore $keyStore \

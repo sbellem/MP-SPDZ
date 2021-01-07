@@ -8,19 +8,19 @@ deposit() {
 }
 
 withdraw() {
-  go run Scripts/hbswap/go/client/withdraw.go $1 $2 $3
+  go run Scripts/hbswap/go/client/withdraw.go $1 $2 $3 $eth_host
 }
 
 secret_deposit() {
-  go run Scripts/hbswap/go/client/secret_deposit.go $1 $2 $3
+  go run Scripts/hbswap/go/client/secret_deposit.go $1 $2 $3 $eth_host
 }
 
 secret_withdraw() {
-  go run Scripts/hbswap/go/client/secret_withdraw.go $1 $2 $3
+  go run Scripts/hbswap/go/client/secret_withdraw.go $1 $2 $3 $eth_host
 }
 
 trade() {
-  go run Scripts/hbswap/go/client/trade.go $1 $2 $3
+  go run Scripts/hbswap/go/client/trade.go $1 $2 $3 $eth_host
 }
 
 httpserver() {

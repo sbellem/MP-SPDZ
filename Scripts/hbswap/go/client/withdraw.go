@@ -6,6 +6,7 @@ import (
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/initc3/MP-SPDZ/Scripts/hbswap/go/utils"
 	"math/big"
+	"net"
 	"os"
 )
 
@@ -35,7 +36,18 @@ func main() {
 	user := os.Args[1]
 	amtETH, amtTOK := os.Args[2], os.Args[3]
 
-	conn := utils.GetEthClient("HTTP://127.0.0.1:8545")
+	// TODO set default to localhost
+	hostname := os.Args[4]
+	addrs, err := net.LookupIP(hostname)
+	if err != nil {
+		fmt.Println("Unknown host")
+		// return err
+		return
+	}
+	addr := addrs[0]
+	fmt.Println("IP address: ", addr)
+	//conn := utils.GetEthClient("HTTP://127.0.0.1:8545")
+	conn := utils.GetEthClient(fmt.Sprintf("HTTP://%s:8545", addr))
 
 	owner, _ := utils.GetAccount(fmt.Sprintf("account_%s", user))
 

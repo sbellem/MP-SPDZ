@@ -38,6 +38,7 @@ func depositTOK(conn *ethclient.Client, auth *bind.TransactOpts, _amt string) {
 func main() {
 	user := os.Args[1]
 	amtETH, amtTOK := os.Args[2], os.Args[3]
+
 	// TODO set default to localhost
 	hostname := os.Args[4]
 	addrs, err := net.LookupIP(hostname)

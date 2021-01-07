@@ -68,8 +68,10 @@ func main() {
 	fmt.Println("IP address: ", addr)
 	conn := utils.GetEthClient(fmt.Sprintf("HTTP://%s:8545", addr))
 	log.Println("connection: ", conn)
+
 	owner, _ := utils.GetAccount("account_0")
 	log.Println("owner: ", owner)
+
 	DeployHbSwap(conn, owner)
 	DeployToken(conn, owner)
 }
