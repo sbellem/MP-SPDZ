@@ -17,4 +17,3 @@ services:
       - ./Scripts/hbswap/poa:/opt/hbswap/poa
       - ./Utils/random-shamir.cpp:/usr/src/MP-SPDZ/Utils/random-shamir.cpp
         #- ./scripts/chain.sh:/usr/src/chain.sh
-      - ./Scripts/hbswap/poa:/opt/hbswap/poa

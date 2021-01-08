@@ -4,11 +4,12 @@ import toml
 
 from Server import Server
 
+
 async def main(node_id, config_file):
     config = toml.load(config_file)
 
-    n = config['n']
-    t = config['t']
+    n = config["n"]
+    t = config["t"]
 
     server_config = config["servers"][node_id]
     server = Server(n, t, server_id, server_config["host"], server_config["http_port"])
@@ -18,6 +19,7 @@ async def main(node_id, config_file):
 
     for task in tasks:
         await task
+
 
 if __name__ == "__main__":
     server_id = int(sys.argv[1])

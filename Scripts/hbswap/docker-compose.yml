@@ -104,11 +104,24 @@ services:
       - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
       - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
       - ./scripts/mpc.sh:/usr/src/MP-SPDZ/mpc.sh
-      - ../../Scripts/hbswap:/usr/src/MP-SPDZ/Scripts/hbswap
-      - ../../Scripts/hbswap:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+      - .:/usr/src/MP-SPDZ/Scripts/hbswap
+      - .:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
       - pool-data:/usr/src/MP-SPDZ/Scripts/hbswap/data
         #- pool-data/Transactions-P0.data:Scripts/hbswap/data/Pool-P0.data
         #- pool-data/Transactions-P1.data:Scripts/hbswap/data/Pool-P1.data
         #- pool-data/Transactions-P2.data:Scripts/hbswap/data/Pool-P2.data
         #- pool-data/Transactions-P3.data:Scripts/hbswap/data/Pool-P3.data
     command: ["bash", "mpc.sh", "eth.chain"]
+
+  client:
+    image: hbswap-mpc
+    build:
+      context: ../..
+      dockerfile: hbswap.Dockerfile
+      target: hbswap
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ./scripts/client.sh:/usr/src/MP-SPDZ/client.sh
+      - .:/usr/src/MP-SPDZ/Scripts/hbswap
+      - .:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+    command: ["bash", "client.sh", "eth.chain"]

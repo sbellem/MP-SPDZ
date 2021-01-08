@@ -12,6 +12,9 @@ mpcserver() {
   go run Scripts/hbswap/go/server/server.go $1 $chain_hostname > Scripts/hbswap/log/mpc_server_$1.log 2>&1
 }
 
+mkdir -p Persistence
+rm -rf Persistence/*
+
 httpserver 0 &
 httpserver 1 &
 httpserver 2 &

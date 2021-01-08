@@ -6,6 +6,7 @@ import time
 from aiohttp import web
 from utils import from_hex
 
+
 class Server:
     def __init__(self, n, t, server_id, host, http_port):
         self.n = n
@@ -34,8 +35,8 @@ class Server:
         @routes.get("/inputmasks/{mask_idxes}")
         async def _handler(request):
             print(f"request: {request}")
-            mask_idxes = re.split(',', request.match_info.get("mask_idxes"))
-            res = ''
+            mask_idxes = re.split(",", request.match_info.get("mask_idxes"))
+            res = ""
             for mask_idx in mask_idxes:
                 res += f"{',' if len(res) > 0 else ''}{self.dbGet(mask_idx.encode())}"
             data = {
