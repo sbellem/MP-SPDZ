@@ -19,17 +19,17 @@ help:
 
 clean: clean-mpc-progs clean-player-data
 	docker-compose run --rm eth.chain rm -rf /opt/hbswap/poa/data
+	docker-compose run --rm mpc.nodes rm -rf Scripts/hbswap/log/*
 
 clean-mpc-progs:
-	docker-compose -f hbswap-init.yml run --rm mpc.compile rm -rf Programs/Bytecode Programs/Schedules Programs/Public-Input
+	docker-compose run --rm mpc.compile rm -rf Programs/Bytecode Programs/Schedules Programs/Public-Input
 
 clean-player-data:
-	# FIXME does not work
-	docker-compose -f hbswap-init.yml run --rm mpc.trusted.setup rm -rf Player-Data/*
+	docker-compose run --rm mpc.trusted.setup rm -rf Player-Data/*
 
 #down: down-init
 down:
-	docker-compose down
+	docker-compose down --remove-orphans
 
 stop:
 	docker-compose stop eth.chain mpc.nodes
@@ -39,12 +39,12 @@ rm: clean
 
 #up: down rm down-init rm-init up-init ## run the example
 up: down rm ## run the example
-	docker-compose up --remove-orphans -d eth.chain
-	docker-compose up --remove-orphans contract.deploy
-	docker-compose up --remove-orphans contract.deposit
-	docker-compose up --remove-orphans mpc.trusted.setup mpc.compile
-	docker-compose up --remove-orphans mpc.init.nodes
-	docker-compose up --remove-orphans -d mpc.nodes
+	docker-compose up -d eth.chain
+	docker-compose up contract.deploy
+	docker-compose up contract.deposit
+	docker-compose up mpc.trusted.setup mpc.compile
+	docker-compose up mpc.init.nodes
+	docker-compose up -d mpc.nodes
 	sh scripts/follow-sim-logs-with-tmux.sh
 
 down-init:

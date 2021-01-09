@@ -12,7 +12,9 @@ async def main(node_id, config_file):
     t = config["t"]
 
     server_config = config["servers"][node_id]
-    server = Server(n, t, server_id, server_config["host"], server_config["http_port"])
+    server = Server(
+        n, t, server_id, server_config["http_host"], server_config["http_port"]
+    )
 
     tasks = []
     tasks.append(asyncio.ensure_future(server.http_server()))
@@ -23,5 +25,6 @@ async def main(node_id, config_file):
 
 if __name__ == "__main__":
     server_id = int(sys.argv[1])
-    config_file = "Scripts/hbswap/conf/config.toml"
+    # config_file = "Scripts/hbswap/conf/config.toml"
+    config_file = "Scripts/hbswap/conf/server.toml"
     asyncio.run(main(server_id, config_file))

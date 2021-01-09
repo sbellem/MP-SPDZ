@@ -6,7 +6,7 @@ from utils import fp
 
 if __name__ == "__main__":
     # TODO add argument parsing for config file to use
-    client = Client.from_toml_config("Scripts/hbswap/conf/client_local.toml")
+    client = Client.from_toml_config("Scripts/hbswap/conf/client.toml")
 
     inputmask_indexes = ""
     for inputmask_index in sys.argv[1::2]:
