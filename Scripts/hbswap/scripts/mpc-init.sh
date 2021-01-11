@@ -11,6 +11,13 @@ prime=${PRIME:-52435875175126190479447740508185965837690552500527637822603658699
 n_parties=${N_PARTIES:-4}
 threshold=${THRESHOLD:-1}
 
+mkdir -p Persistence Player-Data
+
+# Copy the private key, where MP-SPDZ expects it to be (under Player-Data/).
+cp /opt/hbswap/secrets/P$player.key Player-Data/
+# Copy the public keys of all players
+cp /opt/hbswap/public-keys/* Player-Data/
+
 ./malicious-shamir-party.x \
     --prime $prime \
     --nparties $n_parties \
@@ -19,3 +26,6 @@ threshold=${THRESHOLD:-1}
     --hostname $hostname \
     --portnum 5000 \
     hbswap_init
+
+cd Persistence/
+mv Transactions-P$player.data /opt/hbswap/secrets/Pool-P$player.data

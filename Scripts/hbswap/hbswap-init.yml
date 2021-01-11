@@ -2,6 +2,7 @@ version: '3.8'
 
 volumes:
   player-data:
+  #pool-data:
 
 services:
   # generate and "distribute" keys
@@ -62,6 +63,7 @@ services:
       - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
       - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
       - ./scripts/mpc-init.sh:/usr/src/MP-SPDZ/mpc-init.sh
+      #- pool-data:/usr/src/MP-SPDZ/Scripts/hbswap/data
     # NOTE IMPORTANT!
     # The hostname (2nd arg) must be the one of player 0, i.e. "mpc.node.0"
     command: ["bash", "mpc-init.sh", "0", "mpc.node.0"]

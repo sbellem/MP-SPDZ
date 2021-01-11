@@ -17,9 +17,9 @@ export PRINT_HELP_PYSCRIPT
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
-clean: clean-mpc-progs clean-player-data
+clean: clean-mpc-progs
 	docker-compose run --rm eth.chain rm -rf /opt/hbswap/poa/data
-	docker-compose run --rm mpc.nodes rm -rf Scripts/hbswap/log/*
+	#docker-compose run --rm mpc.nodes rm -rf Scripts/hbswap/log/*
 
 clean-mpc-progs:
 	docker-compose run --rm mpc.compile rm -rf Programs/Bytecode Programs/Schedules Programs/Public-Input
@@ -35,26 +35,39 @@ stop:
 	docker-compose stop eth.chain mpc.nodes
 
 rm: clean
-	docker-compose rm --stop --force eth.chain contract.deploy contract.deposit mpc.nodes
+	#docker-compose rm --stop --force eth.chain contract.deploy contract.deposit
+	docker-compose rm --stop --force -v
+	docker volume rm \
+		hbswap_public-keys \
+		hbswap_secrets-p0 \
+		hbswap_secrets-p1 \
+		hbswap_secrets-p2 \
+		hbswap_secrets-p3
 
 #up: down rm down-init rm-init up-init ## run the example
 up: down rm ## run the example
 	docker-compose up -d eth.chain
 	docker-compose up contract.deploy
 	docker-compose up contract.deposit
-	docker-compose up mpc.trusted.setup mpc.compile
-	docker-compose up mpc.init.nodes
-	docker-compose up -d mpc.nodes
-	sh scripts/follow-sim-logs-with-tmux.sh
+	docker-compose up \
+		mpc.trusted.setup \
+		mpc.compile
+	docker-compose up \
+		mpc.init.node.0 \
+		mpc.init.node.1 \
+		mpc.init.node.2 \
+		mpc.init.node.3
+	#docker-compose up -d mpc.nodes
+	#sh scripts/follow-sim-logs-with-tmux.sh
 
 down-init:
-	docker-compose -f hbswap-init.yml down
+	docker-compose -f hbswap-init.yml down --remove-orphans
 
 rm-init: clean
 	docker-compose -f hbswap-init.yml rm --stop --force mpc.trusted.setup mpc.compile mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
 	#docker-compose -f hbswap-init.yml rm --stop --force mpc.trusted.setup mpc.compile mpc.allnodes
 
 up-init: down-init rm-init
-	docker-compose -f hbswap-init.yml up --remove-orphans mpc.trusted.setup mpc.compile
+	docker-compose -f hbswap-init.yml up mpc.trusted.setup mpc.compile
 	docker-compose -f hbswap-init.yml up mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
-	#docker-compose -f hbswap-init.yml up --remove-orphans mpc.allnodes
+	#docker-compose -f hbswap-init.yml up mpc.allnodes

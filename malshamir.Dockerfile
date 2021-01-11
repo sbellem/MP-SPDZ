@@ -70,24 +70,29 @@ ENV N_PARTIES 4
 ENV THRESHOLD 1
 ENV LD_LIBRARY_PATH /usr/local/lib
 
-# Python (HTTP server) dependencies for HTTP server
-RUN pip install gmpy2 gmpy toml leveldb aiohttp
-
-# GO (server) dependencies
-COPY --from=golang:1.15.6-buster /usr/local/go /usr/local/go
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:$PATH
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-
-RUN go get -d -v github.com/ethereum/go-ethereum
-
-WORKDIR $GOPATH/src/github.com/ethereum/go-ethereum
-RUN git checkout cfbb969da
-
-COPY Scripts/hbswap /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
-
-WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
-
-RUN go get -d -v ./...
-
-#WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/go
+## Python (HTTP server) dependencies for HTTP server
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#                lsof \
+#                libmpfr-dev \
+#                libmpc-dev \
+#        && rm -rf /var/lib/apt/lists/*
+#RUN pip install gmpy2 gmpy toml leveldb aiohttp
+#
+## GO (server) dependencies
+#COPY --from=golang:1.15.6-buster /usr/local/go /usr/local/go
+#ENV GOPATH /go
+#ENV PATH $GOPATH/bin:$PATH
+#RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+#
+#RUN go get -d -v github.com/ethereum/go-ethereum
+#
+#WORKDIR $GOPATH/src/github.com/ethereum/go-ethereum
+#RUN git checkout cfbb969da
+#
+#COPY Scripts/hbswap /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+#
+#WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+#
+#RUN go get -d -v ./...
+#
+##WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/go
