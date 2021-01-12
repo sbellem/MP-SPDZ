@@ -74,7 +74,7 @@ mpc-keys:
 mpc-compile:
 	docker-compose up mpc.compile
 
-mpc-init-pool:
+mpc-init-pool: mpc-keys mpc-compile
 	docker-compose up \
 		mpc.init.node.0 \
 		mpc.init.node.1 \
