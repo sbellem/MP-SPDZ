@@ -58,7 +58,7 @@ func dbPut(key string, value []byte) {
 //	return string(data)
 //}
 
-func genInputmask() {
+func genInputmask(leader_hostname string) {
 	tot := int(utils.GetInputmaskCnt(conn).Int64())
 	for true {
 		cnt := utils.GetInputmaskCnt(conn)
@@ -66,7 +66,7 @@ func genInputmask() {
 		if int(cnt.Int64())+100 > tot {
 			fmt.Printf("Generating new inputmasks...\n")
 
-			cmd := exec.Command("./random-shamir.x", "-i", serverID, "-N", players, "-T", threshold, "--nshares", strconv.Itoa(nshares))
+			cmd := exec.Command("./random-shamir.x", "-i", serverID, "-N", players, "-T", threshold, "--nshares", strconv.Itoa(nshares), "--host", leader_hostname)
 			utils.ExecCmd(cmd)
 
 			cmd = exec.Command("python3", "Scripts/hbswap/python/server/proc_inputmask.py", serverID, strconv.Itoa(tot))
@@ -80,7 +80,7 @@ func genInputmask() {
 	}
 }
 
-func watch() {
+func watch(leader_hostname string) {
 	hbswapInstance, err := hbswap.NewHbSwap(common.HexToAddress(hbswapAddr), conn)
 
 	//tradePrepChannel := make(chan *hbswap.HbSwapTradePrep)
@@ -140,7 +140,7 @@ func watch() {
 			cmd := exec.Command("python3", "Scripts/hbswap/python/server/trade_set_data.py", serverID, oce.User.Hex(), oce.TokenA.String(), oce.TokenB.String(), oce.IdxA.String(), oce.IdxB.String(), oce.MaskedA.String(), oce.MaskedB.String())
 			utils.ExecCmd(cmd)
 
-			cmd = exec.Command(prog, "-N", players, "-T", threshold, "-p", serverID, "-pn", mpcPort, "-P", blsPrime, "hbswap_trade")
+			cmd = exec.Command(prog, "-N", players, "-T", threshold, "-p", serverID, "-pn", mpcPort, "-P", blsPrime, "--hostname", leader_hostname, "hbswap_trade")
 			utils.ExecCmd(cmd)
 
 			cmd = exec.Command("python3", "Scripts/hbswap/python/server/trade_org_data.py", serverID)
@@ -177,19 +177,28 @@ func main() {
 
 	// TODO set default to localhost
 	//hostname = flag.String("eth-hostname", "localhost", "Hostname of an ethereum node to connect to.")
-	hostname := os.Args[2]
-	addrs, err := net.LookupIP(hostname)
+	eth_hostname := os.Args[2]
+	addrs, err := net.LookupIP(eth_hostname)
 	if err != nil {
 		fmt.Println("Unknown host")
 	}
-	addr := addrs[0]
-	fmt.Println("IP address: ", addr)
+	eth_addr := addrs[0]
+	fmt.Println("Ethereum node IP address: ", eth_addr)
 
-	conn = utils.GetEthClient(fmt.Sprintf("ws://%s:8546", addr))
+	// TODO set default to localhost
+	leader_hostname := os.Args[3]
+	//addrs, err := net.LookupIP(leader_hostname)
+	//if err != nil {
+	//	fmt.Println("Unknown host")
+	//}
+	//addr := addrs[0]
+	//fmt.Println("Leader IP address: ", addr)
+
+	conn = utils.GetEthClient(fmt.Sprintf("ws://%s:8546", eth_addr))
 
 	var wg sync.WaitGroup
 	wg.Add(1)
-	go watch()
-	go genInputmask()
+	go watch(leader_hostname)
+	go genInputmask(leader_hostname)
 	wg.Wait()
 }

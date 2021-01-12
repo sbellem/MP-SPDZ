@@ -44,21 +44,60 @@ rm: clean
 		hbswap_secrets-p2 \
 		hbswap_secrets-p3
 
-#up: down rm down-init rm-init up-init ## run the example
-up: down rm ## run the example
+init-eth:
 	docker-compose up -d eth.chain
 	docker-compose up contract.deploy
 	docker-compose up contract.deposit
-	docker-compose up \
-		mpc.trusted.setup \
-		mpc.compile
+
+start:
+	docker-compose up -d eth.chain
+	docker-compose up contract.deploy
+	docker-compose up contract.deposit
+	docker-compose up -d \
+		mpc.node.0 \
+		mpc.node.1 \
+		mpc.node.2 \
+		mpc.node.3
+
+up-eth:
+	docker-compose up -d eth.chain
+
+deploy-contract:
+	docker-compose up contract.deploy
+
+init-deposit:
+	docker-compose up contract.deposit
+
+mpc-keys:
+	docker-compose up mpc.trusted.setup
+
+mpc-compile:
+	docker-compose up mpc.compile
+
+mpc-init-pool:
 	docker-compose up \
 		mpc.init.node.0 \
 		mpc.init.node.1 \
 		mpc.init.node.2 \
 		mpc.init.node.3
-	#docker-compose up -d mpc.nodes
-	#sh scripts/follow-sim-logs-with-tmux.sh
+
+mpc:
+	docker-compose up -d \
+		mpc.node.0 \
+		mpc.node.1 \
+		mpc.node.2 \
+		mpc.node.3
+
+run-client:
+	docker-compose up client
+
+up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
+	docker-compose up -d eth.chain
+	docker-compose up contract.deploy
+	docker-compose up contract.deposit
+	docker-compose up -d mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
+	#docker-compose up -d client
+	sh scripts/follow-sim-logs-with-tmux.sh
 
 down-init:
 	docker-compose -f hbswap-init.yml down --remove-orphans
