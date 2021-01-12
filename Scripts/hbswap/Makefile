@@ -91,7 +91,8 @@ mpc:
 run-client:
 	docker-compose up client
 
-up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
+#up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
+up: ## run the example
 	docker-compose up -d eth.chain
 	docker-compose up contract.deploy
 	docker-compose up contract.deposit
