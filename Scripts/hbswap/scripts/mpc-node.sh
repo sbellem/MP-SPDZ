@@ -23,6 +23,7 @@ httpserver() {
 
 mpcserver() {
   go run Scripts/hbswap/go/server/server.go $1 $eth_hostname $leader_hostname
+  #go run Scripts/hbswap/go/server/server.go -serverid=$1 -ethhost=$eth_hostname -leaderhost=$leader_hostname
   #go run Scripts/hbswap/go/server/server.go $1 $eth_hostname $leader_hostname > Scripts/hbswap/log/mpc_server_$1.log 2>&1
 }
 

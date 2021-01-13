@@ -173,26 +173,16 @@ func watch(leader_hostname string) {
 
 func main() {
 	serverID = os.Args[1]
-	log.Printf("Starting server %v\n", serverID)
-
-	// TODO set default to localhost
-	//hostname = flag.String("eth-hostname", "localhost", "Hostname of an ethereum node to connect to.")
 	eth_hostname := os.Args[2]
+	leader_hostname := os.Args[3]
+
+	log.Printf("Starting server %v\n", serverID)
 	addrs, err := net.LookupIP(eth_hostname)
 	if err != nil {
 		fmt.Println("Unknown host")
 	}
 	eth_addr := addrs[0]
 	fmt.Println("Ethereum node IP address: ", eth_addr)
-
-	// TODO set default to localhost
-	leader_hostname := os.Args[3]
-	//addrs, err := net.LookupIP(leader_hostname)
-	//if err != nil {
-	//	fmt.Println("Unknown host")
-	//}
-	//addr := addrs[0]
-	//fmt.Println("Leader IP address: ", addr)
 
 	conn = utils.GetEthClient(fmt.Sprintf("ws://%s:8546", eth_addr))
 
@@ -202,3 +192,28 @@ func main() {
 	go genInputmask(leader_hostname)
 	wg.Wait()
 }
+
+/*
+	var serverID string
+	flag.StringVar(&serverID, "serverid", "0", "Server id.")
+
+	var eth_hostname string
+	flag.StringVar(&eth_hostname, "ethhost", "localhost", "Hostname of an ethereum node to connect to.")
+
+	var leader_hostname string
+	flag.StringVar(&leader_hostname, "leaderhost", "localhost", "Hostname or ip address of the MPC node leader (the one with id 0).")
+
+	flag.Parse()
+
+	log.Printf("Starting server %v\n", serverID)
+
+	addrs, err := net.LookupIP(eth_hostname)
+	if err != nil {
+		fmt.Println("Unknown host")
+	}
+	eth_addr := addrs[0]
+	fmt.Println("Will connect to Ethereum node with IP address: ", eth_addr)
+	conn = utils.GetEthClient(fmt.Sprintf("ws://%s:8546", eth_addr))
+
+	log.Printf("MPC leader hostname is: %v\n", leader_hostname)
+*/

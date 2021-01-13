@@ -91,13 +91,13 @@ mpc:
 run-client:
 	docker-compose up client
 
-#up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
-up: ## run the example
+up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
+#up: ## run the example
 	docker-compose up -d eth.chain
 	docker-compose up contract.deploy
 	docker-compose up contract.deposit
 	docker-compose up -d mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
-	#docker-compose up -d client
+	docker-compose up -d client
 	sh scripts/follow-sim-logs-with-tmux.sh
 
 down-init:
