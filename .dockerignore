@@ -1,7 +1,14 @@
 *~
+CONFIG.mine
+docker-compose.yml
+Dockerfile
+Persistence
+Player-Data
 Programs/Bytecode
 Programs/Public-Input
 Programs/Schedules
-Dockerfile
-docker-compose.yml
-CONFIG.mine
+
+# hbswap
+Scripts/hbswap/data
+Scripts/hbswap/db
+Scripts/hbswap/poa/data
