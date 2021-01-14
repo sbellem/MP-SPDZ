@@ -1,0 +1,117 @@
+.PHONY: help
+
+.DEFAULT_GOAL := help
+
+define PRINT_HELP_PYSCRIPT
+import re, sys
+
+for line in sys.stdin:
+	match = re.match(r'^([a-zA-Z_-]+):.*?## (.*)$$', line)
+	if match:
+		target, help = match.groups()
+		print("%-20s %s" % (target, help))
+endef
+
+export PRINT_HELP_PYSCRIPT
+
+help:
+	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
+
+clean: clean-mpc-progs
+	docker-compose run --rm eth.chain rm -rf /opt/hbswap/poa/data
+	#docker-compose run --rm mpc.nodes rm -rf Scripts/hbswap/log/*
+
+clean-mpc-progs:
+	docker-compose run --rm mpc.compile rm -rf Programs/Bytecode Programs/Schedules Programs/Public-Input
+
+clean-player-data:
+	docker-compose run --rm mpc.trusted.setup rm -rf Player-Data/*
+
+#down: down-init
+down:
+	docker-compose down --remove-orphans
+
+stop:
+	docker-compose stop eth.chain mpc.nodes
+
+rm: clean
+	#docker-compose rm --stop --force eth.chain contract.deploy contract.deposit
+	docker-compose rm --stop --force -v
+	docker volume rm \
+		hbswap_public-keys \
+		hbswap_secrets-p0 \
+		hbswap_secrets-p1 \
+		hbswap_secrets-p2 \
+		hbswap_secrets-p3
+
+init-eth:
+	docker-compose up -d eth.chain
+	docker-compose up contract.deploy
+	docker-compose up pool.init
+	docker-compose up client.deposit
+
+start:
+	docker-compose up -d eth.chain
+	docker-compose up contract.deploy
+	docker-compose up contract.deposit
+	docker-compose up -d \
+		mpc.node.0 \
+		mpc.node.1 \
+		mpc.node.2 \
+		mpc.node.3
+
+up-eth:
+	docker-compose up -d eth.chain
+
+deploy-contract: up-eth
+	docker-compose up contract.deploy
+
+init-pool:
+	docker-compose up pool.init
+
+init-deposit:
+	docker-compose up client.deposit
+
+mpc-keys:
+	docker-compose up mpc.trusted.setup
+
+mpc-compile:
+	docker-compose up mpc.compile
+
+mpc-init-pool: mpc-keys mpc-compile
+	docker-compose up \
+		mpc.init.node.0 \
+		mpc.init.node.1 \
+		mpc.init.node.2 \
+		mpc.init.node.3
+
+mpc:
+	docker-compose up -d \
+		mpc.node.0 \
+		mpc.node.1 \
+		mpc.node.2 \
+		mpc.node.3
+
+run-client:
+	docker-compose up client
+
+up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
+#up: ## run the example
+	docker-compose up -d eth.chain
+	docker-compose up contract.deploy
+	docker-compose up contract.deposit
+	docker-compose up -d mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
+	docker-compose up -d client
+	sh scripts/follow-sim-logs-with-tmux.sh
+
+down-init:
+	docker-compose -f hbswap-init.yml down --remove-orphans
+
+rm-init: clean
+	docker-compose -f hbswap-init.yml rm --stop --force mpc.trusted.setup mpc.compile mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
+	#docker-compose -f hbswap-init.yml rm --stop --force mpc.trusted.setup mpc.compile mpc.allnodes
+
+up-init: down-init rm-init
+	docker-compose -f hbswap-init.yml up mpc.trusted.setup mpc.compile
+	docker-compose -f hbswap-init.yml up mpc.node.0 mpc.node.1 mpc.node.2 mpc.node.3
+	#docker-compose -f hbswap-init.yml up mpc.allnodes

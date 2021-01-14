@@ -13,6 +13,7 @@ import (
 	"io/ioutil"
 	"log"
 	"math/big"
+	"net"
 	"os"
 	"os/exec"
 	"strings"
@@ -20,19 +21,19 @@ import (
 )
 
 var (
-	GOPATH		= os.Getenv("GOPATH")
-	minBalance	= big.NewInt(300000000000000000)
+	GOPATH     = os.Getenv("GOPATH")
+	minBalance = big.NewInt(300000000000000000)
 
 	// parameter for private net
-	chainID 		= "123"
-	HttpEndpoint	= "http://127.0.0.1:8545"
-	WsEndpoint		= "ws://127.0.0.1:8546"
-	EthAddr 		= common.HexToAddress("0x0000000000000000000000000000000000000000")
-	HbswapAddr 		= common.HexToAddress("0xF74Eb25Ab1785D24306CA6b3CBFf0D0b0817C5E2")
-	TokenAddrs 		= []common.Address{
-						common.HexToAddress("0x6b5c9637e0207c72Ee1a275b6C3b686ba8D87385"),
-						common.HexToAddress("0x8C89e5D2bCc0e4C26E3295d48d052E11bd03C06A"),
-					}
+	chainID      = "123"
+	HttpEndpoint = "http://127.0.0.1:8545"
+	WsEndpoint   = "ws://127.0.0.1:8546"
+	EthAddr      = common.HexToAddress("0x0000000000000000000000000000000000000000")
+	HbswapAddr   = common.HexToAddress("0xF74Eb25Ab1785D24306CA6b3CBFf0D0b0817C5E2")
+	TokenAddrs   = []common.Address{
+		common.HexToAddress("0x6b5c9637e0207c72Ee1a275b6C3b686ba8D87385"),
+		common.HexToAddress("0x8C89e5D2bCc0e4C26E3295d48d052E11bd03C06A"),
+	}
 
 	//// parameter for kovan test net
 	//chainID			= "42"
@@ -65,7 +66,7 @@ func StrToBig(st string) *big.Int {
 	return v
 }
 
-func GetEthClient(ethInstance string) (*ethclient.Client) {
+func GetEthClient(ethInstance string) *ethclient.Client {
 	conn, err := ethclient.Dial(ethInstance)
 	if err != nil {
 		log.Fatal(err)
@@ -74,7 +75,7 @@ func GetEthClient(ethInstance string) (*ethclient.Client) {
 	return conn
 }
 
-func GetAccount(account string) (*bind.TransactOpts) {
+func GetAccount(account string) *bind.TransactOpts {
 	dir := GOPATH + "/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/poa/keystore/" + account + "/"
 
 	list, err := ioutil.ReadDir(dir)
@@ -159,8 +160,19 @@ func WaitMined(ctx context.Context, ec *ethclient.Client,
 	}
 }
 
-func stringToBigInt(v string) (*big.Int) {
+func stringToBigInt(v string) *big.Int {
 	value := big.NewInt(0)
 	value.SetString(v, 10)
 	return value
+}
+
+func GetEthURL(hostname string) string {
+	addrs, err := net.LookupIP(hostname)
+	if err != nil {
+		fmt.Println("Unknown host")
+		return fmt.Sprintf("Error looking up hostname %s", hostname)
+	}
+	addr := addrs[0]
+	fmt.Println("Ethereum node IP address: ", addr)
+	return fmt.Sprintf("http://%s:8545", addr)
 }
