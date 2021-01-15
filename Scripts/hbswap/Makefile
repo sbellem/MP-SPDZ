@@ -50,7 +50,7 @@ init-eth:
 	docker-compose up pool.init
 	docker-compose up client.deposit
 
-start:
+simulation:
 	docker-compose up -d eth.chain
 	docker-compose up deploy.contract
 	docker-compose up -d \
@@ -58,10 +58,34 @@ start:
 		mpc.node.1 \
 		mpc.node.2 \
 		mpc.node.3
-	docker-compose -f docker-compose.yml -f liquidity-provider.yml up init.pool
 	docker-compose -f docker-compose.yml -f trader.yml up public.deposit
+	docker-compose -f docker-compose.yml -f liquidity-provider.yml up init.pool
 	docker-compose -f docker-compose.yml -f trader.yml up secret.deposit
-	docker-compose -f docker-compose.yml -f trader.yml up trade
+	docker-compose -f docker-compose.yml -f trader.yml up trade-1
+	docker-compose -f docker-compose.yml -f trader.yml up trade-2
+
+start-hbswap:
+	docker-compose up -d eth.chain
+	docker-compose up deploy.contract
+	docker-compose up -d \
+		mpc.node.0 \
+		mpc.node.1 \
+		mpc.node.2 \
+		mpc.node.3
+	#sh scripts/follow-sim-logs-with-tmux.sh
+
+public-deposit:
+	docker-compose -f docker-compose.yml -f trader.yml up public.deposit
+
+init-secrets:
+	docker-compose -f docker-compose.yml -f liquidity-provider.yml up init.pool
+	docker-compose -f docker-compose.yml -f trader.yml up secret.deposit
+
+trade-1:
+	docker-compose -f docker-compose.yml -f trader.yml up trade-1
+
+trade-2:
+	docker-compose -f docker-compose.yml -f trader.yml up trade-2
 
 up-eth:
 	docker-compose up -d eth.chain

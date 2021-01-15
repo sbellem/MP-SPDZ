@@ -16,4 +16,3 @@ tmux $TMUX_CMD "docker-compose logs -f eth.chain; sh" \; \
     selectp -t 0 \; \
     splitw -h -p 60 "docker-compose logs -f contract.deploy; sh" \; \
     splitw -h -p 60 "docker-compose logs -f contract.deposit; sh"
-    #splitw -h -p 60 "docker-compose logs -f client; sh"
