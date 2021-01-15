@@ -2,6 +2,7 @@
 set -e
 
 eth_host=${1:-localhost}
+leader_host=${2:-localhost}
 
 . Scripts/hbswap/scripts/utils.sh
 
@@ -15,7 +16,7 @@ start_local_network() {
 
 deploy_contract() {
   echo 'Deploying contracts...'
-  go run Scripts/hbswap/go/deploy/deploy.go
+  go run Scripts/hbswap/go/deploy/deploy.go $eth_host
   echo 'Finished deploying contracts'
 }
 
@@ -69,11 +70,11 @@ trade() {
 }
 
 httpserver() {
-  python3 Scripts/hbswap/python/server/start_server.py $1 $eth_host
+  python3 Scripts/hbswap/python/server/start_server.py $1
 }
 
 mpcserver() {
-  go run Scripts/hbswap/go/server/server.go $1 $eth_host > Scripts/hbswap/log/mpc_server_$1.log 2>&1
+  go run Scripts/hbswap/go/server/server.go $1 $eth_host $leader_host > Scripts/hbswap/log/mpc_server_$1.log 2>&1
 }
 
 start_local_network

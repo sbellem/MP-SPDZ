@@ -14,6 +14,7 @@ import (
 	"log"
 	"math/big"
 	"net"
+	"net/url"
 	"os"
 	"os/exec"
 	"strings"
@@ -27,7 +28,9 @@ var (
 	// parameter for private net
 	chainID      = "123"
 	HttpEndpoint = "http://127.0.0.1:8545"
+	EthPort      = 8545
 	WsEndpoint   = "ws://127.0.0.1:8546"
+	EthWsPort    = 8546
 	EthAddr      = common.HexToAddress("0x0000000000000000000000000000000000000000")
 	HbswapAddr   = common.HexToAddress("0xF74Eb25Ab1785D24306CA6b3CBFf0D0b0817C5E2")
 	TokenAddrs   = []common.Address{
@@ -166,13 +169,29 @@ func stringToBigInt(v string) *big.Int {
 	return value
 }
 
-func GetEthURL(hostname string) string {
+func GetIPAddr(hostname string) net.IP {
 	addrs, err := net.LookupIP(hostname)
 	if err != nil {
-		fmt.Println("Unknown host")
-		return fmt.Sprintf("Error looking up hostname %s", hostname)
+		fmt.Sprintf("Error looking up hostname %s", hostname)
+		log.Fatal(err)
 	}
-	addr := addrs[0]
-	fmt.Println("Ethereum node IP address: ", addr)
-	return fmt.Sprintf("http://%s:8545", addr)
+	return addrs[0]
+}
+
+func GetURL(hostname string, port int, scheme string) string {
+	addr := GetIPAddr(hostname)
+	host := fmt.Sprintf("%s:%d", addr, port)
+	u := &url.URL{
+		Scheme: scheme,
+		Host:   host,
+	}
+	return u.String()
+}
+
+func GetEthURL(hostname string) string {
+	return GetURL(hostname, EthPort, "http")
+}
+
+func GetEthWsURL(hostname string) string {
+	return GetURL(hostname, EthWsPort, "ws")
 }

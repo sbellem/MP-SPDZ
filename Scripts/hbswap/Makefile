@@ -29,7 +29,7 @@ clean-player-data:
 
 #down: down-init
 down:
-	docker-compose down --remove-orphans
+	docker-compose -f docker-compose.yml -f liquidity-provider.yml -f trader.yml down --remove-orphans
 
 stop:
 	docker-compose stop eth.chain mpc.nodes
@@ -52,25 +52,28 @@ init-eth:
 
 start:
 	docker-compose up -d eth.chain
-	docker-compose up contract.deploy
-	docker-compose up contract.deposit
+	docker-compose up deploy.contract
 	docker-compose up -d \
 		mpc.node.0 \
 		mpc.node.1 \
 		mpc.node.2 \
 		mpc.node.3
+	docker-compose -f docker-compose.yml -f liquidity-provider.yml up init.pool
+	docker-compose -f docker-compose.yml -f trader.yml up public.deposit
+	docker-compose -f docker-compose.yml -f trader.yml up secret.deposit
+	docker-compose -f docker-compose.yml -f trader.yml up trade
 
 up-eth:
 	docker-compose up -d eth.chain
 
 deploy-contract: up-eth
-	docker-compose up contract.deploy
+	docker-compose -f docker-compose.yml -f eth.yml up contract.deploy
 
-init-pool:
-	docker-compose up pool.init
+lp-init-pool:
+	docker-compose -f docker-compose.yml -f liquidity-provider.yml up pool.init
 
-init-deposit:
-	docker-compose up client.deposit
+trader-deposit:
+	docker-compose -f docker-compose.yml -f trader.yml up client.deposit
 
 mpc-keys:
 	docker-compose up mpc.trusted.setup
@@ -95,8 +98,8 @@ mpc:
 run-client:
 	docker-compose up client
 
-up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
 #up: ## run the example
+up: down rm mpc-keys mpc-compile mpc-init-pool ## run the example
 	docker-compose up -d eth.chain
 	docker-compose up contract.deploy
 	docker-compose up contract.deposit

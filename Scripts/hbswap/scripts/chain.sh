@@ -15,4 +15,4 @@ geth \
     --ws --wsaddr 0.0.0.0 --wsorigins '*' --wsapi admin,debug,eth,miner,net,personal,shh,txpool,web3 \
     --syncmode full \
     --ipcpath "$dataDir/geth.ipc"
-    # 2>> $dataDir/geth.log &
+    #2>> $dataDir/geth.log &

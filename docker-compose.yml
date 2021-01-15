@@ -13,5 +13,6 @@ services:
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
       - ./Scripts:/usr/src/MP-SPDZ/Scripts
-      - ./Scripts/hbswap:/gopath/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+      - ./Scripts/hbswap:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+      - ./Scripts/hbswap/poa:/opt/hbswap/poa
       - ./Utils/random-shamir.cpp:/usr/src/MP-SPDZ/Utils/random-shamir.cpp
