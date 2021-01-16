@@ -63,6 +63,9 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine \
         && echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
 
+RUN mkdir -p PreProcessing-Data \
+        && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
+
 RUN make malicious-shamir-party.x
 RUN make random-shamir.x
 

@@ -54,8 +54,11 @@ typename T::open_type MaliciousShamirMC<T>::reconstruct(
         typename T::open_type check = 0;
         for (size_t k = 0; k < j; k++)
             check += shares[k] * reconstructions[j][k];
-        if (check != value)
+        if (check != value) {
+            cerr << "check != value: " << check << " != " << value << endl;
+            cerr << "threshold: " << threshold << endl;
             throw mac_fail("inconsistent Shamir secret sharing");
+        }
     }
     return value;
 }

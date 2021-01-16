@@ -72,25 +72,6 @@ services:
     working_dir: /usr/src
     command: ["bash", "compile.sh"]
 
-  # NOTE Run all (4) nodes in one container. Can be useful for troubleshooting.
-  #mpc.init.nodes:
-  #  image: hbswap-mpc-init
-  #  build:
-  #    context: ../..
-  #    dockerfile: hbswap.Dockerfile
-  #    target: mp-spdz
-  #  working_dir: /usr/src/MP-SPDZ
-  #  volumes:
-  #    - ../../CONFIG:/usr/src/MP-SPDZ/CONFIG
-  #    - ../../Makefile:/usr/src/MP-SPDZ/Makefile
-  #    - ../../Programs/Bytecode:/usr/src/MP-SPDZ/Programs/Bytecode
-  #    - ../../Programs/Schedules:/usr/src/MP-SPDZ/Programs/Schedules
-  #    - ./scripts/mpc-prep.sh:/usr/src/MP-SPDZ/mpc-prep.sh
-  #    #- ../../Player-Data:/usr/src/MP-SPDZ/Player-Data
-  #    - tls-keys:/usr/src/MP-SPDZ/Player-Data
-  #    - pool-data:/usr/src/MP-SPDZ/Persistence
-  #  command: ["bash", "mpc-prep.sh"]
-
   mpc.node.0:
     image: hbswap-mpc
     build:
@@ -186,17 +167,3 @@ services:
     # NOTE IMPORTANT!
     # The hostname (2nd arg) must be the one of player 0, i.e. "mpc.node.0"
     command: ["wait-for-it", "eth.chain:8545", "--", "bash", "mpc-node.sh", "3", "eth.chain", "mpc.node.0"]
-
-    #client:
-    #  image: hbswap-mpc
-    #  build:
-    #    context: ../..
-    #    dockerfile: hbswap.Dockerfile
-    #    target: hbswap
-    #  working_dir: /usr/src/MP-SPDZ
-    #  volumes:
-    #    - ./scripts/client.sh:/usr/src/MP-SPDZ/client.sh
-    #    - ./scripts/wait-for-it.sh:/usr/local/bin/wait-for-it
-    #    - .:/usr/src/MP-SPDZ/Scripts/hbswap
-    #    - .:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
-    #  command: ["wait-for-it", "mpc.node.3:8080", "--", "bash", "client.sh", "eth.chain"]

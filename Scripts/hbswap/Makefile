@@ -63,6 +63,10 @@ simulation: down mpc-keys mpc-compile
 	docker-compose -f docker-compose.yml -f trader.yml up secret.deposit
 	docker-compose -f docker-compose.yml -f trader.yml up trade-1
 	docker-compose -f docker-compose.yml -f trader.yml up trade-2
+	docker-compose -f docker-compose.yml -f trader.yml up trade-1
+	docker-compose -f docker-compose.yml -f trader.yml up trade-2
+	docker-compose -f docker-compose.yml -f trader.yml up trade-1
+	docker-compose -f docker-compose.yml -f trader.yml up trade-2
 
 start-hbswap:
 	docker-compose up -d eth.chain
