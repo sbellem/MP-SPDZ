@@ -1,4 +1,4 @@
-FROM python:3.8 as mp-spdz
+FROM python:3.8 as base-mp-spdz
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
                 automake \
@@ -63,18 +63,28 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine \
         && echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
 
-RUN mkdir -p PreProcessing-Data \
-        && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
-
-RUN make malicious-shamir-party.x
-RUN make random-shamir.x
-
 ENV PRIME 52435875175126190479447740508185965837690552500527637822603658699938581184513
 ENV N_PARTIES 4
 ENV THRESHOLD 1
 ENV LD_LIBRARY_PATH /usr/local/lib
 
-FROM mp-spdz as hbswap
+
+# Compile random-shamir
+FROM base-mp-spdz as inputmask-preprocessing
+ENV INPUTMASK_SHARES "/opt/hbswap/inputmask-shares"
+RUN mkdir -p $INPUTMASK_SHARES \
+        && echo "PREP_DIR = '-DPREP_DIR=\"/opt/hbswap/inputmask-shares/\"'" >> CONFIG.mine
+RUN make random-shamir.x
+
+# Compile malicious-shamir-party
+FROM base-mp-spdz as malicious-shamir
+ENV PREP_DIR "/opt/hbswap/preprocessing-data"
+RUN mkdir -p $PREP_DIR \
+        && echo "PREP_DIR = '-DPREP_DIR=\"/opt/hbswap/preprocessing-data/\"'" >> CONFIG.mine
+RUN make malicious-shamir-party.x
+
+
+FROM base-mp-spdz as hbswap
 # Python (HTTP server) dependencies for HTTP server
 RUN apt-get update && apt-get install -y --no-install-recommends \
                 lsof \
@@ -104,4 +114,13 @@ RUN go get -d -v ./...
 
 COPY Scripts /usr/src/MP-SPDZ/Scripts
 
-#WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap/go
+# MP-SPDZ
+WORKDIR $MP_SPDZ_HOME
+ENV INPUTMASK_SHARES "/opt/hbswap/inputmask-shares"
+ENV PREP_DIR "/opt/hbswap/preprocessing-data"
+COPY --from=inputmask-preprocessing /usr/src/MP-SPDZ/random-shamir.x /usr/src/MP-SPDZ/
+COPY --from=malicious-shamir /usr/src/MP-SPDZ/malicious-shamir-party.x /usr/src/MP-SPDZ/
+RUN mkdir -p $INPUTMASK_SHARES
+RUN mkdir -p $PREP_DIR
+
+ENV DB_PATH /opt/hbswap/db

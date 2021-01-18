@@ -24,6 +24,7 @@ const (
 	sz        = 32
 	nshares   = 1000
 	interval  = 10
+	prep_dir  = "/opt/hbswap/preprocessing-data"
 )
 
 var (
@@ -169,7 +170,8 @@ func watch(leader_hostname string) {
 
 				cmd := exec.Command("python3", "Scripts/hbswap/python/server/trade_set_data.py", serverID, user, tokenA, tokenB, oce.IdxA.String(), oce.IdxB.String(), oce.MaskedA.String(), oce.MaskedB.String())
 				utils.ExecCmd(cmd)
-
+				os.RemoveAll(fmt.Sprintf(prep_dir))
+				os.Mkdir(fmt.Sprintf(prep_dir), 0777)
 				cmd = exec.Command(prog, "-N", players, "-T", threshold, "-p", serverID, "-pn", mpcPort, "-P", blsPrime, "--hostname", leader_hostname, "hbswap_trade")
 				utils.ExecCmd(cmd)
 
@@ -189,6 +191,8 @@ func watch(leader_hostname string) {
 					cmd = exec.Command("python3", "Scripts/hbswap/python/server/calc_price_set_data.py", serverID, tokenA, tokenB)
 					utils.ExecCmd(cmd)
 
+					os.RemoveAll(fmt.Sprintf(prep_dir))
+					os.Mkdir(fmt.Sprintf(prep_dir), 0777)
 					cmd = exec.Command(prog, "-N", players, "-T", threshold, "-p", serverID, "-pn", mpcPort, "-P", blsPrime, "--hostname", leader_hostname, "hbswap_calc_price")
 					stdout := utils.ExecCmd(cmd)
 					price := strings.Split(stdout, "\n")[1]
@@ -234,6 +238,8 @@ func watch(leader_hostname string) {
 				cmd := exec.Command("python3", "Scripts/hbswap/python/server/withdraw_set_data.py", serverID, oce.Token.String(), oce.User.String(), oce.Amt.String())
 				utils.ExecCmd(cmd)
 
+				os.RemoveAll(fmt.Sprintf(prep_dir))
+				os.Mkdir(fmt.Sprintf(prep_dir), 0777)
 				cmd = exec.Command(prog, "-N", players, "-T", threshold, "-p", serverID, "-pn", mpcPort, "-P", blsPrime, "--hostname", leader_hostname, "hbswap_withdraw")
 				stdout := utils.ExecCmd(cmd)
 

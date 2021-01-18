@@ -8,8 +8,9 @@ leader_hostname=$3
 
 # Place the data where MP-SPDZ expects it
 setup_data() {
-    rm -rf Scripts/hbswap/log
+    rm -rf Scripts/hbswap/log Scripts/hbswap/data/* Scripts/hbswap/poa/data /opt/hbswap/db
     mkdir -p Persistence Player-Data Scripts/hbswap/log
+    mkdir -p /opt/hbswap/db /opt/hbswap/inputmask-shares /opt/hbswap/preprocessing-data
     # Copy the private key, where MP-SPDZ expects it to be (under Player-Data/).
     cp /opt/hbswap/secrets/P$node_id.key Player-Data/
     # Copy the public keys of all players

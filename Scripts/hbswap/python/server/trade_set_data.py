@@ -1,6 +1,8 @@
-import leveldb
+import os
 import sys
 import time
+
+import leveldb
 
 from utils import to_hex
 
@@ -14,6 +16,7 @@ if __name__ == "__main__":
     masked_amt_A = to_hex(sys.argv[7])
     masked_amt_B = to_hex(sys.argv[8])
 
+    db_path = os.getenv("DB_PATH", "/opt/hbswap/db")
     # file = f"Scripts/hbswap/data/Pool-{token_A}-{token_B}-P{server_id}.data"
     # pool_A, pool_B = 0, 0
     # with open(file, 'rb') as f:
@@ -22,7 +25,7 @@ if __name__ == "__main__":
 
     while True:
         try:
-            db = leveldb.LevelDB(f"Scripts/hbswap/db/server{server_id}")
+            db = leveldb.LevelDB(f"{db_path}/server{server_id}")
             break
         except leveldb.LevelDBError:
             time.sleep(3)
