@@ -6,13 +6,20 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      PREP_DIR: "PreProcessing-Data"
+      INPUTMASK_SHARES: "PreProcessing-Data"
+      DB_PATH: /opt/hbswap/db
+      POA_DATADIR: /opt/poa
     working_dir: /usr/src/MP-SPDZ
     volumes:
+      - ./Scripts/hbswap/conf/config.toml:/opt/hbswap/conf/client.toml
+      - ./Scripts/hbswap/conf/config.toml:/opt/hbswap/conf/server.toml
       - ./Compiler:/usr/src/MP-SPDZ/Compiler
       - ./CONFIG:/usr/src/MP-SPDZ/CONFIG
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
       - ./Scripts:/usr/src/MP-SPDZ/Scripts
       - ./Scripts/hbswap:/go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
-      - ./Scripts/hbswap/poa:/opt/hbswap/poa
+      - ./Scripts/hbswap/poa:/opt/poa
       - ./Utils/random-shamir.cpp:/usr/src/MP-SPDZ/Utils/random-shamir.cpp

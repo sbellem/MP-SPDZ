@@ -21,6 +21,7 @@ ENV MP_SPDZ_HOME /usr/src/MP-SPDZ
 WORKDIR $MP_SPDZ_HOME
 
 # mpir
+ENV LD_LIBRARY_PATH /usr/local/lib
 RUN mkdir -p /usr/local/share/info
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/lib/libmpir*.*a /usr/local/lib/
 COPY --from=initc3/mpir:55fe6a9 /usr/local/mpir/lib/libmpir.so.23.0.3 /usr/local/lib/
@@ -66,7 +67,6 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
 ENV PRIME 52435875175126190479447740508185965837690552500527637822603658699938581184513
 ENV N_PARTIES 4
 ENV THRESHOLD 1
-ENV LD_LIBRARY_PATH /usr/local/lib
 
 
 # Compile random-shamir
