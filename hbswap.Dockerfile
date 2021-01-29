@@ -85,14 +85,6 @@ RUN make malicious-shamir-party.x
 
 
 FROM base-mp-spdz as hbswap
-# Python (HTTP server) dependencies for HTTP server
-RUN apt-get update && apt-get install -y --no-install-recommends \
-                lsof \
-                libmpfr-dev \
-                libmpc-dev \
-        && rm -rf /var/lib/apt/lists/*
-
-RUN pip install gmpy2 gmpy toml leveldb aiohttp
 
 # GO (server) dependencies
 ENV PATH /usr/local/go/bin:$PATH
@@ -124,3 +116,13 @@ RUN mkdir -p $INPUTMASK_SHARES
 RUN mkdir -p $PREP_DIR
 
 ENV DB_PATH /opt/hbswap/db
+
+# Python (HTTP server) dependencies for HTTP server
+RUN apt-get update && apt-get install -y --no-install-recommends \
+                lsof \
+                libmpfr-dev \
+                libmpc-dev \
+        && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /usr/src/MP-SPDZ/Scripts/hbswap/python
+RUN pip install --editable .
