@@ -68,7 +68,6 @@ ENV PRIME 5243587517512619047944774050818596583769055250052763782260365869993858
 ENV N_PARTIES 4
 ENV THRESHOLD 1
 
-
 # Compile random-shamir
 FROM base-mp-spdz as inputmask-preprocessing
 ENV INPUTMASK_SHARES "/opt/hbswap/inputmask-shares"
@@ -83,6 +82,7 @@ RUN mkdir -p $PREP_DIR \
         && echo "PREP_DIR = '-DPREP_DIR=\"/opt/hbswap/preprocessing-data/\"'" >> CONFIG.mine
 RUN make malicious-shamir-party.x
 
+########################## end of mp-spdz builds #######################################
 
 FROM base-mp-spdz as hbswap
 
@@ -98,7 +98,7 @@ RUN go get -d -v github.com/ethereum/go-ethereum
 WORKDIR $GOPATH/src/github.com/ethereum/go-ethereum
 RUN git checkout cfbb969da
 
-COPY Scripts/hbswap /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
+COPY Scripts/hbswap/src /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
 
 WORKDIR /go/src/github.com/initc3/MP-SPDZ/Scripts/hbswap
 
@@ -124,5 +124,5 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 libmpc-dev \
         && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /usr/src/MP-SPDZ/Scripts/hbswap/python
+WORKDIR /usr/src/MP-SPDZ/Scripts/hbswap/src/python
 RUN pip install --editable .
