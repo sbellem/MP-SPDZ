@@ -44,4 +44,17 @@ def f(i):
 y = sum(zs)
 print_ln('Computing %s instances of MIMC', n)
 y = mimc_prf(a, b)
-print_ln('MiMC(%s, %s) = %s', a.reveal(), b.reveal(), y.reveal());
+print_ln('MiMC(%s, %s) = %s', a.reveal(), b.reveal(), y.reveal())
+
+print_ln('\n-----------------------------------------------------------------------\n')
+print_ln('\t\t\t\t\tTEST COMPARISON')
+print_ln('\n-----------------------------------------------------------------------\n')
+
+x = sint(1)
+z = x + 5
+print_ln('ADD(%s, 5) = %s', x.reveal(), z.reveal())
+
+q = sint(5)
+p = q > 3
+print_ln('%s > 3 = %s', q.reveal(), p.reveal())
+print_ln('\n-----------------------------------------------------------------------\n')

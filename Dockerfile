@@ -64,3 +64,5 @@ RUN make malicious-shamir-party.x \
         && make random-shamir.x
 
 RUN ./Scripts/setup-ssl.sh 4
+
+RUN make online offline
