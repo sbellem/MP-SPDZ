@@ -346,7 +346,7 @@ void Processor<sint, sgf2n>::read_shares_from_file(int start_file_posn, int end_
     return;
 
   string filename;
-  filename = "Persistence/Transactions-P" + to_string(P.my_num()) + ".data";
+  filename = "Persistence/Transactions-P" + to_string(P.my_num()) + "-" + to_string(P.N.get_portnum_base()) + ".data";
 
   unsigned int size = data_registers.size();
 
@@ -378,7 +378,9 @@ void Processor<sint, sgf2n>::write_shares_to_file(long start_pos,
   if (not sint::real_shares(P))
     return;
 
-  string filename = binary_file_io.filename(P.my_num());
+  //string filename = binary_file_io.filename(P.my_num());
+  string filename;
+  filename = "Persistence/Transactions-P" + to_string(P.my_num()) + "-" + to_string(P.N.get_portnum_base()) + ".data";
 
   unsigned int size = data_registers.size();
 
