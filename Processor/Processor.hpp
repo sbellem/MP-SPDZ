@@ -341,7 +341,7 @@ void Processor<sint, sgf2n>::read_socket_private(int client_id,
 template<class sint, class sgf2n>
 void Processor<sint, sgf2n>::read_shares_from_file(int start_file_posn, int end_file_pos_register, const vector<int>& data_registers) {
   string filename;
-  filename = "Persistence/Transactions-P" + to_string(P.my_num()) + ".data";
+  filename = "Persistence/Transactions-P" + to_string(P.my_num()) + "-" + to_string(P.N.get_portnum_base()) + ".data";
 
   unsigned int size = data_registers.size();
 
@@ -370,7 +370,9 @@ template<class sint, class sgf2n>
 void Processor<sint, sgf2n>::write_shares_to_file(long start_pos,
     const vector<int>& data_registers)
 {
-  string filename = binary_file_io.filename(P.my_num());
+  //string filename = binary_file_io.filename(P.my_num());
+  string filename;
+  filename = "Persistence/Transactions-P" + to_string(P.my_num()) + "-" + to_string(P.N.get_portnum_base()) + ".data";
 
   unsigned int size = data_registers.size();
 
