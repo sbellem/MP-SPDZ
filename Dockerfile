@@ -59,8 +59,9 @@ RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine \
         && echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
 
-RUN make malicious-shamir-party.x \
-        && make paper-example-shamir.x \
-        && make random-shamir.x
+#RUN make malicious-shamir-party.x
+#RUN make paper-example-shamir.x
+#RUN make paper-example.x
+RUN make random-shamir2.x
 
 RUN ./Scripts/setup-ssl.sh 4
