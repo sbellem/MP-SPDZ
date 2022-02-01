@@ -257,6 +257,7 @@ static/no-party.x: Protocols/ShareInterface.o
 # random shamir preproc
 paper-example-shamir.x: $(VM) $(shamir) $(FHEOFFLINE)
 random-shamir.x: $(VM) $(shamir)
+random-shamir2.x: $(VM) $(OT) $(FHEOFFLINE)
 
 ifeq ($(AVX_OT), 1)
 

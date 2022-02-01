@@ -3,8 +3,12 @@
  *
  */
 
+#define NO_MIXED_CIRCUITS
+
+#include "Math/gfp.hpp"
+#include "Machines/MalRep.hpp"
 #include "Machines/ShamirMachine.hpp"
-#include "Processor/Data_Files.hpp"
+
 #include "Tools/ezOptionParser.h"
 
 using namespace ez;
@@ -110,9 +114,14 @@ int generate(ezOptionParser& opt, int nparties)
 {
     // needed because of bug in some gcc versions < 9
     // https://gitter.im/MP-SPDZ/community?at=5fcadf535be1fb21c5fce581
-    bigint::init_thread();
+    //bigint::init_thread();
 
-    typedef MaliciousShamirShare<gfp> T;
+    // bit length of prime
+    const int prime_length = 256;
+
+    // compute number of 64-bit words needed
+    const int n_limbs = (prime_length + 63) / 64;
+    typedef MaliciousShamirShare<gfp_<0, n_limbs>> T;
 
     //int playerno, nparties, nshares, port;
     int playerno, nshares, port;
@@ -129,25 +138,26 @@ int generate(ezOptionParser& opt, int nparties)
     CryptoPlayer P(N);
 
     // initialize field
-    gfp::init_field(bigint(prime));
-
-    // TODO figure out whether gfp1 is needed, seems not for Shamir
-    //gfp1::init_field(bigint(prime), false);
-    T::bit_type::mac_key_type::init_field();
+    //gfp_::init_field(bigint(prime));
+    T::clear::init_field(bigint(prime));
+    // TODO: not sure if the BLS prime should also be set on the `next`
+    //T::clear::next::init_default(prime_length, false);
+    T::clear::next::init_field(bigint(prime), false);
 
     // must initialize MAC key for security of some protocols
     typename T::mac_key_type mac_key;
     T::read_or_generate_mac_key("", P, mac_key);
-    typename T::bit_type::mac_key_type binary_mac_key;
-    T::bit_type::part_type::read_or_generate_mac_key("", P, binary_mac_key);
 
+    // TODO check if really needed
+    // global OT setup
+    BaseMachine machine;
+    if (T::needs_ot)
+        machine.ot_setups.push_back({P});
+
+    // TODO check if really needed
     // keeps tracks of preprocessing usage
     DataPositions usage;
     usage.set_num_players(P.num_players());
-
-    // binary MAC check setup
-    GC::ShareThread<typename T::bit_type> thread(N,
-            OnlineOptions::singleton, P, binary_mac_key, usage);
 
     // output protocol
     typename T::MAC_Check output(mac_key);
@@ -178,5 +188,6 @@ int generate(ezOptionParser& opt, int nparties)
 
     cout << "\nDONE!" << endl;
 
+    T::LivePrep::teardown();
     return 0;
 }

@@ -11,7 +11,13 @@
 
 int main(int argc, char** argv)
 {
-    typedef ShamirShare<gfp> T;
+    // bit length of prime
+    const int prime_length = 256;
+    // compute number of 64-bit words needed
+    const int n_limbs = (prime_length + 63) / 64;
+
+    typedef ShamirShare<gfp_<0, n_limbs>> T;
+
     //typedef ShamirShare<gf2n> U;
 
     // need player number and number of players
@@ -27,9 +33,9 @@ int main(int argc, char** argv)
     CryptoPlayer P(N);
 
     // initialize fields
-    bigint prime = bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513");
-    cout << "numBits: " << numBits(32768) << endl;
-    gfp::init_field(prime);
+    //bigint prime = bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513");
+    //cout << "numBits: " << numBits(32768) << endl;
+    //gfp_::init_field(prime);
 
     //gfp1::init_default(256, false);
     //gfp1::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"), false);
