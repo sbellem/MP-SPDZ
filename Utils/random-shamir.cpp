@@ -112,7 +112,12 @@ int generate(ezOptionParser& opt, int nparties)
     // https://gitter.im/MP-SPDZ/community?at=5fcadf535be1fb21c5fce581
     bigint::init_thread();
 
-    typedef MaliciousShamirShare<gfp> T;
+    // bit length of prime
+    const int prime_length = 128;
+
+    // compute number of 64-bit words needed
+    const int n_limbs = (prime_length + 63) / 64;
+    typedef MaliciousShamirShare<gfp_<0, n_limbs>> T;
 
     //int playerno, nparties, nshares, port;
     int playerno, nshares, port;
@@ -129,7 +134,7 @@ int generate(ezOptionParser& opt, int nparties)
     CryptoPlayer P(N);
 
     // initialize field
-    gfp::init_field(bigint(prime));
+    //gfp_::init_field(bigint(prime));
 
     // TODO figure out whether gfp1 is needed, seems not for Shamir
     //gfp1::init_field(bigint(prime), false);
