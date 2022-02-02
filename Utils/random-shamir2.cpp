@@ -8,11 +8,8 @@
 #define NO_MIXED_CIRCUITS
 
 #include "Math/gfp.hpp"
-#include "Machines/SPDZ.hpp"
 #include "Machines/MalRep.hpp"
 #include "Machines/ShamirMachine.hpp"
-#include "Protocols/CowGearShare.h"
-#include "Protocols/CowGearPrep.hpp"
 
 template<class T>
 void run(char** argv, int prime_length);
@@ -100,35 +97,6 @@ void run(char** argv, int prime_length)
             outputFile << "\n";
     }
     cout << "\nDONE!" << endl;
-
-    // input protocol
-    //typename T::Input input(processor, output);
-    //typename T::Protocol protocol(P);
-    //int n = 1000;
-    //vector<T> a(n), b(n);
-    //T c;
-    //typename T::clear result;
-    //input.reset_all(P);
-    //for (int i = 0; i < n; i++)
-    //    input.add_from_all(i);
-    //input.exchange();
-    //for (int i = 0; i < n; i++)
-    //{
-    //    a[i] = input.finalize(0);
-    //    b[i] = input.finalize(1);
-    //}
-    //protocol.init_dotprod(&processor);
-    //for (int i = 0; i < n; i++)
-    //    protocol.prepare_dotprod(a[i], b[i]);
-    //protocol.next_dotprod();
-    //protocol.exchange();
-    //c = protocol.finalize_dotprod(n);
-    //output.init_open(P);
-    //output.prepare_open(c);
-    //output.exchange(P);
-    //result = output.finalize_open();
-    //cout << "result: " << result << endl;
-    //output.Check(P);
 
     T::LivePrep::teardown();
 }
