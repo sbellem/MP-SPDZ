@@ -11,8 +11,10 @@
 #include "Machines/MalRep.hpp"
 #include "Machines/ShamirMachine.hpp"
 
+//template<class T>
+//void run(char** argv, int prime_length);
 template<class T>
-void run(char** argv, int prime_length);
+void run(char** argv);
 
 int main(int argc, char** argv)
 {
@@ -37,11 +39,14 @@ int main(int argc, char** argv)
     ShamirOptions::s().threshold = threshold;
     ShamirOptions::s().nparties = nparties;
 
-    run<MaliciousShamirShare<gfp_<0, n_limbs>>>(argv, prime_length);
+    //run<MaliciousShamirShare<gfp_<0, n_limbs>>>(argv, prime_length);
+    run<MaliciousShamirShare<gfp_<0, n_limbs>>>(argv);
 }
 
+//template<class T>
+//void run(char** argv, int prime_length)
 template<class T>
-void run(char** argv, int prime_length)
+void run(char** argv)
 {
     // set up networking on localhost
     Names N;
@@ -52,8 +57,11 @@ void run(char** argv, int prime_length)
     CryptoPlayer P(N);
 
     // initialize fields
-    T::clear::init_default(prime_length);
-    T::clear::next::init_default(prime_length, false);
+    //T::clear::init_default(prime_length);
+    T::clear::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"));
+    // TODO: not sure if the BLS prime should also be set on the `next`
+    //T::clear::next::init_default(prime_length, false);
+    T::clear::next::init_field(bigint("52435875175126190479447740508185965837690552500527637822603658699938581184513"), false);
 
     // must initialize MAC key for security of some protocols
     typename T::mac_key_type mac_key;
