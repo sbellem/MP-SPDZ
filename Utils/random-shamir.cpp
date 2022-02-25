@@ -28,8 +28,8 @@ int main(int argc, const char** argv)
     opts = {opt, argc, argv};
 
     opt.overview = "Generator of random shares using Shamir Secret Sharing.";
-    opt.syntax = "./random-gen-shamir.x [OPTIONS]\n";
-    opt.example = "./random-gen-shamir.x -i 0 -N 4 -T 1 --nshares 10000 --host darkmatter.io --port 9999 \n";
+    opt.syntax = "./random-shamir.x [OPTIONS]\n";
+    opt.example = "./random-shamir.x -i 0 -N 4 -T 1 --nshares 10000 --host darkmatter.io --port 9999 \n";
 
     opt.add(
 		"", // Default.
