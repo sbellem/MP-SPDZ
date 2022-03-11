@@ -24,13 +24,13 @@ docker build --target base --tag mpspdz:base .
 To push to DockerHub, tag the image accordingly, e.g.:
 
 ```shell
-docker tag mpspdz:base intic3/mpspdz:$(git log -n 1 --format:%h)
+docker tag mpspdz:base initc3/mpspdz:$(git log -n 1 --pretty=format:%h)
 ```
 
 and push it:
 
 ```shell
-docker push intic3/mpspdz:$(git log -n 1 --format:%h)
+docker push initc3/mpspdz:$(git log -n 1 --pretty=format:%h)
 ```
 
 ## Building a program (e.g.: `malicious-shamir-offline.x`)
@@ -50,13 +50,13 @@ Tag it and push, e.g.:
 
 ```shell
 docker tag mal-shamir-offline.x:latest \
-    intic3/mal-shamir-offline.x:$(git log -n 1 --pretty=format:%h)
+    initc3/mal-shamir-offline.x:$(git log -n 1 --pretty=format:%h)
 ```
 
 and publish it:
 
 ```shell
-docker push intic3/mal-shamir-offline.x:$(git log -n 1 --pretty=format:%h)
+docker push initc3/mal-shamir-offline.x:$(git log -n 1 --pretty=format:%h)
 ```
 
 ### Additional build arguments
@@ -81,5 +81,22 @@ docker tag malicious-shamir-party.x:latest \
     initc3/malicious-shamir-party.x:$(git log -n 1 --pretty=format:%h)
 ```
 ```shell
-docker push intic3/malicious-shamir-party.x:$(git log -n 1 --pretty=format:%h)
+docker push initc3/malicious-shamir-party.x:$(git log -n 1 --pretty=format:%h)
+```
+
+### Building `random-shamir.x`
+
+```shell
+docker build --tag random-shamir.x \
+    --build-arg program=random-shamir.x \
+    --build-arg prep_dir=/opt/inputmask-shares .
+```
+
+#### Tag and publish
+```shell
+docker tag random-shamir.x:latest \
+    initc3/random-shamir.x:$(git log -n 1 --pretty=format:%h)
+```
+```shell
+docker push initc3/random-shamir.x:$(git log -n 1 --pretty=format:%h)
 ```
