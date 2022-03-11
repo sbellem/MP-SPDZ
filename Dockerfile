@@ -32,17 +32,13 @@ RUN make mpir
 
 RUN make clean
 
-#RUN mkdir -p PreProcessing-Data \
-#        && echo "PREP_DIR = '-DPREP_DIR=\"PreProcessing-Data/\"'" >> CONFIG.mine
+ARG mod="-DGFP_MOD_SZ=4"
 
 # DEBUG and configuration flags
 RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_MAC" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine \
-        && echo "MOD = -DGFP_MOD_SZ=4" >> CONFIG.mine
-
-#RUN make malicious-shamir-party.x
-RUN make random-shamir.x
+        && echo "MOD = ${mod}" >> CONFIG.mine
 
 RUN ./Scripts/setup-ssl.sh 4
