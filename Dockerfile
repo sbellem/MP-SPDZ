@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.8 as base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
                 automake \
@@ -30,15 +30,26 @@ COPY . .
 # mpir
 RUN make mpir
 
-RUN make clean
-
-ARG mod="-DGFP_MOD_SZ=4"
+# ssl keys
+ARG n=4
+RUN ./Scripts/setup-ssl.sh $n
 
 # DEBUG and configuration flags
 RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_MAC" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine
+
+
+FROM base
+
+ARG program="malicious-shamir-party.x"
+
+ARG mod="-DGFP_MOD_SZ=4"
+ARG prep_dir="/opt/preprocessing-data"
+
+RUN mkdir -p $prep_dir \
+        && echo "PREP_DIR = '-DPREP_DIR=\"${prep_dir}\"'" >> CONFIG.mine \
         && echo "MOD = ${mod}" >> CONFIG.mine
 
-RUN ./Scripts/setup-ssl.sh 4
+RUN make clean && make ${program}
