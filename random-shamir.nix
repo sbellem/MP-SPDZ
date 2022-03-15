@@ -2,7 +2,9 @@
 with pkgs;
 
 let
-  src = ./.;
+  src = builtins.path {
+    path = ./.;
+  };
 in
   stdenvNoCC.mkDerivation {
     inherit src;
@@ -26,8 +28,8 @@ in
     ];
     buildFlags = ["random-shamir.x"];
     installPhase = ''
-      mkdir -p $out
-      cp random-shamir.x $out/random-shamir.x
-      '';
+      mkdir -p $out/bin
+      cp random-shamir.x libSPDZ.so $out/bin/
+    '';
     dontFixup = true;
 }
