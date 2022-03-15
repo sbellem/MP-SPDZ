@@ -30,7 +30,7 @@ SPDZ = Machines/SPDZ.o $(TINIER)
 
 
 LIB = libSPDZ.a
-SHAREDLIB = libSPDZ.so
+SHAREDLIB = /usr/local/lib/libSPDZ.so
 FHEOFFLINE = libFHE.so
 LIBRELEASE = librelease.a
 
@@ -123,7 +123,8 @@ $(LIBRELEASE): Protocols/MalRepRingOptions.o $(PROCESSOR) $(COMMONOBJS) $(TINIER
 	$(AR) -csr $@ $^
 
 CFLAGS += -fPIC
-LDLIBS += -Wl,-rpath -Wl,$(CURDIR)
+#LDLIBS += -Wl,-rpath -Wl,$(CURDIR)
+LDLIBS += -Wl,-rpath -Wl,/usr
 
 $(SHAREDLIB): $(PROCESSOR) $(COMMONOBJS) GC/square64.o GC/Instruction.o
 	$(CXX) $(CFLAGS) -shared -o $@ $^ $(LDLIBS)
@@ -287,10 +288,10 @@ mpir-global: mpir-setup
 
 mpir: mpir-setup
 	cd mpir; \
-	./configure --enable-cxx --prefix=$(CURDIR)/local
+	./configure --enable-cxx --prefix=/usr/local
 	$(MAKE) -C mpir install
-	-echo MY_CFLAGS += -I./local/include >> CONFIG.mine
-	-echo MY_LDLIBS += -Wl,-rpath -Wl,$(CURDIR)/local/lib -L$(CURDIR)/local/lib >> CONFIG.mine
+	-echo MY_CFLAGS += -I/usr/local/include >> CONFIG.mine
+	-echo MY_LDLIBS += -Wl,-rpath -Wl,/usr/local/lib -L/usr/local/lib >> CONFIG.mine
 
 mac-setup: mac-machine-setup
 	brew install openssl boost libsodium mpir yasm ntl

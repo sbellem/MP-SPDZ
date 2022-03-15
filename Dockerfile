@@ -3,9 +3,11 @@ FROM python:3.8 as base
 RUN apt-get update && apt-get install -y --no-install-recommends \
                 automake \
                 build-essential \
+                clang-11 \
                 git \
                 libboost-dev \
                 libboost-thread-dev \
+                libclang-dev \
                 libntl-dev \
                 libsodium-dev \
                 libssl-dev \
@@ -35,6 +37,7 @@ ARG n=4
 RUN ./Scripts/setup-ssl.sh $n
 
 # DEBUG and configuration flags
+RUN echo "CXX = clang++-11" >> CONFIG.mine
 RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
         && echo "MY_CFLAGS += -DDEBUG_MAC" >> CONFIG.mine \
