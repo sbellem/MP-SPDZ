@@ -28,8 +28,9 @@ in
     ];
     buildFlags = ["random-shamir.x"];
     installPhase = ''
-      mkdir -p $out/bin
-      cp random-shamir.x libSPDZ.so $out/bin/
+      mkdir -p $out/bin $out/lib
+      cp random-shamir.x $out/bin/
+      cp libSPDZ.so $out/lib/
     '';
     dontFixup = true;
 }
