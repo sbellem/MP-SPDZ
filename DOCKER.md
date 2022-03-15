@@ -33,13 +33,14 @@ and push it:
 docker push initc3/mpspdz:$(git log -n 1 --pretty=format:%h)
 ```
 
-## Building a program (e.g.: `malicious-shamir-offline.x`)
+## Building a program: `mal-shamir-offline.x`
 A specific program can be built by passing the `--build-arg` option to docker.
 
 For example, to build `mal-shamir-offline.x`:
 
 ```shell
-docker build --tag mal-shamir-offline.x --build-arg program=mal-shamir-offline.x .
+docker build --tag mal-shamir-offline.x \
+    --build-arg program=mal-shamir-offline.x .
 ```
 
 The default `program` is `malicious-shamir-party.x`. So you don't need to
@@ -69,13 +70,13 @@ prep_dir="/opt/preprocessing-data": directory where to store preprocessing data
 
 See the `ARG` instructions in the [`Dockerfile`](./Dockerfile).
 
-### Building `malicious-shamir-party.x`
+## Building `malicious-shamir-party.x`
 
 ```shell
 docker build --tag malicious-shamir-party.x .
 ```
 
-#### Tag and publish
+### Tag and publish
 ```shell
 docker tag malicious-shamir-party.x:latest \
     initc3/malicious-shamir-party.x:$(git log -n 1 --pretty=format:%h)
@@ -84,7 +85,7 @@ docker tag malicious-shamir-party.x:latest \
 docker push initc3/malicious-shamir-party.x:$(git log -n 1 --pretty=format:%h)
 ```
 
-### Building `random-shamir.x`
+## Building `random-shamir.x`
 
 ```shell
 docker build --tag random-shamir.x \
@@ -92,7 +93,7 @@ docker build --tag random-shamir.x \
     --build-arg prep_dir=/opt/inputmask-shares .
 ```
 
-#### Tag and publish
+### Tag and publish
 ```shell
 docker tag random-shamir.x:latest \
     initc3/random-shamir.x:$(git log -n 1 --pretty=format:%h)
