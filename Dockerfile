@@ -66,8 +66,4 @@ RUN ./compile.py tutorial
 RUN echo 1 2 3 4 > Player-Data/Input-P0-0 && echo 1 2 3 4 > Player-Data/Input-P1-0
 
 # test with:
-#CMD ["malicious-shamir-party.x", "-N", "4", "-T", "1", "0", "tutorial", "&", \
-#     "malicious-shamir-party.x", "-N", "4", "-T", "1", "1", "tutorial", "&", \
-#     "malicious-shamir-party.x", "-N", "4", "-T", "1", "2", "tutorial", "&", \
-#     "malicious-shamir-party.x", "-N", "4", "-T", "1", "3", "tutorial"]
-CMD "malicious-shamir-party.x -N 4 -T 1 0 tutorial & malicious-shamir-party.x -N 4 -T 1 1 tutorial & malicious-shamir-party.x -N 4 -T 1 2 tutorial & malicious-shamir-party.x -N 4 -T 1 3 tutorial"
+# malicious-shamir-party.x -N 4 -T 1 0 tutorial & malicious-shamir-party.x -N 4 -T 1 1 tutorial & malicious-shamir-party.x -N 4 -T 1 2 tutorial & malicious-shamir-party.x -N 4 -T 1 3 tutorial
