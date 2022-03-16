@@ -7,7 +7,7 @@
 #define GC_SECRET_H_
 
 #include "GC/config.h"
-#include "BMR/config.h"
+//#include "BMR/config.h"
 #include "BMR/common.h"
 
 #include "GC/Clear.h"

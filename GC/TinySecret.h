@@ -9,8 +9,8 @@
 #include "Secret.h"
 #include "TinyShare.h"
 #include "ShareParty.h"
-#include "OT/Rectangle.h"
-#include "OT/BitDiagonal.h"
+//#include "OT/Rectangle.h"
+//#include "OT/BitDiagonal.h"
 
 template<class T> class NPartyTripleGenerator;
 template<class T> class OTTripleGenerator;
@@ -42,7 +42,7 @@ public:
     typedef typename part_type::sacri_type sacri_type;
     typedef typename part_type::mac_type mac_type;
     typedef typename part_type::mac_share_type mac_share_type;
-    typedef BitDiagonal Rectangle;
+    //typedef BitDiagonal Rectangle;
 
     typedef typename T::super check_type;
 
