@@ -6,7 +6,7 @@
 #ifndef GC_SECRET_INLINE_H_
 #define GC_SECRET_INLINE_H_
 
-#include "BMR/config.h"
+//#include "BMR/config.h"
 #include "GC/Secret.h"
 
 #ifdef MAX_INLINE

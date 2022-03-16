@@ -6,7 +6,7 @@
 #ifndef GC_INSTRUCTION_INLINE_H_
 #define GC_INSTRUCTION_INLINE_H_
 
-#include "BMR/config.h"
+//#include "BMR/config.h"
 
 #ifdef MAX_INLINE
 #define MAYBE_INLINE inline
