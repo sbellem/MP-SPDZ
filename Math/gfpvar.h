@@ -82,6 +82,12 @@ public:
         write_setup(get_prep_sub_dir<T>(nplayers));
     }
 
+    template<class T>
+    static void write_setup(string dir, int nplayers)
+    {
+        write_setup(get_prep_sub_dir<T>(dir, nplayers));
+    }
+
     gfpvar_();
     gfpvar_(int other);
     gfpvar_(int128 other);
