@@ -69,12 +69,13 @@ Processor<sint, sgf2n>::Processor(int thread_num,Player& P,
 
   public_input_filename = get_filename("Programs/Public-Input/",false);
   public_input.open(public_input_filename);
-  private_input_filename = (get_filename(machine.opts.prep_dir.append("/Private-Input-").c_str(),true));
+
+  private_input_filename = (get_filename((machine.opts.prep_dir + "/Private-Input-").c_str(),true));
   private_input.open(private_input_filename.c_str());
-  public_output.open(get_filename(machine.opts.prep_dir.append("/Public-Output-").c_str(),true).c_str(), ios_base::out);
+  public_output.open(get_filename((machine.opts.prep_dir + "/Public-Output-").c_str(),true).c_str(), ios_base::out);
   binary_output.open(
       get_parameterized_filename(P.my_num(), thread_num,
-          machine.opts.prep_dir.append("/Binary-Output").c_str()), ios_base::out);
+          (machine.opts.prep_dir + "/Binary-Output").c_str()), ios_base::out);
 
   open_input_file(P.my_num(), thread_num, machine.opts.cmd_private_input_file);
 
