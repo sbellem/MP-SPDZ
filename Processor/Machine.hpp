@@ -72,7 +72,7 @@ Machine<sint, sgf2n>::Machine(Names& playerNames, bool use_encryption,
   init_binary_domains(opts.security_parameter, lg2);
 
   // make directory for outputs if necessary
-  mkdir_p(PREP_DIR);
+  mkdir_p(opts.prep_dir.c_str());
 
   string id = "machine";
   if (use_encryption)
