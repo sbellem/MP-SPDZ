@@ -6,7 +6,7 @@
 #define NO_MIXED_CIRCUITS
 
 #include "Math/gfp.hpp"
-#include "Machines/MalRep.hpp"
+#include "Protocols/MaliciousRepPrep.hpp"
 #include "Machines/ShamirMachine.hpp"
 
 #include "Tools/ezOptionParser.h"
