@@ -254,6 +254,9 @@ static/real-bmr-party.x: $(BMR)
 static/bmr-program-party.x: $(BMR)
 static/no-party.x: Protocols/ShareInterface.o
 
+# random shamir preproc
+random-shamir.x: $(VM) $(shamir)
+
 ifeq ($(AVX_OT), 1)
 $(LIBSIMPLEOT): SimpleOT/Makefile
 	$(MAKE) -C SimpleOT
