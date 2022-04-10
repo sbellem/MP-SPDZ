@@ -32,20 +32,20 @@ RUN pip install --upgrade pip ipython
 
 COPY . .
 
-RUN echo "CXX = clang++-11" >> CONFIG.mine \
+ARG arch=native
+RUN echo "ARCH = -march=${arch}" >> CONFIG.mine \
+        && echo "CXX = clang++-11" >> CONFIG.mine \
         && echo "USE_NTL = 1" >> CONFIG.mine \
         && echo "MY_CFLAGS += -I/usr/local/include" >> CONFIG.mine \
-        && echo "MY_LDLIBS += -Wl,-rpath -Wl,/usr/local/lib -L/usr/local/lib" >> CONFIG.mine
+        && echo "MY_LDLIBS += -Wl,-rpath -Wl,/usr/local/lib -L/usr/local/lib" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_MAC" >> CONFIG.mine \
+        && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine
 
 # ssl keys
 ARG n=4
 RUN ./Scripts/setup-ssl.sh $n
-
-# DEBUG and configuration flags
-RUN echo "MY_CFLAGS += -DDEBUG_NETWORKING" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DVERBOSE" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DDEBUG_MAC" >> CONFIG.mine \
-        && echo "MY_CFLAGS += -DDEBUG_FILE" >> CONFIG.mine
 
 
 FROM base as programs

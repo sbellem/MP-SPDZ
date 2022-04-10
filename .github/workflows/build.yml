@@ -29,6 +29,7 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           target: base
+          build-args: arch=x86-64
           tags: |
             initc3/mpspdz,
             initc3/mpspdz:${{ github.head_ref }},
@@ -56,6 +57,7 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: |
+            arch=x86-64
             program=malicious-shamir-party.x
             prep_dir=/opt/preprocessing-data
           tags: |
@@ -84,7 +86,9 @@ jobs:
           context: .
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          build-args: program=mal-shamir-offline.x
+          build-args: |
+            arch=x86-64
+            program=mal-shamir-offline.x
           tags: |
             initc3/mal-shamir-offline.x,
             initc3/mal-shamir-offline.x:${{ github.head_ref }},
@@ -112,6 +116,7 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           build-args: |
+            arch=x86-64
             program=random-shamir.x
             prep_dir=/opt/inputmask-shares
           tags: |
@@ -140,6 +145,7 @@ jobs:
           context: .
           file: mal-shamir.Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
+          build-args: arch=x86-64
           tags: |
             initc3/mal-shamir,
             initc3/mal-shamir:${{ github.head_ref }},
