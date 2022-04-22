@@ -34,9 +34,14 @@ jobs:
           context: .
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
-          target: base
           push: true
-          build-args: arch=x86-64
+          target: buildenv
+          build-args: |
+            arch=x86-64
+            use_ntl=1
+            prep_dir=/opt/preprocessing-data
+            ssl_dir="/opt/ssl"
+            cryptoplayers=4
           tags: |
             initc3/mpspdz,
             initc3/mpspdz:${{ github.ref_name }},
@@ -72,10 +77,14 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
+          target: machine
           build-args: |
             arch=x86-64
-            program=malicious-shamir-party.x
+            machine=malicious-shamir-party.x
             prep_dir=/opt/preprocessing-data
+            ssl_dir=/opt/ssl
+            cryptoplayers=4
+            gfp_mod_sz=4
           tags: |
             initc3/malicious-shamir-party.x,
             initc3/malicious-shamir-party.x:${{ github.ref_name }},
@@ -111,9 +120,14 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
+          target: machine
           build-args: |
             arch=x86-64
-            program=mal-shamir-offline.x
+            machine=mal-shamir-offline.x
+            prep_dir=/opt/preprocessing-data
+            ssl_dir=/opt/ssl
+            cryptoplayers=4
+            gfp_mod_sz=4
           tags: |
             initc3/mal-shamir-offline.x,
             initc3/mal-shamir-offline.x:${{ github.ref_name }},
@@ -149,10 +163,14 @@ jobs:
           file: Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
+          target: machine
           build-args: |
             arch=x86-64
-            program=random-shamir.x
+            machine=random-shamir.x
             prep_dir=/opt/inputmask-shares
+            ssl_dir=/opt/ssl
+            cryptoplayers=4
+            gfp_mod_sz=4
           tags: |
             initc3/random-shamir.x,
             initc3/random-shamir.x:${{ github.ref_name }},
