@@ -18,7 +18,7 @@ git checkout d686efcada9efef08cd0573e1aafc478f02d5fcf
 ```
 
 ```shell
-docker build --target base --tag mpspdz:base .
+docker build --target bulidenv --tag mpspdz:bulidenv .
 ```
 
 To push to DockerHub, tag the image accordingly, e.g.:
@@ -39,12 +39,15 @@ A specific program can be built by passing the `--build-arg` option to docker.
 For example, to build `mal-shamir-offline.x`:
 
 ```shell
-docker build --tag mal-shamir-offline.x \
-    --build-arg program=mal-shamir-offline.x .
+docker build \
+        --tag mpspdz:mal-shamir-offline.x \
+        --target machine \
+        --build-arg machine=mal-shamir-offline.x \
+        --build-arg gfp_mod_sz=4 \
+        --build-arg prep_dir=/opt/preprocessing-data \
+        --build-arg ssl_dir=/opt/ssl \
+        --build-arg cryptoplayers 4 .
 ```
-
-The default `program` is `malicious-shamir-party.x`. So you don't need to
-pass it when when building the image.
 
 ### Publishing the image to DockerHub
 Tag it and push, e.g.:
@@ -61,19 +64,25 @@ docker push initc3/mal-shamir-offline.x:$(git log -n 1 --pretty=format:%h)
 ```
 
 ### Additional build arguments
-Other build arguments, and their default are:
-
-`n=4`: number of players
-`mod="-DGFP_MOD_SZ=4": for primes > 256 bits, number of limbs (prime length
+`cryptoplayers=4`: number of players
+`gfp_mod_sz=4`: for primes > 256 bits, number of limbs (prime length
     divided by 64 rounded up)
-prep_dir="/opt/preprocessing-data": directory where to store preprocessing data
+`prep_dir="/opt/preprocessing-data"`: directory where to store preprocessing data
 
-See the `ARG` instructions in the [`Dockerfile`](./Dockerfile).
+For other build arguments, see the `ARG` instructions in the
+[`Dockerfile`](./Dockerfile).
 
 ## Building `malicious-shamir-party.x`
 
 ```shell
-docker build --tag malicious-shamir-party.x .
+docker build \
+        --tag mpspdz:malicious-shamir-party.x \
+        --target machine \
+        --build-arg machine=malicious-shamir-party.x \
+        --build-arg gfp_mod_sz=4 \
+        --build-arg prep_dir=/opt/preprocessing-data \
+        --build-arg ssl_dir=/opt/ssl \
+        --build-arg cryptoplayers 4 .
 ```
 
 ### Tag and publish
@@ -88,9 +97,14 @@ docker push initc3/malicious-shamir-party.x:$(git log -n 1 --pretty=format:%h)
 ## Building `random-shamir.x`
 
 ```shell
-docker build --tag random-shamir.x \
-    --build-arg program=random-shamir.x \
-    --build-arg prep_dir=/opt/inputmask-shares .
+docker build \
+    --tag mpspdz:random-shamir.x \
+    --target machine \
+    --build-arg machine=random-shamir.x \
+    --build-arg gfp_mod_sz=4 \
+    --build-arg prep_dir=/opt/inputmask-shares \
+    --build-arg ssl_dir=/opt/ssl \
+    --build-arg cryptoplayers=4 .
 ```
 
 ### Tag and publish
