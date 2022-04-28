@@ -258,6 +258,7 @@ Test/failure.x: Protocols/MalRepRingOptions.o
 
 # random shamir preproc
 random-shamir.x: $(VM) $(shamir)
+paper-example-shamir.x: $(VM) $(shamir)
 
 ifeq ($(AVX_OT), 1)
 $(LIBSIMPLEOT): SimpleOT/Makefile

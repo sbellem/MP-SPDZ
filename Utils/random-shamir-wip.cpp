@@ -1,11 +1,15 @@
 /*
- * Shamir-based random share generator.
+ * paper-example.cpp
+ *
+ * Working example similar to Figure 2 in https://eprint.iacr.org/2020/521
  *
  */
 
 #define NO_MIXED_CIRCUITS
 
 #include "Math/gfp.hpp"
+//#include "Math/gfp.hpp"
+#include "Machines/SPDZ.hpp"
 #include "Machines/MalRep.hpp"
 #include "Machines/ShamirMachine.hpp"
 #include "Protocols/ProtocolSet.h"
@@ -14,7 +18,8 @@
 
 using namespace ez;
 
-int generate(ezOptionParser& opt, int nparties);
+template<class T>
+void run(ezOptionParser& opt, bigint prime, int prime_length);
 
 void Usage(ezOptionParser& opt) {
 	string usage;
@@ -92,15 +97,6 @@ int main(int argc, const char** argv)
 		"--port" // Flag token.
 	);
 
-    opt.add(
-          PREP_DIR, // Default.
-          0, // Required?
-          1, // Number of args expected.
-          0, // Delimiter if expecting multiple args.
-          "Preprocessing directory (default: 'Player-Data')", // Help description.
-          "--prep-dir" // Flag token.
-    );
-
     opt.parse(argc, argv);
 
 	if (opt.isSet("-h")) {
@@ -113,93 +109,66 @@ int main(int argc, const char** argv)
 		Usage(opt);
         exit(0);
     }
-    cout << "opts threshold: " << opts.threshold << endl;
-    cout << "opts nparties: " << opts.nparties << endl;
-    return generate(opt, opts.nparties);
-}
 
+    string prime;
+    opt.get("--prime")->getString(prime);
 
-int generate(ezOptionParser& opt, int nparties)
-{
     // bit length of prime
     const int prime_length = 256;
 
     // compute number of 64-bit words needed
     const int n_limbs = (prime_length + 63) / 64;
-    typedef MaliciousShamirShare<gfp_<0, n_limbs>> T;
 
-    //int playerno, nparties, nshares, port;
-    int playerno, nshares, port;
-    string hostname, prime, prep_dir;
+    run<MaliciousShamirShare<gfp_<0, n_limbs>>>(opt, bigint(prime), prime_length);
+    //run<MaliciousShamirShare<gfp_<0, n_limbs>>>(opt, bigint(prime));
+}
+
+template<class T>
+void run(ezOptionParser& opt, bigint prime, int prime_length)
+{
+    int playerno, nparties, nshares, port;
+    string hostname, prep_dir;
     opt.get("--playerno")->getInt(playerno);
-    //opt.get("--nparties")->getInt(nparties);
+    opt.get("--nparties")->getInt(nparties);
     opt.get("--nshares")->getInt(nshares);
-    opt.get("--prime")->getString(prime);
     opt.get("--host")->getString(hostname);
     opt.get("--port")->getInt(port);
     opt.get("--prep-dir")->getString(prep_dir);
 
-    Names N(playerno, nparties, hostname, port);
-    CryptoPlayer P(N);
+    Names names(playerno, nparties, hostname, port);
+    CryptoPlayer crypto_player(names);
 
     // protocol setup (domain, MAC key if needed etc)
-    ProtocolSetup<T> setup(bigint(prime), P);
+    cout << "prime: " << prime << endl;
+    cout << "prime_length: " << prime_length << endl;
+    //ProtocolSetup<T> setup(crypto_player, prime_length);
+    //ProtocolSetup<T> setup(bigint(prime), crypto_player);
 
-    ProtocolSet<T> set(P, setup);
-    //auto& protocol = set.protocol;
+    //ProtocolSet<T> protocol_set(crypto_player, setup);
 
-    auto& preprocessing = set.preprocessing;
+    //auto& preprocessing = protocol_set.preprocessing;
 
-    // initialize field
-    //T::clear::init_field(bigint(prime));
-    // TODO: not sure if the BLS prime should also be set on the `next`
-    //T::clear::next::init_default(prime_length, false);
-    //T::clear::next::init_field(bigint(prime), false);
+    //stringstream ss;
+    //ofstream outputFile;
+    //string prep_data_dir = get_prep_sub_dir<T>(prep_dir, crypto_player.num_players());
+    //ss << prep_data_dir << "Randoms-" << T::type_short() << "-P" << crypto_player.my_num();
+    //outputFile.open(ss.str().c_str());
 
-    // must initialize MAC key for security of some protocols
-    //typename T::mac_key_type mac_key;
-    //T::read_or_generate_mac_key("", P, mac_key);
+    //int ntriples = nshares / 2 + nshares % 2;
+    //vector<T> Sa(ntriples), Sb(ntriples), Sc(ntriples);
+    //for (int i=0; i < ntriples; i++)
+    //{
+    //    preprocessing.get_three(DATA_TRIPLE, Sa[i], Sb[i], Sc[i]);
+    //    Sa[i].output(outputFile, true);
+    //    if (i == ntriples - 1 &&  nshares % 2)
+    //        break;
+    //    outputFile << "\n";
+    //    Sb[i].output(outputFile, true);
+    //    if (i != ntriples - 1)
+    //        outputFile << "\n";
+    //}
 
-    // TODO check if really needed
-    // global OT setup
-    //BaseMachine machine;
-    //if (T::needs_ot)
-    //    machine.ot_setups.push_back({P});
+    //cout << "\nDONE!" << endl;
 
-    // TODO check if really needed
-    // keeps tracks of preprocessing usage
-    //DataPositions usage;
-    //usage.set_num_players(P.num_players());
-
-    // output protocol
-    //typename T::MAC_Check output(mac_key);
-
-    // preprocessing
-    //typename T::LivePrep preprocessing(0, usage);
-    //SubProcessor<T> processor(output, preprocessing, P);
-
-    stringstream ss;
-    ofstream outputFile;
-    string prep_data_dir = get_prep_sub_dir<T>(prep_dir, P.num_players());
-    ss << prep_data_dir << "Randoms-" << T::type_short() << "-P" << P.my_num();
-    outputFile.open(ss.str().c_str());
-
-    int ntriples = nshares / 2 + nshares % 2;
-    vector<T> Sa(ntriples), Sb(ntriples), Sc(ntriples);
-    for (int i=0; i < ntriples; i++)
-    {
-        preprocessing.get_three(DATA_TRIPLE, Sa[i], Sb[i], Sc[i]);
-        Sa[i].output(outputFile, true);
-        if (i == ntriples - 1 &&  nshares % 2)
-            break;
-        outputFile << "\n";
-        Sb[i].output(outputFile, true);
-        if (i != ntriples - 1)
-            outputFile << "\n";
-    }
-
-    cout << "\nDONE!" << endl;
-
-    T::LivePrep::teardown();
-    return 0;
+    //T::LivePrep::teardown();
 }
