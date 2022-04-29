@@ -109,9 +109,45 @@ docker build \
 
 ### Tag and publish
 ```shell
-docker tag random-shamir.x:latest \
+docker tag mpspdz:random-shamir.x:latest \
     initc3/random-shamir.x:$(git log -n 1 --pretty=format:%h)
 ```
 ```shell
 docker push initc3/random-shamir.x:$(git log -n 1 --pretty=format:%h)
+```
+
+
+## Building `mal-shamir-bmr-party.x`
+
+```shell
+docker build \
+        --tag mpspdz:mal-shamir-bmr \
+        --build-arg machine=mal-shamir-bmr-party.x \
+        --build-arg prep_dir=/opt/preprocessing-data \
+        --build-arg ssl_dir=/opt/ssl \
+        --build-arg cryptoplayers=3 \
+        --build-arg src=tutorial \
+        --build-arg compile_options="--binary=32" .
+```
+
+### Tag and publish
+```shell
+docker tag mpspdz:mal-shamir-bmr:latest \
+    initc3/mal-shamir-bmr:$(git log -n 1 --pretty=format:%h)
+```
+```shell
+docker push initc3/mal-shamir-bmr:$(git log -n 1 --pretty=format:%h)
+```
+
+### Test
+To test the image, locally built:
+
+```shell
+docker run --rm mpspdz:mal-shamir-bmr ./Scripts/mal-shamir-bmr.sh tutorial
+```
+
+or, to test a pre-built image, hosted on DockerHub:
+
+```shell
+docker run --rm initc3/mal-shamir-bmr ./Scripts/mal-shamir-bmr.sh tutorial
 ```
