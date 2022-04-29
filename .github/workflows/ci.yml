@@ -216,7 +216,7 @@ jobs:
             compile_options=--binary=32
           tags: |
             initc3/mal-shamir-bmr,
-            initc3/mal-shamir-bmr:${{ github.head_ref }},
+            initc3/mal-shamir-bmr:${{ github.ref_name }},
             initc3/mal-shamir-bmr:${{ steps.vars.outputs.short_sha }}
           cache-from: type=registry,ref=initc3/mal-shamir-bmr:buildcache
           cache-to: type=registry,ref=initc3/mal-shamir-bmr:buildcache,mode=max
