@@ -46,7 +46,7 @@ docker build \
         --build-arg gfp_mod_sz=4 \
         --build-arg prep_dir=/opt/preprocessing-data \
         --build-arg ssl_dir=/opt/ssl \
-        --build-arg cryptoplayers 4 .
+        --build-arg cryptoplayers=4 .
 ```
 
 ### Publishing the image to DockerHub
@@ -82,7 +82,7 @@ docker build \
         --build-arg gfp_mod_sz=4 \
         --build-arg prep_dir=/opt/preprocessing-data \
         --build-arg ssl_dir=/opt/ssl \
-        --build-arg cryptoplayers 4 .
+        --build-arg cryptoplayers=4 .
 ```
 
 ### Tag and publish
