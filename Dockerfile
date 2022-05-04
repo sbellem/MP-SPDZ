@@ -42,8 +42,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
                 automake \
                 build-essential \
                 clang-11 \
+                cmake \
                 git \
                 libboost-dev \
+                libboost-test-dev \
                 libboost-thread-dev \
                 libclang-dev \
                 libntl-dev \
@@ -87,7 +89,7 @@ RUN echo "ARCH = -march=${arch}" >> CONFIG.mine \
         && echo "SSL_DIR = '-DSSL_DIR=\"${ssl_dir}/\"'" >> CONFIG.mine
 
 # ssl keys
-ARG cryptoplayers=0
+ARG cryptoplayers=3
 ENV PLAYERS ${cryptoplayers}
 RUN ./Scripts/setup-ssl.sh ${cryptoplayers} ${ssl_dir}
 
@@ -144,6 +146,17 @@ FROM machine as program
 ARG src="tutorial"
 ARG compile_options="--field=64"
 RUN ./compile.py ${compile_options} ${src}
+#RUN mkdir -p Player-Data \
+#        && echo 1 2 3 4 > Player-Data/Input-P0-0 \
+#        && echo 1 2 3 4 > Player-Data/Input-P1-0
 RUN mkdir -p Player-Data \
-        && echo 1 2 3 4 > Player-Data/Input-P0-0 \
-        && echo 1 2 3 4 > Player-Data/Input-P1-0
+        && echo 1 > Player-Data/Input-P0-0 \
+        && echo 2 > Player-Data/Input-P1-0 \
+        && echo 3 > Player-Data/Input-P2-0
+
+
+FROM machine as machinex
+
+ARG machinex="random-shamir.x"
+
+RUN make clean && make ${machinex} && cp ${machinex} /usr/local/bin/

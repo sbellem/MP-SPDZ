@@ -17,7 +17,8 @@
 using namespace ez;
 
 template <class T>
-void run(ez::ezOptionParser &opt, bigint prime, int prime_length);
+void run(int playerno, int nparties, int nshares, string hostname, int port,
+         string prep_dir, bigint prime, int prime_length);
 
 void Usage(ez::ezOptionParser &opt) {
   string usage;
@@ -80,20 +81,6 @@ int main(int argc, const char **argv) {
   const int prime_length = 256;
   const int n_limbs = (prime_length + 63) / 64;
 
-  if (protocol == "shamir")
-    run<ShamirShare<gfp_<0, n_limbs>>>(opt, bigint(prime), prime_length);
-  else if (protocol == "malshamir")
-    run<MaliciousShamirShare<gfp_<0, n_limbs>>>(opt, bigint(prime),
-                                                prime_length);
-  else {
-    cerr << "Unsupported protocol: " << protocol << endl;
-    cerr << "Use shamir or malshamir" << endl;
-    exit(1);
-  }
-}
-
-template <class T>
-void run(ez::ezOptionParser &opt, bigint prime, int prime_length) {
   int playerno, nparties, nshares, port;
   string hostname, prep_dir;
   opt.get("--playerno")->getInt(playerno);
@@ -103,6 +90,24 @@ void run(ez::ezOptionParser &opt, bigint prime, int prime_length) {
   opt.get("--port")->getInt(port);
   opt.get("--prep-dir")->getString(prep_dir);
 
+  if (protocol == "shamir")
+    run<ShamirShare<gfp_<0, n_limbs>>>(playerno, nparties, nshares, hostname,
+                                       port, prep_dir, bigint(prime),
+                                       prime_length);
+  else if (protocol == "malshamir")
+    run<MaliciousShamirShare<gfp_<0, n_limbs>>>(playerno, nparties, nshares,
+                                                hostname, port, prep_dir,
+                                                bigint(prime), prime_length);
+  else {
+    cerr << "Unsupported protocol: " << protocol << endl;
+    cerr << "Use shamir or malshamir" << endl;
+    exit(1);
+  }
+}
+
+template <class T>
+void run(int playerno, int nparties, int nshares, string hostname, int port,
+         string prep_dir, bigint prime, int prime_length) {
   Names names(playerno, nparties, hostname, port);
   CryptoPlayer player(names);
 

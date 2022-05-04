@@ -70,7 +70,7 @@ endif
 # MOD = -DMAX_MOD_SZ=10 -DGFP_MOD_SZ=5
 
 LDLIBS = -lmpirxx -lmpir -lsodium $(MY_LDLIBS)
-LDLIBS += -lboost_system -lssl -lcrypto
+LDLIBS += -lboost_system -lboost_unit_test_framework -lssl -lcrypto
 
 ifeq ($(USE_NTL),1)
 CFLAGS += -DUSE_NTL
@@ -87,7 +87,10 @@ else
 BOOST = -lboost_thread $(MY_BOOST)
 endif
 
-CFLAGS += $(ARCH) $(MY_CFLAGS) $(GDEBUG) -Wextra -Wall $(OPTIM) -I$(ROOT) -pthread $(PROF) $(DEBUG) $(MOD) $(GF2N_LONG) $(PREP_DIR) $(SSL_DIR) $(SECURE) -std=c++11 -Werror
+
+BOOST_DYN = -DBOOST_ALL_NO_LIB -DBOOST_TEST_DYN_LINK
+
+CFLAGS += $(ARCH) $(MY_CFLAGS) $(GDEBUG) -Wextra -Wall $(OPTIM) -I$(ROOT) -pthread $(PROF) $(DEBUG) $(MOD) $(GF2N_LONG) $(BOOST_DYN) $(PREP_DIR) $(SSL_DIR) $(SECURE) -std=c++11 -Werror
 CPPFLAGS = $(CFLAGS)
 LD = $(CXX)
 

@@ -6,6 +6,15 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      #target: buildenv
+      args:
+        machine: malicious-shamir-party.x
+        prep_dir: /opt/preprocessing-data
+        ssl_dir: /opt/ssl
+        cryptoplayers: 3
+        gfp_mod_sz: 4
+        compile_options: "-v -C --field=256"
+        src: average
     environment:
       PREP_DIR: ${PREP_DIR}
       PRIME: ${PRIME}
@@ -16,3 +25,6 @@ services:
       - ./Makefile:/usr/src/MP-SPDZ/Makefile
       - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
       - ./Scripts:/usr/src/MP-SPDZ/Scripts
+      - ./Utils/default-prime-length.cpp:/usr/src/MP-SPDZ/Utils/default-prime-length.cpp
+      - ./Utils/random-shamir.cpp:/usr/src/MP-SPDZ/Utils/random-shamir.cpp
+      - ./tests:/usr/src/MP-SPDZ/tests

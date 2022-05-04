@@ -197,6 +197,14 @@ Fake-Offline.x: Utils/Fake-Offline.o $(VM)
 %-ecdsa-party.x: ECDSA/%-ecdsa-party.o ECDSA/P256Element.o $(VM)
 	$(CXX) -o $@ $(CFLAGS) $^ $(LDLIBS)
 
+# for tests
+test_random.x: tests/test_random.o $(SHAREDLIB)
+	$(CXX) $(CFLAGS) -o $@ $^ $(LDLIBS)
+#test_random.x: $(VM) $(shamir) tests/test_random.o
+
+#tests/test_random.o: tests/test_random.cpp
+#	$(CXX) -o $@ $< $(CFLAGS) -MMD -MP -c
+
 replicated-bin-party.x: GC/square64.o
 replicated-ring-party.x: GC/square64.o
 replicated-field-party.x: GC/square64.o
@@ -257,7 +265,10 @@ static/no-party.x: Protocols/ShareInterface.o
 Test/failure.x: Protocols/MalRepRingOptions.o
 
 # random shamir preproc
-random-shamir.x: $(VM) $(shamir)
+#random-shamir.x: $(VM) $(shamir)
+#random-shamir.x: $(SHAREDLIB) $(shamir)
+random-shamir.x: Utils/random-shamir.o $(SHAREDLIB)
+	$(CXX) $(CFLAGS) -o $@ $^ $(LDLIBS)
 
 ifeq ($(AVX_OT), 1)
 $(LIBSIMPLEOT): SimpleOT/Makefile
