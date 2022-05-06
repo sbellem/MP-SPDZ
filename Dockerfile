@@ -160,3 +160,5 @@ FROM machine as machinex
 ARG machinex="random-shamir.x"
 
 RUN make clean && make ${machinex} && cp ${machinex} /usr/local/bin/
+
+RUN pip install gmpy gmpy2

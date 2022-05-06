@@ -18,7 +18,7 @@ using namespace ez;
 
 template <class T>
 void run(int playerno, int nparties, int nshares, string hostname, int port,
-         string prep_dir, bigint prime, int prime_length);
+         string prep_dir, bigint prime, int prime_length, bool binary_output);
 
 void Usage(ez::ezOptionParser &opt) {
   string usage;
@@ -61,6 +61,11 @@ int main(int argc, const char **argv) {
           "Protocol (shamir or malshamir) (default: 'malshamir')",
           "--protocol");
 
+  opt.add("", 0, 0, 0,
+          "Write the shares in binary format. If not specified, shares are "
+          "written in decimal-based integers aka \"human\" format.",
+          "-b", "--binary-output");
+
   opt.parse(argc, argv);
 
   if (opt.isSet("-h")) {
@@ -83,21 +88,23 @@ int main(int argc, const char **argv) {
 
   int playerno, nparties, nshares, port;
   string hostname, prep_dir;
+  bool binary_output;
   opt.get("--playerno")->getInt(playerno);
   opt.get("--nparties")->getInt(nparties);
   opt.get("--nshares")->getInt(nshares);
   opt.get("--host")->getString(hostname);
   opt.get("--port")->getInt(port);
   opt.get("--prep-dir")->getString(prep_dir);
+  binary_output = opt.isSet("--binary-output");
 
   if (protocol == "shamir")
     run<ShamirShare<gfp_<0, n_limbs>>>(playerno, nparties, nshares, hostname,
                                        port, prep_dir, bigint(prime),
-                                       prime_length);
+                                       prime_length, binary_output);
   else if (protocol == "malshamir")
     run<MaliciousShamirShare<gfp_<0, n_limbs>>>(playerno, nparties, nshares,
                                                 hostname, port, prep_dir,
-                                                bigint(prime), prime_length);
+                                                bigint(prime), prime_length, binary_output);
   else {
     cerr << "Unsupported protocol: " << protocol << endl;
     cerr << "Use shamir or malshamir" << endl;
@@ -107,7 +114,7 @@ int main(int argc, const char **argv) {
 
 template <class T>
 void run(int playerno, int nparties, int nshares, string hostname, int port,
-         string prep_dir, bigint prime, int prime_length) {
+         string prep_dir, bigint prime, int prime_length, bool binary_output) {
   Names names(playerno, nparties, hostname, port);
   CryptoPlayer player(names);
 
@@ -129,11 +136,11 @@ void run(int playerno, int nparties, int nshares, string hostname, int port,
   vector<T> Sa(ntriples), Sb(ntriples), Sc(ntriples);
   for (int i = 0; i < ntriples; i++) {
     preprocessing.get_three(DATA_TRIPLE, Sa[i], Sb[i], Sc[i]);
-    Sa[i].output(outputFile, true);
+    Sa[i].output(outputFile, !binary_output);
     if (i == ntriples - 1 && nshares % 2)
       break;
     outputFile << "\n";
-    Sb[i].output(outputFile, true);
+    Sb[i].output(outputFile, !binary_output);
     if (i != ntriples - 1)
       outputFile << "\n";
   }
