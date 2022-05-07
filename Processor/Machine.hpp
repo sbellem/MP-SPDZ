@@ -136,15 +136,17 @@ void Machine<sint, sgf2n>::prepare(const string& progname_str)
         {
           string filename = Binary_File_IO::filename(my_number);
           ifstream pers(filename);
-          try
-          {
-              check_file_signature<sint>(pers, filename);
-          }
-          catch (signature_mismatch&)
-          {
+          if (pers.fail())
               ofstream pers(filename, ios::binary);
-              file_signature<sint>().output(pers);
-          }
+          //try
+          //{
+          //    check_file_signature<sint>(pers, filename);
+          //}
+          //catch (signature_mismatch&)
+          //{
+          //    ofstream pers(filename, ios::binary);
+          //    file_signature<sint>().output(pers);
+          //}
           break;
         }
     }
