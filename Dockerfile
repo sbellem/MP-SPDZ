@@ -155,10 +155,16 @@ RUN mkdir -p Player-Data \
         && echo 3 > Player-Data/Input-P2-0
 
 
-FROM machine as machinex
+FROM program as machinez
 
-ARG machinex="random-shamir.x"
+ARG machinez="random-shamir.x"
 
-RUN make clean && make ${machinex} && cp ${machinex} /usr/local/bin/
+RUN make clean && make ${machinez} && cp ${machinez} /usr/local/bin/
 
 RUN pip install gmpy gmpy2
+
+RUN mkdir Persistence
+
+#RUN random-shamir.x -i 0 -N 3 -T 1 -s 1 -b --prep-dir /opt/masks \
+#        & random-shamir.x -i 1 -N 3 -T 1 -s 1 -b --prep-dir /opt/masks \
+#        & random-shamir.x -i 2 -N 3 -T 1 -s 1 -b --prep-dir /opt/masks

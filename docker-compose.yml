@@ -1,4 +1,4 @@
-version: '3.8'
+version: '3.9'
 
 services:
   mp-spdz:
@@ -15,7 +15,9 @@ services:
         gfp_mod_sz: 4
         compile_options: "-v -C --field=256"
         src: average
-        machinex: random-shamir.x
+        machinez: random-shamir.x
+    environment:
+      PRIME: ${PRIME}
     working_dir: /usr/src/MP-SPDZ
     volumes:
       - ./Compiler:/usr/src/MP-SPDZ/Compiler
