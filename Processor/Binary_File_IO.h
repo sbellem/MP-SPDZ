@@ -28,7 +28,7 @@ class Binary_File_IO
    */
   template <class T>
   void write_to_file(const string filename, const vector<T>& buffer,
-      long start_pos);
+      long start_pos, bool file_sig=true);
 
   /*
    * Read from posn in the filename the binary values until the buffer is full.
@@ -37,7 +37,7 @@ class Binary_File_IO
    * Throws file_error.
    */
   template <class T>
-  void read_from_file(const string filename, vector< T >& buffer, const int start_posn, int &end_posn);
+  void read_from_file(const string filename, vector< T >& buffer, const int start_posn, int &end_posn, bool file_sig=true);
 };
 
 #endif

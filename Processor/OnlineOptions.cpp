@@ -36,6 +36,7 @@ OnlineOptions::OnlineOptions() : playerno(-1)
     max_broadcast = 0;
     receive_threads = false;
     prep_dir = std::string(PREP_DIR);
+    no_persistence_file_sig = false;
 #ifdef VERBOSE
     verbose = true;
 #else
@@ -131,9 +132,20 @@ OnlineOptions::OnlineOptions(ez::ezOptionParser& opt, int argc,
             "--security" // Flag token.
         );
 
+    opt.add(
+          "", // Default.
+          0, // Required?
+          0, // Number of args expected.
+          0, // Delimiter if expecting multiple args.
+          "Disable signature protocol for persistence files. (default: enabled)", // Help description.
+          "-npfs", // Flag token.
+          "--no-persistence-file-sig" // Flag token.
+    );
+
     opt.parse(argc, argv);
 
     interactive = opt.isSet("-I");
+    no_persistence_file_sig = opt.isSet("--no-persistence-file-sig");
 
     opt.get("-IF")->getString(cmd_private_input_file);
     opt.get("-OF")->getString(cmd_private_output_file);

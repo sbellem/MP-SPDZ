@@ -35,6 +35,7 @@ public:
     int trunc_error;
     int opening_sum, max_broadcast;
     bool receive_threads;
+    bool no_persistence_file_sig;
 
     OnlineOptions();
     OnlineOptions(ez::ezOptionParser& opt, int argc, const char** argv,
