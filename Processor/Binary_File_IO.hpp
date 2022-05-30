@@ -59,7 +59,6 @@ void Binary_File_IO::read_from_file(const string filename, vector<T> &buffer,
   }
 
   auto data_start = inf.tellg();
-  cout << "data_start: " << long(data_start) << endl;
 
   int size_in_bytes = T::size() * buffer.size();
   int n_read = 0;
