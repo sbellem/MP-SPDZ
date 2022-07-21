@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  mp-spdz:
+    image: mp-spdz
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        machine: malicious-shamir-party.x
+        prep_dir: /opt/preprocessing-data
+        ssl_dir: /opt/ssl
+        cryptoplayers: 3
+        gfp_mod_sz: 4
+        compile_options: "-v -C --field=256"
+        src: average
+    environment:
+      PREP_DIR: ${PREP_DIR}
+      PRIME: ${PRIME}
+    working_dir: /usr/src/MP-SPDZ
+    volumes:
+      - ./Compiler:/usr/src/MP-SPDZ/Compiler
+      - ./CONFIG:/usr/src/MP-SPDZ/CONFIG
+      - ./Makefile:/usr/src/MP-SPDZ/Makefile
+      - ./Programs/Source:/usr/src/MP-SPDZ/Programs/Source
+      - ./Scripts:/usr/src/MP-SPDZ/Scripts
