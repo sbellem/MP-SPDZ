@@ -35,4 +35,5 @@ services:
       - ./log_1.txt:/usr/src/MP-SPDZ/log_1.txt
       - ./log_2.txt:/usr/src/MP-SPDZ/log_2.txt
       - ./log_3.txt:/usr/src/MP-SPDZ/log_3.txt
+      - ./mal-shamir-offline.x:/usr/src/MP-SPDZ/mal-shamir-offline.x
     command: tail -F anything

@@ -90,12 +90,11 @@ template<class T>
 void ShamirMC<T>::exchange(const Player& P)
 {
     vector<bool> my_senders(P.num_players()), my_receivers(P.num_players());
-    for (int i = 0; i < P.num_players(); i++)
-    {
-        my_senders[i] = P.get_offset(i) <= threshold;
-        my_receivers[i] = P.get_offset(i) >= P.num_players() - threshold;
-    }
-    for (int i = 0; i < P.num_players(); i++) my_senders[i] = 0;
+//    for (int i = 0; i < P.num_players(); i++)
+//    {
+//        my_senders[i] = P.get_offset(i) <= threshold;
+//        my_receivers[i] = P.get_offset(i) >= P.num_players() - threshold;
+//    }
     for (int i = 0, ofs = 0, idx = P.get_player(ofs); i <= threshold; i++) {
         my_senders[idx] = 1;
         do {
